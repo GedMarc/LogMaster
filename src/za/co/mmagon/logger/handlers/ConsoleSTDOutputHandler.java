@@ -9,6 +9,8 @@ import za.co.mmagon.logger.LogFactory;
 import za.co.mmagon.logger.model.LogEntry;
 
 /**
+ * Logs to the standard output rather than the error output.
+ * Provides ansi colours if needed
  *
  * @author GedMarc
  * @since 13 Dec 2016
@@ -28,6 +30,9 @@ public class ConsoleSTDOutputHandler extends ConsoleHandler
     public static final String ANSI_CYAN = "\u001b[0;36m";
     public static final String ANSI_WHITE = "\u001b[0;37m";
 
+    /**
+     * Construct a new instance of the std output handler
+     */
     public ConsoleSTDOutputHandler()
     {
 
@@ -78,7 +83,7 @@ public class ConsoleSTDOutputHandler extends ConsoleHandler
                 {
                     return ANSI_RED + LogEntry.newEntry(record).toString() + ANSI_RESET;
                 }
-                return LogEntry.newEntry(record) + "\n\r".toString();
+                return LogEntry.newEntry(record) + "\n\r";
             }
         });
     }
