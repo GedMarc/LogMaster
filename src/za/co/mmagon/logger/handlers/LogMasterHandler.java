@@ -1,10 +1,6 @@
 package za.co.mmagon.logger.handlers;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  *
@@ -21,5 +17,10 @@ import java.lang.annotation.Target;
 public @interface LogMasterHandler
 {
 
+    /**
+     * Returns the name value associated with the handler
+     *
+     * @return
+     */
     public String value();
 }

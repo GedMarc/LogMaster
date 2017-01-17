@@ -55,7 +55,7 @@ public class LogColourFormatter extends java.util.logging.Formatter
      */
     public LogColourFormatter()
     {
-
+        //Nothing needing to be done
     }
 
     /**

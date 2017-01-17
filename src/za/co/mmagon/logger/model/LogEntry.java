@@ -22,7 +22,6 @@ import java.util.regex.Pattern;
 public class LogEntry implements Serializable
 {
 
-    //private static final Logger log = LogFactory.getLog("LogEntry");
     private static final long serialVersionUID = 1L;
     /**
      * The pattern for a property
@@ -57,6 +56,31 @@ public class LogEntry implements Serializable
      * The original system id of this log entry for identification
      */
     private String originalSourceSystemID;
+
+    /**
+     * Constructs a new log entry
+     */
+    private LogEntry()
+    {
+        this.dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+
+    }
+
+    /**
+     * Constructs a new log entry with the given entry and level
+     *
+     * @param entry
+     * @param level
+     */
+    @SuppressWarnings("")
+    private LogEntry(String entry, Level level)
+    {
+        this.dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        setDate(new Date());
+        setLevel(level);
+        LogProperty props = LogProperty.newProperty("message", entry);
+        getProperties().add(props);
+    }
 
     /**
      * Creates a new log entry with all global properties attached
@@ -115,31 +139,6 @@ public class LogEntry implements Serializable
         }
         le.setMessage(record.getMessage());
         return le;
-    }
-
-    /**
-     * Constructs a new log entry
-     */
-    private LogEntry()
-    {
-        this.dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-
-    }
-
-    /**
-     * Constructs a new log entry with the given entry and level
-     *
-     * @param entry
-     * @param level
-     */
-    @SuppressWarnings("")
-    private LogEntry(String entry, Level level)
-    {
-        this.dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        setDate(new Date());
-        setLevel(level);
-        LogProperty props = LogProperty.newProperty("message", entry);
-        getProperties().add(props);
     }
 
     /**

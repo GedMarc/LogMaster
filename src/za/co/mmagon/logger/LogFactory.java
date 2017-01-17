@@ -254,7 +254,7 @@ public class LogFactory
         }
 
         @Override
-        public void close() throws SecurityException
+        public void close()
         {
             //Nothing Needed
         }
