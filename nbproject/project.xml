@@ -16,6 +16,7 @@
         </libraries>
         <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
             <word>ansi</word>
+            <word>Colour</word>
             <word>colours</word>
         </spellchecker-wordlist>
     </configuration>

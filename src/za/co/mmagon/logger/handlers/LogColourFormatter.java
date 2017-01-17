@@ -13,21 +13,58 @@ import za.co.mmagon.logger.model.LogEntry;
 public class LogColourFormatter extends java.util.logging.Formatter
 {
 
+    /**
+     * Ansi Colour
+     */
     public static final String ANSI_RESET = "\u001b[0m";
+    /**
+     * Ansi Colour
+     */
     public static final String ANSI_BLACK = "\u001b[1;30m";
+    /**
+     * Ansi Colour
+     */
     public static final String ANSI_RED = "\u001b[1;31m";
+    /**
+     * Ansi Colour
+     */
     public static final String ANSI_GREEN = "\u001b[0;32m";
+    /**
+     * Ansi Colour
+     */
     public static final String ANSI_YELLOW = "\u001b[1;33m";
+    /**
+     * Ansi Colour
+     */
     public static final String ANSI_BLUE = "\u001b[1;34m";
+    /**
+     * Ansi Colour
+     */
     public static final String ANSI_PURPLE = "\u001b[0;35m";
+    /**
+     * Ansi Colour
+     */
     public static final String ANSI_CYAN = "\u001b[0;36m";
+    /**
+     * Ansi Colour
+     */
     public static final String ANSI_WHITE = "\u001b[0;37m";
 
+    /**
+     * The log colour formatter
+     */
     public LogColourFormatter()
     {
 
     }
 
+    /**
+     * Formats according to level
+     *
+     * @param record
+     *
+     * @return
+     */
     @Override
     public String format(LogRecord record)
     {
