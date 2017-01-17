@@ -5,11 +5,7 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
@@ -36,6 +32,7 @@ public class LogEntry implements Serializable
     private String message;
     private List<LogProperty> properties;
     private Serializable data;
+    private final SimpleDateFormat dateFormatter;
 
     private String originalSourceSystemID;
 
@@ -56,6 +53,7 @@ public class LogEntry implements Serializable
      * Creates a new log entry with all global properties attached
      *
      * @param record A log record produced by java logging
+     *
      * @return
      */
     public static LogEntry newEntry(LogRecord record)
@@ -68,7 +66,7 @@ public class LogEntry implements Serializable
         le.setDate(d);
 
         le.getProperties().add(LogProperty.newProperty("Level", padRight(record.getLevel().getName(), 7)));
-        le.getProperties().add(LogProperty.newProperty("Date", dateFormatter.format(d)));
+        le.getProperties().add(LogProperty.newProperty("Date", le.dateFormatter.format(d)));
         le.getProperties().add(LogProperty.newProperty("Message", record.getMessage()));
         le.getProperties().add(LogProperty.newProperty("Name", record.getLoggerName()));
         le.getProperties().add(LogProperty.newProperty("Class", record.getSourceClassName()));
@@ -102,6 +100,7 @@ public class LogEntry implements Serializable
      */
     private LogEntry()
     {
+        this.dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 
     }
 
@@ -114,6 +113,7 @@ public class LogEntry implements Serializable
     @SuppressWarnings("")
     private LogEntry(String entry, Level level)
     {
+        this.dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
         setDate(new Date());
         setLevel(level);
         LogProperty props = LogProperty.newProperty("message", entry);
@@ -134,6 +134,7 @@ public class LogEntry implements Serializable
      * Sets the date of this log entry
      *
      * @param date
+     *
      * @return
      */
     public LogEntry setDate(Date date)
@@ -156,6 +157,7 @@ public class LogEntry implements Serializable
      * Sets the level of this log entry
      *
      * @param level
+     *
      * @return
      */
     public LogEntry setLevel(Level level)
@@ -183,6 +185,7 @@ public class LogEntry implements Serializable
      * Sets the properties of this log entry
      *
      * @param properties
+     *
      * @return
      */
     public LogEntry setProperties(List<LogProperty> properties)
@@ -205,6 +208,7 @@ public class LogEntry implements Serializable
      * Any attached object you would want to fetch data from
      *
      * @param data
+     *
      * @return
      */
     public LogEntry setData(Serializable data)
@@ -227,6 +231,7 @@ public class LogEntry implements Serializable
      * Returns the message for this entry
      *
      * @param message
+     *
      * @return
      */
     public LogEntry setMessage(String message)
@@ -240,12 +245,10 @@ public class LogEntry implements Serializable
         });
         getProperties().add(LogProperty.newProperty("Level", padRight(getLevel().getName(), 7)));
         getProperties().add(LogProperty.newProperty("Date", dateFormatter.format(getDate())));
-        
+
         getProperties().add(LogProperty.newProperty("Message", message));
         return this;
     }
-
-    private static SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 
     @Override
     public String toString()

@@ -23,8 +23,6 @@ public class LogFactory
     private final List<Handler> logHandles = new ArrayList<>();
     private final AsyncLogger asyncLogger = new AsyncLogger();
 
-    ;
-
     /**
      * Hidden log factory constructor
      */
@@ -47,6 +45,7 @@ public class LogFactory
      * Returns a logger in Async that may or may not log to the console according to configuration
      *
      * @param name
+     *
      * @return
      */
     public Logger getLogger(String name)
@@ -70,6 +69,7 @@ public class LogFactory
      * Alias for get logger
      *
      * @param name
+     *
      * @return
      */
     public static Logger getLog(String name)
@@ -118,6 +118,7 @@ public class LogFactory
      * Adds a log handler to the collection
      *
      * @param handler
+     *
      * @return
      */
     public Handler addLogHandler(Handler handler)
@@ -147,7 +148,8 @@ public class LogFactory
 
         /**
          * A new log thread created from a log record
-         * @param logEntry 
+         *
+         * @param logEntry
          */
         public LoggingThread(LogRecord logEntry)
         {
@@ -184,8 +186,10 @@ public class LogFactory
 
         /**
          * Default override
+         *
          * @param record
-         * @return 
+         *
+         * @return
          */
         @Override
         public boolean isLoggable(LogRecord record)
@@ -197,7 +201,7 @@ public class LogFactory
         public synchronized void publish(LogRecord record)
         {
             LoggingThread thread = new LoggingThread(record);
-            thread.run();
+            thread.start();
             flush();
         }
 
