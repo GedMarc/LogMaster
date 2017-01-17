@@ -87,8 +87,9 @@ public class LogProperty implements Serializable
     /**
      * Returns a new log entry property and all registered global properties in the log factory
      *
-     * @param name The name of the property (usually message)
+     * @param name  The name of the property (usually message)
      * @param value The value of the property
+     *
      * @return The new log property
      */
     public static LogProperty newProperty(String name, String value)
@@ -126,6 +127,11 @@ public class LogProperty implements Serializable
         return Objects.equals(this.propertyName, other.propertyName);
     }
 
+    /**
+     * Returns a square bracket display of the properties
+     *
+     * @return
+     */
     @Override
     public String toString()
     {

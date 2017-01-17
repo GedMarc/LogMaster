@@ -11,7 +11,6 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import za.co.mmagon.logger.LogFactory;
 
 /**
  * A default Log Entry
@@ -23,17 +22,40 @@ import za.co.mmagon.logger.LogFactory;
 public class LogEntry implements Serializable
 {
 
-    private static final Logger log = LogFactory.getLog("LogEntry");
-
+    //private static final Logger log = LogFactory.getLog("LogEntry");
     private static final long serialVersionUID = 1L;
+    /**
+     * The pattern for a property
+     */
+    private static final Pattern propertyPatten = Pattern.compile("\\[(.*?)\\]-\\[(.*?)\\];");
 
+    /**
+     * The date of this log entry
+     */
     private Date date;
+    /**
+     * The level of this log entry
+     */
     private Level level;
+    /**
+     * The message of this log entry
+     */
     private String message;
+    /**
+     * The properties of this log entry
+     */
     private List<LogProperty> properties;
+    /**
+     * The actual data of this log entry
+     */
     private Serializable data;
+    /**
+     * The date formatter of this log entry
+     */
     private final SimpleDateFormat dateFormatter;
-
+    /**
+     * The original system id of this log entry for identification
+     */
     private String originalSourceSystemID;
 
     /**
@@ -250,6 +272,11 @@ public class LogEntry implements Serializable
         return this;
     }
 
+    /**
+     * Returns the log entry with the square brackets
+     *
+     * @return
+     */
     @Override
     public String toString()
     {
@@ -296,14 +323,24 @@ public class LogEntry implements Serializable
         this.originalSourceSystemID = originalSourceSystemID;
     }
 
-    private static final Pattern propertyPatten = Pattern.compile("\\[(.*?)\\]-\\[(.*?)\\];");
-
+    /**
+     * Is the parameter a message
+     *
+     * @return
+     */
     private boolean isParameterMessage()
     {
         Matcher m = propertyPatten.matcher(message);
         return m.groupCount() > 0;
     }
 
+    /**
+     * Returns the properties map form this log entry
+     *
+     * @param message
+     *
+     * @return
+     */
     public Map<String, String> getPropertiesFromMessage(String message)
     {
         Map<String, String> props = new HashMap<>();
@@ -319,16 +356,39 @@ public class LogEntry implements Serializable
         return props;
     }
 
+    /**
+     * Pads a property field or value by so many digits
+     *
+     * @param s the string
+     * @param n number of digits
+     *
+     * @return
+     */
     public static String padRight(String s, int n)
     {
         return String.format("%-" + n + "s", s);
     }
 
+    /**
+     * Pads the property field or value by the number
+     *
+     * @param s the string
+     * @param n the number of chars to
+     *
+     * @return
+     */
     public static String padLeft(String s, int n)
     {
         return String.format("%1$" + n + "s", s);
     }
 
+    /**
+     * Returns a specific log property
+     *
+     * @param name
+     *
+     * @return
+     */
     public LogProperty getProperty(String name)
     {
         for (LogProperty next : properties)

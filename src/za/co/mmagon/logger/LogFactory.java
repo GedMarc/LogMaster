@@ -15,12 +15,29 @@ import za.co.mmagon.logger.handlers.ConsoleSTDOutputHandler;
 public class LogFactory
 {
 
-    public static boolean LogToConsole = true;
-    public static Level DefaultLevel = Level.CONFIG;
+    /**
+     * Whether or not to log to the console
+     */
+    private static boolean LogToConsole = true;
+    /**
+     * The default level for the logging
+     */
+    private static Level DefaultLevel = Level.CONFIG;
+    /**
+     * The instance of the log factory
+     */
     private static final LogFactory instance = new LogFactory();
-
+    /**
+     * The handler for the console logger
+     */
     private final ConsoleSTDOutputHandler consoleLogger = new ConsoleSTDOutputHandler();
+    /**
+     * The log handles that get operated on asynchronously
+     */
     private final List<Handler> logHandles = new ArrayList<>();
+    /**
+     * The actual async logger
+     */
     private final AsyncLogger asyncLogger = new AsyncLogger();
 
     /**
@@ -89,6 +106,36 @@ public class LogFactory
     }
 
     /**
+     * If we should ever log to console
+     *
+     * @return
+     */
+    public static boolean isLogToConsole()
+    {
+        return LogToConsole;
+    }
+
+    /**
+     * Returns the console logger
+     *
+     * @return
+     */
+    public ConsoleSTDOutputHandler getConsoleLogger()
+    {
+        return consoleLogger;
+    }
+
+    /**
+     * If we should ever log to console
+     *
+     * @param LogToConsole
+     */
+    public static void setLogToConsole(boolean LogToConsole)
+    {
+        LogFactory.LogToConsole = LogToConsole;
+    }
+
+    /**
      * Sets the default level on all the loggers currently associated, as well as any future loggers
      *
      * @param DefaultLevel
@@ -144,6 +191,9 @@ public class LogFactory
     public class LoggingThread extends Thread
     {
 
+        /**
+         * The log record coming in
+         */
         private final LogRecord logEntry;
 
         /**
@@ -185,18 +235,10 @@ public class LogFactory
         }
 
         /**
-         * Default override
+         * Publish the record in a thread
          *
          * @param record
-         *
-         * @return
          */
-        @Override
-        public boolean isLoggable(LogRecord record)
-        {
-            return super.isLoggable(record);
-        }
-
         @Override
         public synchronized void publish(LogRecord record)
         {
@@ -208,13 +250,13 @@ public class LogFactory
         @Override
         public void flush()
         {
-
+            //Nothing Needed
         }
 
         @Override
         public void close() throws SecurityException
         {
-
+            //Nothing Needed
         }
     }
 }

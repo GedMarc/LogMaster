@@ -21,7 +21,7 @@ public class LogFactoryTest
     @Test
     public void testGetInstance()
     {
-        LogFactory.DefaultLevel = Level.FINEST;
+        LogFactory.setDefaultLevel(Level.SEVERE);
         Logger.getGlobal().setUseParentHandlers(false);
         Logger.getGlobal().setLevel(Level.SEVERE);
         Logger.getGlobal().setFilter(new Filter()
