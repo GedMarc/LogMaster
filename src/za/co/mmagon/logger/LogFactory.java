@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017 Marc Magon.
@@ -92,7 +92,7 @@ public class LogFactory
     {
         if (getLogHandles().isEmpty())
         {
-            getLogHandles().add(consoleLogger);
+            // getLogHandles().add(consoleLogger);
         }
         Logger newLog = Logger.getLogger(name);
         for (Handler handler : newLog.getHandlers())
@@ -208,8 +208,7 @@ public class LogFactory
     }
 
     /**
-     * The physical thread the async logger runs through.
-     * Published through the log handles list
+     * The physical thread the async logger runs through. Published through the log handles list
      */
     public class LoggingThread extends Thread
     {
@@ -254,7 +253,7 @@ public class LogFactory
          */
         public AsyncLogger()
         {
-            //Nothing needed to be done on load 
+            //Nothing needed to be done on load
         }
 
         /**
