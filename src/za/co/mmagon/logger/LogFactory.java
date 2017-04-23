@@ -45,7 +45,7 @@ public class LogFactory
     /**
      * The default level for the logging
      */
-    private static Level DefaultLevel = Level.CONFIG;
+    private static Level DefaultLevel = Level.FINE;
     /**
      * The instance of the log factory
      */
