@@ -1,25 +1,18 @@
 /*
- * The MIT License
+ * Copyright (C) 2017 Marc Magon
  *
- * Copyright 2017 Marc Magon.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package za.co.mmagon.logger;
 
@@ -50,6 +43,26 @@ public class LogFactory
      * The instance of the log factory
      */
     private static final LogFactory instance = new LogFactory();
+
+    /**
+     * Returns if the log master is asynchronous
+     *
+     * @return
+     */
+    public static boolean isAsync()
+    {
+        return async;
+    }
+
+    /**
+     * Sets if the log master is asynchronous
+     *
+     * @param async
+     */
+    public static void setAsync(boolean async)
+    {
+        LogFactory.async = async;
+    }
     /**
      * The handler for the console logger
      */
@@ -62,6 +75,11 @@ public class LogFactory
      * The actual async logger
      */
     private final AsyncLogger asyncLogger = new AsyncLogger();
+
+    /**
+     * The asynchronous holder
+     */
+    private static boolean async = false;
 
     /**
      * Hidden log factory constructor
@@ -82,7 +100,8 @@ public class LogFactory
     }
 
     /**
-     * Returns a logger in Async that may or may not log to the console according to configuration
+     * Returns a logger in Async that may or may not log to the console
+     * according to configuration
      *
      * @param name
      *
@@ -95,11 +114,12 @@ public class LogFactory
             // getLogHandles().add(consoleLogger);
         }
         Logger newLog = Logger.getLogger(name);
-        for (Handler handler : newLog.getHandlers())
-        {
+        /*for (Handler handler : newLog.getHandlers()) {
             newLog.removeHandler(handler);
         }
-        newLog.addHandler(asyncLogger);
+        if (async) {
+            newLog.addHandler(asyncLogger);
+        }*/
         newLog.setLevel(DefaultLevel);
 
         return newLog;
@@ -159,7 +179,8 @@ public class LogFactory
     }
 
     /**
-     * Sets the default level on all the loggers currently associated, as well as any future loggers
+     * Sets the default level on all the loggers currently associated, as well
+     * as any future loggers
      *
      * @param DefaultLevel
      */
@@ -208,7 +229,8 @@ public class LogFactory
     }
 
     /**
-     * The physical thread the async logger runs through. Published through the log handles list
+     * The physical thread the async logger runs through. Published through the
+     * log handles list
      */
     public class LoggingThread extends Thread
     {
@@ -235,7 +257,8 @@ public class LogFactory
         @Override
         public void run()
         {
-            logHandles.forEach(next ->
+            logHandles.forEach(next
+                    ->
             {
                 next.publish(logEntry);
             });
