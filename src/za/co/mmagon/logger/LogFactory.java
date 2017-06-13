@@ -16,13 +16,13 @@
  */
 package za.co.mmagon.logger;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 import java.util.logging.*;
 import za.co.mmagon.logger.handlers.ConsoleSTDOutputHandler;
 
 /**
+ * Default handler for java.util.logging framework.
+ *
  *
  * @author GedMarc
  * @since 13 Dec 2016
@@ -100,8 +100,7 @@ public class LogFactory
     }
 
     /**
-     * Returns a logger in Async that may or may not log to the console
-     * according to configuration
+     * Returns a logger in Async that may or may not log to the console according to configuration
      *
      * @param name
      *
@@ -114,12 +113,10 @@ public class LogFactory
             // getLogHandles().add(consoleLogger);
         }
         Logger newLog = Logger.getLogger(name);
-        /*for (Handler handler : newLog.getHandlers()) {
-            newLog.removeHandler(handler);
+        /*
+         * for (Handler handler : newLog.getHandlers()) { newLog.removeHandler(handler); } if (async) { newLog.addHandler(asyncLogger);
         }
-        if (async) {
-            newLog.addHandler(asyncLogger);
-        }*/
+         */
         newLog.setLevel(DefaultLevel);
 
         return newLog;
@@ -179,8 +176,7 @@ public class LogFactory
     }
 
     /**
-     * Sets the default level on all the loggers currently associated, as well
-     * as any future loggers
+     * Sets the default level on all the loggers currently associated, as well as any future loggers
      *
      * @param DefaultLevel
      */
@@ -229,8 +225,7 @@ public class LogFactory
     }
 
     /**
-     * The physical thread the async logger runs through. Published through the
-     * log handles list
+     * The physical thread the async logger runs through. Published through the log handles list
      */
     public class LoggingThread extends Thread
     {
