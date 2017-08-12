@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2017 Marc Magon
+/*
+ * Copyright (C) 2017 Armin Software
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,25 +16,15 @@
  */
 package za.co.mmagon.logger.handlers;
 
-import java.lang.annotation.*;
-
 /**
- * @author GedMarc
- * @since 13 Dec 2016
+ * Defines the output for consoles (not a good idea to have colours and std at the same time)
+ *
+ * @param <J> CRP
+ *
+ * @author Marc Magon
+ * @since 16 Jul 2017
  */
-@Target(
-		{
-				ElementType.FIELD, ElementType.TYPE, ElementType.LOCAL_VARIABLE, ElementType.PACKAGE, ElementType.METHOD, ElementType.TYPE_PARAMETER, ElementType.TYPE_USE
-		})
-@Retention(RetentionPolicy.RUNTIME)
-@Inherited
-public @interface LogMasterHandler
+public interface ConsoleOutput<J extends ConsoleOutput<J>>
 {
 
-	/**
-	 * Returns the name value associated with the handler
-	 *
-	 * @return
-	 */
-	public String value();
 }

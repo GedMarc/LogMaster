@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2017 Marc Magon
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,102 +16,133 @@
  */
 package za.co.mmagon.logger.handlers;
 
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import za.co.mmagon.logger.model.LogEntry;
 
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
+
 /**
+ * standard colour formatter for console output
  *
  * @author GedMarc
  * @since 14 Dec 2016
- *
  */
 public class LogColourFormatter extends java.util.logging.Formatter
 {
+	
+	/**
+	 * Ansi Colour
+	 */
+	public static final String ANSI_RESET = "\u001b[0m";
+	/**
+	 * Ansi Colour
+	 */
+	public static final String ANSI_BLACK = "\u001b[30m";
+	/**
+	 * Ansi Colour
+	 */
+	public static final String ANSI_RED = "\u001b[31m";
+	/**
+	 * Ansi Colour
+	 */
+	public static final String ANSI_GREEN = "\u001b[32m";
+	/**
+	 * Ansi Colour
+	 */
+	public static final String ANSI_YELLOW = "\u001b[33m";
+	/**
+	 * Ansi Colour
+	 */
+	public static final String ANSI_BLUE = "\u001b[34m";
+	/**
+	 * Ansi Colour
+	 */
+	public static final String ANSI_PURPLE = "\u001b[35m";
+	/**
+	 * Ansi Colour
+	 */
+	public static final String ANSI_CYAN = "\u001b[36m";
+	/**
+	 * Ansi Colour
+	 */
+	public static final String ANSI_WHITE = "\u001b[37m";
+	public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
+	public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
+	public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+	public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
+	public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
+	public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
+	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
+	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+	public static boolean INVERTED = true;
 
-    /**
-     * Ansi Colour
-     */
-    public static final String ANSI_RESET = "\u001b[0m";
-    /**
-     * Ansi Colour
-     */
-    public static final String ANSI_BLACK = "\u001b[1;30m";
-    /**
-     * Ansi Colour
-     */
-    public static final String ANSI_RED = "\u001b[1;31m";
-    /**
-     * Ansi Colour
-     */
-    public static final String ANSI_GREEN = "\u001b[0;32m";
-    /**
-     * Ansi Colour
-     */
-    public static final String ANSI_YELLOW = "\u001b[1;33m";
-    /**
-     * Ansi Colour
-     */
-    public static final String ANSI_BLUE = "\u001b[1;34m";
-    /**
-     * Ansi Colour
-     */
-    public static final String ANSI_PURPLE = "\u001b[0;35m";
-    /**
-     * Ansi Colour
-     */
-    public static final String ANSI_CYAN = "\u001b[0;36m";
-    /**
-     * Ansi Colour
-     */
-    public static final String ANSI_WHITE = "\u001b[0;37m";
+	/**
+	 * The log colour formatter
+	 */
+	public LogColourFormatter()
+	{
+		//Nothing needing to be done
+	}
 
-    /**
-     * The log colour formatter
-     */
-    public LogColourFormatter()
-    {
-        //Nothing needing to be done
-    }
-
-    /**
-     * Formats according to level
-     *
-     * @param record
-     *
-     * @return
-     */
-    @Override
-    public String format(LogRecord record)
-    {
-        if (record.getLevel() == Level.FINEST)
-        {
-            return ANSI_WHITE + LogEntry.newEntry(record).toString() + ANSI_RESET;
-        }
-        else if (record.getLevel() == Level.FINER)
-        {
-            return ANSI_YELLOW + LogEntry.newEntry(record).toString() + ANSI_RESET;
-        }
-        else if (record.getLevel() == Level.FINE)
-        {
-            return ANSI_GREEN + LogEntry.newEntry(record).toString() + ANSI_RESET;
-        }
-        else if (record.getLevel() == Level.CONFIG)
-        {
-            return ANSI_CYAN + LogEntry.newEntry(record).toString() + ANSI_RESET;
-        }
-        else if (record.getLevel() == Level.INFO)
-        {
-            return ANSI_BLUE + LogEntry.newEntry(record).toString() + ANSI_RESET;
-        }
-        else if (record.getLevel() == Level.WARNING)
-        {
-            return ANSI_PURPLE + LogEntry.newEntry(record).toString() + ANSI_RESET;
-        }
-        else if (record.getLevel() == Level.SEVERE)
-        {
-            return ANSI_RED + LogEntry.newEntry(record).toString() + ANSI_RESET;
-        }
-        return LogEntry.newEntry(record).toString();
-    }
+	public static void main(String[] args)
+	{
+		Logger log = Logger.getLogger("Test Output");
+		System.out.println("Standard Output");
+		LogManager.getLogManager().getLogger("").addHandler(new ConsoleSTDOutputHandler());
+		System.out.println("Coloured?");
+		log.severe("Coloured?");
+		
+	}
+	
+	/**
+	 * Formats according to level
+	 *
+	 * @param record
+	 *
+	 * @return
+	 */
+	@Override
+	public String format(LogRecord record)
+	{
+		String output = "";
+		if (record.getLevel() == Level.FINEST)
+		{
+			output = ANSI_CYAN
+					+ (INVERTED ? ANSI_BLACK_BACKGROUND : "")
+					+ LogEntry.newEntry(record).toString() + ANSI_RESET;
+		}
+		else if (record.getLevel() == Level.FINER)
+		{
+			output = ANSI_CYAN
+					+ (INVERTED ? ANSI_BLACK_BACKGROUND : "") + LogEntry.newEntry(record).toString() + ANSI_RESET;
+		}
+		else if (record.getLevel() == Level.FINE)
+		{
+			output = ANSI_GREEN
+					+ (INVERTED ? ANSI_BLACK_BACKGROUND : "") + LogEntry.newEntry(record).toString() + ANSI_RESET;
+		}
+		else if (record.getLevel() == Level.CONFIG)
+		{
+			output = ANSI_PURPLE
+					+ (INVERTED ? ANSI_BLACK_BACKGROUND : "") + LogEntry.newEntry(record).toString() + ANSI_RESET;
+		}
+		else if (record.getLevel() == Level.INFO)
+		{
+			output = ANSI_BLUE
+					+ (INVERTED ? ANSI_BLACK_BACKGROUND : "") + LogEntry.newEntry(record).toString() + ANSI_RESET;
+		}
+		else if (record.getLevel() == Level.WARNING)
+		{
+			output = ANSI_YELLOW
+					+ (INVERTED ? ANSI_BLACK_BACKGROUND : "") + LogEntry.newEntry(record).toString() + ANSI_RESET;
+		}
+		else if (record.getLevel() == Level.SEVERE)
+		{
+			output = ANSI_RED
+					+ (INVERTED ? ANSI_BLACK_BACKGROUND : "") + LogEntry.newEntry(record).toString() + ANSI_RESET;
+		}
+		return output + System.getProperty("line.separator");
+	}
 }

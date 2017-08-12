@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2017 Marc Magon
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,32 +16,51 @@
  */
 package za.co.mmagon.logger.handlers;
 
-import java.util.logging.ConsoleHandler;
-import java.util.logging.LogRecord;
 import za.co.mmagon.logger.LogFactory;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+
 /**
- * Logs to the standard output rather than the error output. Provides ansi
- * colours if needed
+ * Logs to the standard output rather than the error output. Provides ansi colours if needed
  *
  * @author GedMarc
- * @since 13 Dec 2016
  * @version 1.0
- *
+ * @since 13 Dec 2016
  */
-public class ConsoleSTDOutputHandler extends ConsoleHandler {
+public class ConsoleSTDOutputHandler extends ConsoleHandler implements ConsoleOutput<ConsoleSTDOutputHandler>
+{
 
-    /**
-     * Construct a new instance of the std output handler
-     */
-    public ConsoleSTDOutputHandler() {
+	/**
+	 * A list of ignored properties per level
+	 */
+	private static final Map<Level, String> levelIgnoredProperties = new HashMap<>();
 
-        setLevel(LogFactory.getDefaultLevel());
-        setOutputStream(System.out);
-        setFilter((LogRecord record)
-                -> {
-            return !(record.getMessage() == null || record.getMessage().isEmpty());
-        });
-        setFormatter(new LogColourFormatter());
-    }
+	/**
+	 * Construct a new instance of the std output handler
+	 */
+	public ConsoleSTDOutputHandler()
+	{
+		setLevel(LogFactory.getDefaultLevel());
+		setOutputStream(System.err);
+		setFilter((LogRecord record)
+				          ->
+		          {
+			          return !(record.getMessage() == null || record.getMessage().isEmpty());
+		          });
+		setFormatter(new LogColourFormatter());
+	}
+
+	/**
+	 * Returns a non-null list of ignored properties rendered per display
+	 *
+	 * @return
+	 */
+	public Map<Level, String> getLevelIgnoredProperties()
+	{
+		return levelIgnoredProperties;
+	}
 }

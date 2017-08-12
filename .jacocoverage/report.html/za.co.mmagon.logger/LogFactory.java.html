@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../.resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/>
+    <title>LogFactory.java</title>
+    <link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../.resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;LogMaster&quot; (powered by JaCoCo
+    from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">za.co.mmagon.logger</a> &gt; <span
+        class="el_source">LogFactory.java</span></div>
+<h1>LogFactory.java</h1>
+<pre class="source lang-java linenums">/*
+ * Copyright (C) 2017 Marc Magon
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package za.co.mmagon.logger;
+
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.logging.*;
+import za.co.mmagon.logger.handlers.ConsoleSTDOutputHandler;
+
+/**
+ *
+ * @author GedMarc
+ * @since 13 Dec 2016
+ *
+ */
+public class LogFactory
+{
+
+    /**
+     * Whether or not to log to the console
+     */
+<span class="fc" id="L37">    private static boolean LogToConsole = true;</span>
+    /**
+     * The default level for the logging
+     */
+<span class="fc" id="L41">    private static Level DefaultLevel = Level.FINE;</span>
+    /**
+     * The instance of the log factory
+     */
+<span class="fc" id="L45">    private static final LogFactory instance = new LogFactory();</span>
+
+    /**
+     * Returns if the log master is asynchronous
+     *
+     * @return
+     */
+    public static boolean isAsync()
+    {
+<span class="nc" id="L54">        return async;</span>
+    }
+
+    /**
+     * Sets if the log master is asynchronous
+     *
+     * @param async
+     */
+    public static void setAsync(boolean async)
+    {
+<span class="nc" id="L64">        LogFactory.async = async;</span>
+<span class="nc" id="L65">    }</span>
+    /**
+     * The handler for the console logger
+     */
+<span class="fc"
+      id="L69">    private final ConsoleSTDOutputHandler consoleLogger = new ConsoleSTDOutputHandler();</span>
+    /**
+     * The log handles that get operated on asynchronously
+     */
+<span class="fc" id="L73">    private final List&lt;Handler&gt; logHandles = new ArrayList&lt;&gt;();</span>
+    /**
+     * The actual async logger
+     */
+<span class="fc" id="L77">    private final AsyncLogger asyncLogger = new AsyncLogger();</span>
+
+    /**
+     * The asynchronous holder
+     */
+<span class="fc" id="L82">    private static boolean async = false;</span>
+
+    /**
+     * Hidden log factory constructor
+     */
+    private LogFactory()
+<span class="fc" id="L88">    {</span>
+        //Nothing needing to be done
+<span class="fc" id="L90">    }</span>
+
+    /**
+     * Returns an instance of the log factory
+     *
+     * @return
+     */
+    public static LogFactory getInstance()
+    {
+<span class="fc" id="L99">        return instance;</span>
+    }
+
+    /**
+     * Returns a logger in Async that may or may not log to the console
+     * according to configuration
+     *
+     * @param name
+     *
+     * @return
+     */
+    public Logger getLogger(String name)
+    {
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">        if (getLogHandles().isEmpty())</span>
+        {
+            // getLogHandles().add(consoleLogger);
+        }
+<span class="fc" id="L116">        Logger newLog = Logger.getLogger(name);</span>
+        /*for (Handler handler : newLog.getHandlers()) {
+            newLog.removeHandler(handler);
+        }
+        if (async) {
+            newLog.addHandler(asyncLogger);
+        }*/
+<span class="fc" id="L123">        newLog.setLevel(DefaultLevel);</span>
+
+<span class="fc" id="L125">        return newLog;</span>
+    }
+
+    /**
+     * Alias for get logger
+     *
+     * @param name
+     *
+     * @return
+     */
+    public static Logger getLog(String name)
+    {
+<span class="nc" id="L137">        return getInstance().getLogger(name);</span>
+    }
+
+    /**
+     * Returns the currently assigned default level
+     *
+     * @return
+     */
+    public static Level getDefaultLevel()
+    {
+
+<span class="fc" id="L148">        return DefaultLevel;</span>
+    }
+
+    /**
+     * If we should ever log to console
+     *
+     * @return
+     */
+    public static boolean isLogToConsole()
+    {
+<span class="nc" id="L158">        return LogToConsole;</span>
+    }
+
+    /**
+     * Returns the console logger
+     *
+     * @return
+     */
+    public ConsoleSTDOutputHandler getConsoleLogger()
+    {
+<span class="nc" id="L168">        return consoleLogger;</span>
+    }
+
+    /**
+     * If we should ever log to console
+     *
+     * @param LogToConsole
+     */
+    public static void setLogToConsole(boolean LogToConsole)
+    {
+<span class="nc" id="L178">        LogFactory.LogToConsole = LogToConsole;</span>
+<span class="nc" id="L179">    }</span>
+
+    /**
+     * Sets the default level on all the loggers currently associated, as well
+     * as any future loggers
+     *
+     * @param DefaultLevel
+     */
+    public static void setDefaultLevel(Level DefaultLevel)
+    {
+<span class="fc" id="L189">        LogFactory.DefaultLevel = DefaultLevel;</span>
+<span class="fc" id="L190">        Enumeration&lt;String&gt; loggs = LogManager.getLogManager().getLoggerNames();</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">        while (loggs.hasMoreElements())</span>
+        {
+<span class="fc" id="L193">            String logName = loggs.nextElement();</span>
+<span class="fc" id="L194">            LogManager.getLogManager().getLogger(logName).setLevel(DefaultLevel);</span>
+<span class="fc" id="L195">        }</span>
+<span class="fc" id="L196">    }</span>
+
+    /**
+     * Returns a list of all the current log handlers the async logger triggers
+     *
+     * @return
+     */
+    public List&lt;Handler&gt; getLogHandles()
+    {
+<span class="fc" id="L205">        return logHandles;</span>
+    }
+
+    /**
+     * Adds a log handler to the collection
+     *
+     * @param handler
+     *
+     * @return
+     */
+    public Handler addLogHandler(Handler handler)
+    {
+<span class="nc" id="L217">        logHandles.add(handler);</span>
+<span class="nc" id="L218">        return handler;</span>
+    }
+
+    /**
+     * Returns a direct reference to the async logger
+     *
+     * @return
+     */
+    public AsyncLogger getAsyncLogger()
+    {
+<span class="nc" id="L228">        return asyncLogger;</span>
+    }
+
+    /**
+     * The physical thread the async logger runs through. Published through the
+     * log handles list
+     */
+    public class LoggingThread extends Thread
+    {
+
+        /**
+         * The log record coming in
+         */
+        private final LogRecord logEntry;
+
+        /**
+         * A new log thread created from a log record
+         *
+         * @param logEntry
+         */
+        public LoggingThread(LogRecord logEntry)
+<span class="nc" id="L249">        {</span>
+<span class="nc" id="L250">            super(&quot;LoggingThread&quot;);</span>
+<span class="nc" id="L251">            this.logEntry = logEntry;</span>
+<span class="nc" id="L252">        }</span>
+
+        /**
+         * Publish to each log handler
+         */
+        @Override
+        public void run()
+        {
+<span class="nc" id="L260">            logHandles.forEach(next</span>
+                    -&gt;
+            {
+<span class="nc" id="L263">                next.publish(logEntry);</span>
+<span class="nc" id="L264">            });</span>
+<span class="nc" id="L265">        }</span>
+    }
+
+    /**
+     * The Async Log Handler
+     */
+    public class AsyncLogger extends java.util.logging.Handler
+    {
+
+        /**
+         * Default construction
+         */
+        public AsyncLogger()
+<span class="fc" id="L278">        {</span>
+            //Nothing needed to be done on load
+<span class="fc" id="L280">        }</span>
+
+        /**
+         * Publish the record in a thread
+         *
+         * @param record
+         */
+        @Override
+        public synchronized void publish(LogRecord record)
+        {
+<span class="nc" id="L290">            LoggingThread thread = new LoggingThread(record);</span>
+<span class="nc" id="L291">            thread.start();</span>
+<span class="nc" id="L292">            flush();</span>
+<span class="nc" id="L293">        }</span>
+
+        @Override
+        public void flush()
+        {
+            //Nothing Needed
+<span class="nc" id="L299">        }</span>
+
+        @Override
+        public void close()
+        {
+            //Nothing Needed
+<span class="nc" id="L305">        }</span>
+    }
+}
+</pre>
+<div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>
+</div>
+</body>
+</html>

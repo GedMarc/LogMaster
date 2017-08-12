@@ -1,5 +1,5 @@
-/* 
- * Copyright (C) 2017 Marc Magon
+/*
+ * Copyright (C) 2017 Armin Software
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,27 +14,57 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package za.co.mmagon.logger.handlers;
-
-import java.lang.annotation.*;
+package za.co.mmagon.logger.model;
 
 /**
- * @author GedMarc
- * @since 13 Dec 2016
+ * @author Marc Magon
+ * @since 16 Jul 2017
  */
-@Target(
-		{
-				ElementType.FIELD, ElementType.TYPE, ElementType.LOCAL_VARIABLE, ElementType.PACKAGE, ElementType.METHOD, ElementType.TYPE_PARAMETER, ElementType.TYPE_USE
-		})
-@Retention(RetentionPolicy.RUNTIME)
-@Inherited
-public @interface LogMasterHandler
+public enum LogProperties
 {
+	Level("Level"),
+	Date,
+	Message,
+	Name,
+	Method,
+	Class,
+	Exception("\nException");
+	/**
+	 * Any sub data
+	 */
+	private String data;
 
 	/**
-	 * Returns the name value associated with the handler
+	 * A new LogProperties
+	 */
+	private LogProperties()
+	{
+
+	}
+
+	/**
+	 * A new LogProperties with data
+	 */
+	private LogProperties(String data)
+	{
+
+	}
+
+	/**
+	 * Returns the name or the data contained within
 	 *
 	 * @return
 	 */
-	public String value();
+	@Override
+	public String toString()
+	{
+		if (data != null && !data.isEmpty())
+		{
+			return data;
+		}
+		else
+		{
+			return name();
+		}
+	}
 }

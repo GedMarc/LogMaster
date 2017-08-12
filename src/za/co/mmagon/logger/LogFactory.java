@@ -16,287 +16,331 @@
  */
 package za.co.mmagon.logger;
 
-import java.util.*;
-import java.util.logging.*;
 import za.co.mmagon.logger.handlers.ConsoleSTDOutputHandler;
+
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.logging.*;
 
 /**
  * Default handler for java.util.logging framework.
  *
- *
  * @author GedMarc
  * @since 13 Dec 2016
- *
  */
 public class LogFactory
 {
 
-    /**
-     * Whether or not to log to the console
-     */
-    private static boolean LogToConsole = true;
-    /**
-     * The default level for the logging
-     */
-    private static Level DefaultLevel = Level.FINE;
-    /**
-     * The instance of the log factory
-     */
-    private static final LogFactory instance = new LogFactory();
+	/**
+	 * The instance of the log factory
+	 */
+	private static final LogFactory instance = new LogFactory();
+	/**
+	 * Whether or not to log to the console
+	 */
+	private static boolean LogToConsole = true;
+	/**
+	 * The default level for the logging
+	 */
+	private static Level DefaultLevel = Level.FINE;
+	/**
+	 * The asynchronous holder
+	 */
+	private static boolean async = true;
+	/**
+	 * The handler for the console logger
+	 */
+	private final ConsoleSTDOutputHandler consoleLogger = new ConsoleSTDOutputHandler();
+	/**
+	 * The log handles that get operated on asynchronously
+	 */
+	private final List<Handler> logHandles = new ArrayList<>();
+	/**
+	 * The actual async logger
+	 */
+	private final AsyncLogger asyncLogger = new AsyncLogger();
+	
+	/**
+	 * Hidden log factory constructor
+	 */
+	private LogFactory()
+	{
+		Enumeration<String> enums = LogManager.getLogManager().getLoggerNames();
+		while (enums.hasMoreElements())
+		{
+			String nextElement = enums.nextElement();
+			for (Handler handler : LogManager.getLogManager().getLogger(nextElement).getHandlers())
+			{
+				//LogManager.getLogManager().getLogger(nextElement).removeHandler(handler);
+				if (isLogToConsole())
+				{
+					LogManager.getLogManager().getLogger(nextElement).addHandler(consoleLogger);
+				}
+			}
+		}
+	}
 
-    /**
-     * Returns if the log master is asynchronous
-     *
-     * @return
-     */
-    public static boolean isAsync()
-    {
-        return async;
-    }
+	/**
+	 * Returns if the log master is asynchronous
+	 *
+	 * @return
+	 */
+	public static boolean isAsync()
+	{
+		return async;
+	}
 
-    /**
-     * Sets if the log master is asynchronous
-     *
-     * @param async
-     */
-    public static void setAsync(boolean async)
-    {
-        LogFactory.async = async;
-    }
-    /**
-     * The handler for the console logger
-     */
-    private final ConsoleSTDOutputHandler consoleLogger = new ConsoleSTDOutputHandler();
-    /**
-     * The log handles that get operated on asynchronously
-     */
-    private final List<Handler> logHandles = new ArrayList<>();
-    /**
-     * The actual async logger
-     */
-    private final AsyncLogger asyncLogger = new AsyncLogger();
+	/**
+	 * Sets if the log master is asynchronous
+	 *
+	 * @param async
+	 */
+	public static void setAsync(boolean async)
+	{
+		LogFactory.async = async;
+	}
 
-    /**
-     * The asynchronous holder
-     */
-    private static boolean async = false;
+	/**
+	 * Returns an instance of the log factory
+	 *
+	 * @return
+	 */
+	public static LogFactory getInstance()
+	{
+		return instance;
+	}
 
-    /**
-     * Hidden log factory constructor
-     */
-    private LogFactory()
-    {
-        //Nothing needing to be done
-    }
+	/**
+	 * Alias for get logger
+	 *
+	 * @param name
+	 *
+	 * @return
+	 */
+	public static Logger getLog(String name)
+	{
+		return getInstance().getLogger(name);
+	}
 
-    /**
-     * Returns an instance of the log factory
-     *
-     * @return
-     */
-    public static LogFactory getInstance()
-    {
-        return instance;
-    }
+	/**
+	 * Returns the currently assigned default level
+	 *
+	 * @return
+	 */
+	public static Level getDefaultLevel()
+	{
 
-    /**
-     * Returns a logger in Async that may or may not log to the console according to configuration
-     *
-     * @param name
-     *
-     * @return
-     */
-    public Logger getLogger(String name)
-    {
-        if (getLogHandles().isEmpty())
-        {
-            // getLogHandles().add(consoleLogger);
-        }
-        Logger newLog = Logger.getLogger(name);
+		return DefaultLevel;
+	}
+
+	/**
+	 * Sets the default level on all the loggers currently associated, as well as any future loggers
+	 *
+	 * @param DefaultLevel
+	 */
+	public static void setDefaultLevel(Level DefaultLevel)
+	{
+		LogFactory.DefaultLevel = DefaultLevel;
+
+		Enumeration<String> enums = LogManager.getLogManager().getLoggerNames();
+		while (enums.hasMoreElements())
+		{
+			String nextElement = enums.nextElement();
+			for (Handler handler : LogManager.getLogManager().getLogger(nextElement).getHandlers())
+			{
+				handler.setLevel(DefaultLevel);
+			}
+		}
+
+		if (async)
+		{
+			instance.getLogHandles().forEach(logHandle ->
+			                                 {
+				                                 logHandle.setLevel(DefaultLevel);
+			                                 });
+		}
+	}
+
+	/**
+	 * If we should ever log to console
+	 *
+	 * @return
+	 */
+	public static boolean isLogToConsole()
+	{
+		return LogToConsole;
+	}
+
+	/**
+	 * If we should ever log to console
+	 *
+	 * @param LogToConsole
+	 */
+	public static void setLogToConsole(boolean LogToConsole)
+	{
+		LogFactory.LogToConsole = LogToConsole;
+	}
+
+	/**
+	 * Returns the console logger
+	 *
+	 * @return
+	 */
+	public ConsoleSTDOutputHandler getConsoleLogger()
+	{
+		return consoleLogger;
+	}
+
+	/**
+	 * Returns a logger in Async that may or may not log to the console according to configuration
+	 *
+	 * @param name
+	 *
+	 * @return
+	 */
+	public Logger getLogger(String name)
+	{
+		if (getLogHandles().isEmpty())
+		{
+			// getLogHandles().add(consoleLogger);
+		}
+		Logger newLog = Logger.getLogger(name);
+		newLog.setUseParentHandlers(false);
+		if (isLogToConsole())
+		{
+			if (!async)
+			{
+				newLog.addHandler(new ConsoleSTDOutputHandler());
+			}
+			else
+			{
+
+			}
+		}
         /*
-         * for (Handler handler : newLog.getHandlers()) { newLog.removeHandler(handler); } if (async) { newLog.addHandler(asyncLogger);
-        }
+         * for (Handler handler : newLog.getHandlers()) { newLog.removeHandler(handler); } if (async) { newLog.addHandler(asyncLogger); }
          */
-        newLog.setLevel(DefaultLevel);
+		newLog.setLevel(DefaultLevel);
 
-        return newLog;
-    }
+		return newLog;
+	}
 
-    /**
-     * Alias for get logger
-     *
-     * @param name
-     *
-     * @return
-     */
-    public static Logger getLog(String name)
-    {
-        return getInstance().getLogger(name);
-    }
+	/**
+	 * Returns a list of all the current log handlers the async logger triggers
+	 *
+	 * @return
+	 */
+	public List<Handler> getLogHandles()
+	{
+		return logHandles;
+	}
 
-    /**
-     * Returns the currently assigned default level
-     *
-     * @return
-     */
-    public static Level getDefaultLevel()
-    {
+	/**
+	 * Adds a log handler to the collection
+	 *
+	 * @param handler
+	 *
+	 * @return
+	 */
+	public Handler addLogHandler(Handler handler)
+	{
+		logHandles.add(handler);
+		return handler;
+	}
 
-        return DefaultLevel;
-    }
+	/**
+	 * Returns a direct reference to the async logger
+	 *
+	 * @return
+	 */
+	public AsyncLogger getAsyncLogger()
+	{
+		return asyncLogger;
+	}
 
-    /**
-     * If we should ever log to console
-     *
-     * @return
-     */
-    public static boolean isLogToConsole()
-    {
-        return LogToConsole;
-    }
+	/**
+	 * The physical thread the async logger runs through. Published through the log handles list
+	 */
+	public class LoggingThread extends Thread
+	{
 
-    /**
-     * Returns the console logger
-     *
-     * @return
-     */
-    public ConsoleSTDOutputHandler getConsoleLogger()
-    {
-        return consoleLogger;
-    }
+		/**
+		 * The log record coming in
+		 */
+		private final LogRecord logEntry;
 
-    /**
-     * If we should ever log to console
-     *
-     * @param LogToConsole
-     */
-    public static void setLogToConsole(boolean LogToConsole)
-    {
-        LogFactory.LogToConsole = LogToConsole;
-    }
+		/**
+		 * A new log thread created from a log record
+		 *
+		 * @param logEntry
+		 */
+		public LoggingThread(LogRecord logEntry)
+		{
+			super("LoggingThread");
+			this.logEntry = logEntry;
+		}
 
-    /**
-     * Sets the default level on all the loggers currently associated, as well as any future loggers
-     *
-     * @param DefaultLevel
-     */
-    public static void setDefaultLevel(Level DefaultLevel)
-    {
-        LogFactory.DefaultLevel = DefaultLevel;
-        Enumeration<String> loggs = LogManager.getLogManager().getLoggerNames();
-        while (loggs.hasMoreElements())
-        {
-            String logName = loggs.nextElement();
-            LogManager.getLogManager().getLogger(logName).setLevel(DefaultLevel);
-        }
-    }
+		/**
+		 * Publish to each log handler
+		 */
+		@Override
+		public void run()
+		{
+			logHandles.forEach(next
+					                   ->
+			                   {
+				                   next.publish(logEntry);
+			                   });
+		}
+	}
 
-    /**
-     * Returns a list of all the current log handlers the async logger triggers
-     *
-     * @return
-     */
-    public List<Handler> getLogHandles()
-    {
-        return logHandles;
-    }
+	/**
+	 * The Async Log Handler
+	 */
+	public class AsyncLogger extends java.util.logging.Handler
+	{
 
-    /**
-     * Adds a log handler to the collection
-     *
-     * @param handler
-     *
-     * @return
-     */
-    public Handler addLogHandler(Handler handler)
-    {
-        logHandles.add(handler);
-        return handler;
-    }
+		private LoggingThread thread;
 
-    /**
-     * Returns a direct reference to the async logger
-     *
-     * @return
-     */
-    public AsyncLogger getAsyncLogger()
-    {
-        return asyncLogger;
-    }
+		/**
+		 * Default construction
+		 */
+		public AsyncLogger()
+		{
+			//Nothing needed to be done on load
+		}
 
-    /**
-     * The physical thread the async logger runs through. Published through the log handles list
-     */
-    public class LoggingThread extends Thread
-    {
+		/**
+		 * Publish the record in a thread
+		 *
+		 * @param record
+		 */
+		@Override
+		public synchronized void publish(LogRecord record)
+		{
+			thread = new LoggingThread(record);
+			thread.start();
+			flush();
+		}
 
-        /**
-         * The log record coming in
-         */
-        private final LogRecord logEntry;
+		@Override
+		public void flush()
+		{
+			//Nothing Needed
+		}
 
-        /**
-         * A new log thread created from a log record
-         *
-         * @param logEntry
-         */
-        public LoggingThread(LogRecord logEntry)
-        {
-            super("LoggingThread");
-            this.logEntry = logEntry;
-        }
-
-        /**
-         * Publish to each log handler
-         */
-        @Override
-        public void run()
-        {
-            logHandles.forEach(next
-                    ->
-            {
-                next.publish(logEntry);
-            });
-        }
-    }
-
-    /**
-     * The Async Log Handler
-     */
-    public class AsyncLogger extends java.util.logging.Handler
-    {
-
-        /**
-         * Default construction
-         */
-        public AsyncLogger()
-        {
-            //Nothing needed to be done on load
-        }
-
-        /**
-         * Publish the record in a thread
-         *
-         * @param record
-         */
-        @Override
-        public synchronized void publish(LogRecord record)
-        {
-            LoggingThread thread = new LoggingThread(record);
-            thread.start();
-            flush();
-        }
-
-        @Override
-        public void flush()
-        {
-            //Nothing Needed
-        }
-
-        @Override
-        public void close()
-        {
-            //Nothing Needed
-        }
-    }
+		@Override
+		public void close()
+		{
+			if (thread != null)
+			{
+				if (thread.isAlive())
+				{
+					thread.destroy();
+				}
+			}
+		}
+	}
+	
 }
