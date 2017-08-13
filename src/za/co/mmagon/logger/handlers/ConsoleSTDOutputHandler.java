@@ -45,7 +45,7 @@ public class ConsoleSTDOutputHandler extends ConsoleHandler implements ConsoleOu
 	public ConsoleSTDOutputHandler()
 	{
 		setLevel(LogFactory.getDefaultLevel());
-		setOutputStream(System.err);
+		setOutputStream(System.out);
 		setFilter((LogRecord record)
 				          ->
 		          {

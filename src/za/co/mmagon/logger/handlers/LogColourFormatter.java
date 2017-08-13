@@ -76,7 +76,8 @@ public class LogColourFormatter extends java.util.logging.Formatter
 	public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
-	public static boolean INVERTED = true;
+	
+	public static boolean INVERTED = false;
 
 	/**
 	 * The log colour formatter
@@ -93,7 +94,6 @@ public class LogColourFormatter extends java.util.logging.Formatter
 		LogManager.getLogManager().getLogger("").addHandler(new ConsoleSTDOutputHandler());
 		System.out.println("Coloured?");
 		log.severe("Coloured?");
-		
 	}
 	
 	/**

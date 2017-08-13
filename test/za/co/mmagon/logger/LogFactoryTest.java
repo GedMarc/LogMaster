@@ -1,9 +1,11 @@
 package za.co.mmagon.logger;
 
 import org.junit.Test;
+import za.co.mmagon.logger.handlers.ConsoleSTDOutputHandler;
 import za.co.mmagon.logger.model.LogEntry;
 
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 /**
@@ -19,9 +21,9 @@ public class LogFactoryTest
 	@Test
 	public void testGetInstance()
 	{
-		LogFactory.setDefaultLevel(Level.FINEST);
+		LogFactory.setDefaultLevel(Level.ALL);
 		Logger log = LogFactory.getLog("TestLog");
-		log.setLevel(Level.FINEST);
+		log.setLevel(Level.ALL);
 		log.severe("Severe Message");
 		log.config("========================================================================");
 		log.warning("This is a warning message");
@@ -50,7 +52,7 @@ public class LogFactoryTest
 	public void testColourOutput()
 	{
 		Logger log = LogFactory.getInstance().getLogger("Colour Test");
-		//LogManager.getLogManager().getLogger("").addHandler(new ConsoleSTDOutputHandler());
+		LogManager.getLogManager().getLogger("").addHandler(new ConsoleSTDOutputHandler());
 		log.severe("Coloured Severe");
 	}
 }
