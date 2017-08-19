@@ -1,5 +1,0 @@
-projectKey=za.co.mmagon.logging
-serverUrl=http://arminhost:9000
-dashboardUrl=http://arminhost:9000/dashboard/index/za.co.mmagon.logging
-ceTaskId=AV1Loh8C8kr51LW4vEdf
-ceTaskUrl=http://arminhost:9000/api/ce/task?id=AV1Loh8C8kr51LW4vEdf

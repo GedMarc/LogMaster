@@ -72,11 +72,20 @@ public class LogFactory
 		while (enums.hasMoreElements())
 		{
 			String nextElement = enums.nextElement();
-			for (Handler handler : LogManager.getLogManager().getLogger(nextElement).getHandlers())
+			if (nextElement != null)
 			{
-				if (isLogToConsole())
+				try
 				{
-					LogManager.getLogManager().getLogger(nextElement).addHandler(consoleLogger);
+					for (Handler handler : LogManager.getLogManager().getLogger(nextElement).getHandlers())
+					{
+						if (isLogToConsole())
+						{
+							LogManager.getLogManager().getLogger(nextElement).addHandler(consoleLogger);
+						}
+					}
+				}catch(NullPointerException npe)
+				{
+				
 				}
 			}
 		}
@@ -212,7 +221,7 @@ public class LogFactory
 		{
 			// getLogHandles().add(consoleLogger);
 		}
-		newLog.setUseParentHandlers(true);
+		newLog.setUseParentHandlers(false);
 		if (isLogToConsole())
 		{
 			if (!async)
