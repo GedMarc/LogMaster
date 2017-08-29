@@ -109,7 +109,7 @@ public class LogColourFormatter extends java.util.logging.Formatter
 		String output = "";
 		if (record.getLevel() == Level.FINEST)
 		{
-			output = ANSI_CYAN
+			output = ANSI_RED
 					+ (INVERTED ? ANSI_BLACK_BACKGROUND : "")
 					+ LogEntry.newEntry(record).toString() + ANSI_RESET;
 		}
@@ -130,7 +130,7 @@ public class LogColourFormatter extends java.util.logging.Formatter
 		}
 		else if (record.getLevel() == Level.INFO)
 		{
-			output = ANSI_BLUE
+			output = ANSI_GREEN
 					+ (INVERTED ? ANSI_BLACK_BACKGROUND : "") + LogEntry.newEntry(record).toString() + ANSI_RESET;
 		}
 		else if (record.getLevel() == Level.WARNING)
@@ -142,6 +142,19 @@ public class LogColourFormatter extends java.util.logging.Formatter
 		{
 			output = ANSI_RED
 					+ (INVERTED ? ANSI_BLACK_BACKGROUND : "") + LogEntry.newEntry(record).toString() + ANSI_RESET;
+		}
+		
+		if(record.getParameters() != null && record.getParameters().length > 0)
+		{
+			for (int n = 0; n < record.getParameters().length;n++)
+			{
+				Object o = record.getParameters()[n];
+				if(o == null)
+					continue;
+				String replace = "\\{" + n + "\\}";
+				String replacable = o.toString();
+				output = output.replaceAll(replace,replacable);
+			}
 		}
 		return output + System.getProperty("line.separator");
 	}
