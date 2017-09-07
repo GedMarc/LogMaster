@@ -49,7 +49,7 @@ public class LogFactory
 	/**
 	 * The asynchronous holder
 	 */
-	private static boolean async = true;
+	private static boolean async = false;
 	/**
 	 * The handler for the console logger
 	 */
