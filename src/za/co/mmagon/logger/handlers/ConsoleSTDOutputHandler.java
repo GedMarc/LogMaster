@@ -16,6 +16,7 @@
  */
 package za.co.mmagon.logger.handlers;
 
+import com.armineasy.injection.LogColourFormatter;
 import za.co.mmagon.logger.LogFactory;
 
 import java.util.HashMap;
