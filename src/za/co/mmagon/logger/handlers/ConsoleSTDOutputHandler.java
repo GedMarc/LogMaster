@@ -16,7 +16,7 @@
  */
 package za.co.mmagon.logger.handlers;
 
-import com.armineasy.injection.LogColourFormatter;
+import com.armineasy.injection.LogSingleLineFormatter;
 import za.co.mmagon.logger.LogFactory;
 
 import java.util.HashMap;
@@ -34,12 +34,12 @@ import java.util.logging.LogRecord;
  */
 public class ConsoleSTDOutputHandler extends ConsoleHandler implements ConsoleOutput<ConsoleSTDOutputHandler>
 {
-
+	
 	/**
 	 * A list of ignored properties per level
 	 */
 	private static final Map<Level, String> levelIgnoredProperties = new HashMap<>();
-
+	
 	/**
 	 * Construct a new instance of the std output handler
 	 */
@@ -52,9 +52,9 @@ public class ConsoleSTDOutputHandler extends ConsoleHandler implements ConsoleOu
 		          {
 			          return !(record.getMessage() == null || record.getMessage().isEmpty());
 		          });
-		setFormatter(new LogColourFormatter());
+		setFormatter(new LogSingleLineFormatter());
 	}
-
+	
 	/**
 	 * Returns a non-null list of ignored properties rendered per display
 	 *

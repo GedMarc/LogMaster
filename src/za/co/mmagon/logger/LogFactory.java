@@ -69,7 +69,7 @@ public class LogFactory
 	private LogFactory()
 	{
 		Enumeration<String> enums = LogManager.getLogManager().getLoggerNames();
-		while (enums.hasMoreElements())
+		/*while (enums.hasMoreElements())
 		{
 			String nextElement = enums.nextElement();
 			if (nextElement != null)
@@ -88,7 +88,7 @@ public class LogFactory
 				
 				}
 			}
-		}
+		}*/
 	}
 	
 	/**
@@ -212,10 +212,10 @@ public class LogFactory
 	{
 		
 		Logger newLog = Logger.getLogger(name);
-		if (isLogToConsole())
+		/*if (isLogToConsole())
 		{
 			newLog.addHandler(new ConsoleSTDOutputHandler());
-		}
+		}*/
 		
 		if (getLogHandles().isEmpty())
 		{
@@ -226,7 +226,7 @@ public class LogFactory
 		{
 			if (!async)
 			{
-				newLog.addHandler(new ConsoleSTDOutputHandler());
+				//newLog.addHandler(new ConsoleSTDOutputHandler());
 			}
 			else
 			{

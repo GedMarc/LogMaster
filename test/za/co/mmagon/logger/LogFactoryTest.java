@@ -33,7 +33,6 @@ public class LogFactoryTest
 		log.config("========================================================================");
 		log.fine("This is a fine message"); //not printing
 		log.config("========================================================================");
-		log.fine("Is it the fine?");
 		LogEntry le = LogEntry.newEntry().setMessage("Check the formmating");
 		log.finest(le.getMessage());
 
