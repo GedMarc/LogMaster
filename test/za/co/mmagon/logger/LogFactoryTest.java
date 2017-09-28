@@ -1,6 +1,6 @@
 package za.co.mmagon.logger;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import za.co.mmagon.logger.handlers.ConsoleSTDOutputHandler;
 import za.co.mmagon.logger.model.LogEntry;
 
