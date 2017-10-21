@@ -34,12 +34,12 @@ import java.util.logging.LogRecord;
  */
 public class ConsoleSTDOutputHandler extends ConsoleHandler implements ConsoleOutput<ConsoleSTDOutputHandler>
 {
-	
+
 	/**
 	 * A list of ignored properties per level
 	 */
 	private static final Map<Level, String> levelIgnoredProperties = new HashMap<>();
-	
+
 	/**
 	 * Construct a new instance of the std output handler
 	 */
@@ -47,14 +47,12 @@ public class ConsoleSTDOutputHandler extends ConsoleHandler implements ConsoleOu
 	{
 		setLevel(LogFactory.getDefaultLevel());
 		setOutputStream(System.out);
-		setFilter((LogRecord record)
-				          ->
-		          {
-			          return !(record.getMessage() == null || record.getMessage().isEmpty());
-		          });
+		setFilter((LogRecord record) ->
+				          !(record.getMessage() == null || record.getMessage().isEmpty())
+		         );
 		setFormatter(new LogSingleLineFormatter());
 	}
-	
+
 	/**
 	 * Returns a non-null list of ignored properties rendered per display
 	 *

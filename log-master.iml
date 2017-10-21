@@ -50,8 +50,4 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-guice:2.8.9" level="project" />
     <orderEntry type="library" name="Maven: javax.cache:cache-api:1.0.0" level="project" />
   </component>
-  <component name="sonarModuleSettings">
-    <option name="localAnalysisScripName" value="&lt;PROJECT&gt;" />
-    <option name="serverName" value="&lt;PROJECT&gt;" />
-  </component>
 </module>
