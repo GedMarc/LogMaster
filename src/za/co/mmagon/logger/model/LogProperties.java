@@ -37,7 +37,7 @@ public enum LogProperties
 	/**
 	 * A new LogProperties
 	 */
-	private LogProperties()
+	LogProperties()
 	{
 
 	}
@@ -45,7 +45,7 @@ public enum LogProperties
 	/**
 	 * A new LogProperties with data
 	 */
-	private LogProperties(String data)
+	LogProperties(String data)
 	{
 
 	}

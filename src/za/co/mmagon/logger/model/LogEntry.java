@@ -45,7 +45,7 @@ public class LogEntry implements Serializable
 	/**
 	 * A list of the properties to display with each entry
 	 */
-	private static final Map<LogProperties, Boolean> displayedProperties = new HashMap<>();
+	private static final Map<LogProperties, Boolean> displayedProperties = new EnumMap<LogProperties, Boolean>();
 	private static final List<String> exceptionHighlightedPackages = new ArrayList<>();
 	/**
 	 * The date formatter of this log entry
@@ -117,7 +117,8 @@ public class LogEntry implements Serializable
 	/**
 	 * Creates a new log entry with all global properties attached
 	 *
-	 * @param record A log record produced by java logging
+	 * @param record
+	 * 		A log record produced by java logging
 	 *
 	 * @return
 	 */
@@ -170,12 +171,14 @@ public class LogEntry implements Serializable
 	{
 		return PROPERTY_PATTERN;
 	}
-	
+
 	/**
 	 * Pads a property field or value by so many digits
 	 *
-	 * @param s the string
-	 * @param n number of digits
+	 * @param s
+	 * 		the string
+	 * @param n
+	 * 		number of digits
 	 *
 	 * @return
 	 */
@@ -183,12 +186,14 @@ public class LogEntry implements Serializable
 	{
 		return String.format("%-" + n + "s", s);
 	}
-	
+
 	/**
 	 * Pads the property field or value by the number
 	 *
-	 * @param s the string
-	 * @param n the number of chars to
+	 * @param s
+	 * 		the string
+	 * @param n
+	 * 		the number of chars to
 	 *
 	 * @return
 	 */
@@ -417,7 +422,7 @@ public class LogEntry implements Serializable
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns the properties map form this log entry
 	 *
@@ -438,5 +443,25 @@ public class LogEntry implements Serializable
 			props.put(m.group(1), m.group(2));
 		}
 		return props;
+	}
+
+	/**
+	 * Configuration for the log properties that are displayed
+	 *
+	 * @return
+	 */
+	public static Map<LogProperties, Boolean> getDisplayedProperties()
+	{
+		return displayedProperties;
+	}
+
+	/**
+	 * Exception packages that get highlighted
+	 *
+	 * @return
+	 */
+	public static List<String> getExceptionHighlightedPackages()
+	{
+		return exceptionHighlightedPackages;
 	}
 }
