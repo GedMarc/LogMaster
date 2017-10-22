@@ -45,7 +45,13 @@ public class LogEntry implements Serializable
 	/**
 	 * A list of the properties to display with each entry
 	 */
-	private static final Map<LogProperties, Boolean> displayedProperties = new EnumMap<LogProperties, Boolean>();
+	private static final Map<LogProperties, Boolean> displayedProperties;
+
+	static
+	{
+		displayedProperties = new EnumMap<>(LogProperties.class);
+	}
+
 	private static final List<String> exceptionHighlightedPackages = new ArrayList<>();
 	/**
 	 * The date formatter of this log entry

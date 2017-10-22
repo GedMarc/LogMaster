@@ -296,13 +296,6 @@ public class LogFactory
 		@Override
 		public void close()
 		{
-			if (thread != null)
-			{
-				if (thread.isAlive())
-				{
-					thread.destroy();
-				}
-			}
 		}
 	}
 
