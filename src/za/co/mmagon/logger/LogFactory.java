@@ -296,6 +296,7 @@ public class LogFactory
 		@Override
 		public void close()
 		{
+			//Nothing needed
 		}
 	}
 

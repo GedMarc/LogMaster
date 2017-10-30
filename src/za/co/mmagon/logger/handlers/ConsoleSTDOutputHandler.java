@@ -43,6 +43,7 @@ public class ConsoleSTDOutputHandler extends ConsoleHandler implements ConsoleOu
 	/**
 	 * Construct a new instance of the std output handler
 	 */
+	@SuppressWarnings("all")
 	public ConsoleSTDOutputHandler()
 	{
 		setLevel(LogFactory.getDefaultLevel());
