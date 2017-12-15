@@ -16,7 +16,7 @@
  */
 package za.co.mmagon.logger.handlers;
 
-import za.co.mmagon.guiceinjection.LogSingleLineFormatter;
+import za.co.mmagon.guiceinjection.logging.LogSingleLineFormatter;
 import za.co.mmagon.logger.LogFactory;
 
 import java.util.HashMap;
