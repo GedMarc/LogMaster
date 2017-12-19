@@ -11,10 +11,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="guice-injection" />
-    <orderEntry type="module" module-name="guice-injection" scope="TEST" production-on-test="" />
-    <orderEntry type="module" module-name="guice-injection" />
-    <orderEntry type="module" module-name="guice-injection" scope="TEST" production-on-test="" />
-    <orderEntry type="module" module-name="guice-injection" />
     <orderEntry type="library" name="Maven: io.github.lukehutch:fast-classpath-scanner:2.9.3" level="project" />
     <orderEntry type="library" name="Maven: com.jcabi:jcabi-aspects:0.22.6" level="project" />
     <orderEntry type="library" name="Maven: com.jcabi:jcabi-log:0.17" level="project" />
