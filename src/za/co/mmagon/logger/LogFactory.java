@@ -187,7 +187,7 @@ public class LogFactory
 	public Logger getLogger(String name)
 	{
 		Logger newLog = Logger.getLogger(name);
-		newLog.setUseParentHandlers(false);
+		newLog.setUseParentHandlers(true);
 		newLog.setLevel(DefaultLevel);
 
 		return newLog;
