@@ -16,6 +16,7 @@
  */
 package za.co.mmagon.logger.handlers;
 
+import za.co.mmagon.guiceinjection.logging.LogColourFormatter;
 import za.co.mmagon.guiceinjection.logging.LogSingleLineFormatter;
 import za.co.mmagon.logger.LogFactory;
 
@@ -52,6 +53,20 @@ public class ConsoleSTDOutputHandler extends ConsoleHandler implements ConsoleOu
 				          !(record.getMessage() == null || record.getMessage().isEmpty())
 		         );
 		setFormatter(new LogSingleLineFormatter());
+	}
+
+	/**
+	 * Construct a new instance of the std output handler
+	 */
+	@SuppressWarnings("all")
+	public ConsoleSTDOutputHandler(boolean coloured)
+	{
+		setLevel(LogFactory.getDefaultLevel());
+		setOutputStream(System.out);
+		setFilter((LogRecord record) ->
+				          record != null && !(record.getMessage() == null || record.getMessage().isEmpty())
+		         );
+		setFormatter(new LogColourFormatter());
 	}
 
 	/**
