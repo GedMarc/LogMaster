@@ -131,11 +131,14 @@ public class LogFactory
 	{
 		LogFactory.DefaultLevel = DefaultLevel;
 
-		Enumeration<String> enums = LogManager.getLogManager().getLoggerNames();
+		Enumeration<String> enums = LogManager.getLogManager()
+				                            .getLoggerNames();
 		while (enums.hasMoreElements())
 		{
 			String nextElement = enums.nextElement();
-			for (Handler handler : LogManager.getLogManager().getLogger(nextElement).getHandlers())
+			for (Handler handler : LogManager.getLogManager()
+					                       .getLogger(nextElement)
+					                       .getHandlers())
 			{
 				handler.setLevel(DefaultLevel);
 			}
@@ -143,7 +146,8 @@ public class LogFactory
 
 		if (async)
 		{
-			instance.getLogHandles().forEach(logHandle -> logHandle.setLevel(DefaultLevel));
+			instance.getLogHandles()
+					.forEach(logHandle -> logHandle.setLevel(DefaultLevel));
 		}
 	}
 
@@ -189,7 +193,6 @@ public class LogFactory
 		Logger newLog = Logger.getLogger(name);
 		newLog.setUseParentHandlers(true);
 		newLog.setLevel(DefaultLevel);
-
 		return newLog;
 	}
 
