@@ -16,9 +16,9 @@
  */
 package za.co.mmagon.logger.handlers;
 
-import za.co.mmagon.guiceinjection.logging.LogColourFormatter;
-import za.co.mmagon.guiceinjection.logging.LogSingleLineFormatter;
 import za.co.mmagon.logger.LogFactory;
+import za.co.mmagon.logger.logging.LogColourFormatter;
+import za.co.mmagon.logger.logging.LogSingleLineFormatter;
 
 import java.util.HashMap;
 import java.util.Map;
