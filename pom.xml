@@ -25,7 +25,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <src.dir>src</src.dir>
-        <test.dir>test</test.dir><additionalparam>-Xdoclint:none</additionalparam>
+        <test.dir>test</test.dir>
+        <additionalparam>-Xdoclint:none</additionalparam>
         <maven.jar.version>3.0.2</maven.jar.version>
         <maven.dependency.version>3.0.1</maven.dependency.version>
         <maven.javadoc.version>2.10.4</maven.javadoc.version>
@@ -129,7 +130,7 @@
     </distributionManagement>
     <organization>
         <name>Marc Magon</name>
-        <url>http://jwebswing.com</url>
+        <url>http://jwebmp.com</url>
     </organization>
     <scm>
         <url>https://github.com/GedMarc?tab=repositories</url>
@@ -141,7 +142,7 @@
     </issueManagement>
     <ciManagement>
         <system>TeamCity</system>
-        <url>http://jwebswing.com/teamcity</url>
+        <url>http://jwebmp.com/teamcity</url>
     </ciManagement>
     <reporting>
         <plugins>
