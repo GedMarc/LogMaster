@@ -51,8 +51,6 @@
     <build>
         <sourceDirectory>${src.dir}</sourceDirectory>
         <testSourceDirectory>${test.dir}</testSourceDirectory>
-        <finalName>log-master</finalName>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
