@@ -194,13 +194,16 @@ public class LogFactory
 		while (enums.hasMoreElements())
 		{
 			String nextElement = enums.nextElement();
-			for (Handler handler : LogManager.getLogManager()
-			                                 .getLogger(nextElement)
-			                                 .getHandlers())
+			Logger logger = LogManager.getLogManager()
+			                          .getLogger(nextElement);
+			if (logger != null)
 			{
-				if (handler != null)
+				for (Handler handler : logger.getHandlers())
 				{
-					handler.setLevel(DefaultLevel);
+					if (handler != null)
+					{
+						handler.setLevel(DefaultLevel);
+					}
 				}
 			}
 		}
