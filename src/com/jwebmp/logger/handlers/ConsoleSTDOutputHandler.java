@@ -42,6 +42,7 @@ public class ConsoleSTDOutputHandler
 	 * A list of ignored properties per level
 	 */
 	private static final Map<Level, String> levelIgnoredProperties = new HashMap<>();
+	private static final LogColourFormatter logFormatter = new LogColourFormatter();
 
 	/**
 	 * Construct a new instance of the std output handler
@@ -66,7 +67,12 @@ public class ConsoleSTDOutputHandler
 		setOutputStream(System.out);
 		setFilter((LogRecord record) -> record != null && !(record.getMessage() == null || record.getMessage()
 		                                                                                         .isEmpty()));
-		setFormatter(new LogColourFormatter());
+		setFormatter(logFormatter);
+	}
+
+	public static LogColourFormatter getLogFormatter()
+	{
+		return logFormatter;
 	}
 
 	/**

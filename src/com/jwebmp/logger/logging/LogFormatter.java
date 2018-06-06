@@ -19,7 +19,7 @@ abstract class LogFormatter
 			{
 				t.printStackTrace(pw);
 			}
-			output.append(LogColourFormatter.ANSI_RESET);
+			output.append(LogColourFormatter.getAnsiReset());
 			output.append(sw.toString());
 		}
 		return output;

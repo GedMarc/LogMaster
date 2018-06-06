@@ -29,52 +29,53 @@ import java.util.logging.LogRecord;
 public class LogColourFormatter
 		extends LogFormatter
 {
+	private static String ANSI_RED_BACKGROUND = "\u001B[41m";
+	private static String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+	private static String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
+	private static String ANSI_BLUE_BACKGROUND = "\u001B[44m";
+	private static String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
+	private static String ANSI_CYAN_BACKGROUND = "\u001B[46m";
+	private static String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 	/**
 	 * Ansi Colour
 	 */
-	public static final String ANSI_RESET = "\u001b[0m";
+	private static String ANSI_RESET = "\u001b[0m";
 	/**
 	 * Ansi Colour
 	 */
-	public static final String ANSI_BLACK = "\u001b[30m";
+	private static String ANSI_BLACK = "\u001b[30m";
 	/**
 	 * Ansi Colour
 	 */
-	public static final String ANSI_RED = "\u001b[31m";
+	private static String ANSI_RED = "\u001b[31m";
 	/**
 	 * Ansi Colour
 	 */
-	public static final String ANSI_GREEN = "\u001b[32m";
+	private static String ANSI_GREEN = "\u001b[32m";
 	/**
 	 * Ansi Colour
 	 */
-	public static final String ANSI_YELLOW = "\u001b[33m";
+	private static String ANSI_YELLOW = "\u001b[33m";
 	/**
 	 * Ansi Colour
 	 */
-	public static final String ANSI_BLUE = "\u001b[34m";
+	private static String ANSI_BLUE = "\u001b[34m";
 	/**
 	 * Ansi Colour
 	 */
-	public static final String ANSI_PURPLE = "\u001b[35m";
+	private static String ANSI_PURPLE = "\u001b[35m";
 	/**
 	 * Ansi Colour
 	 */
-	public static final String ANSI_CYAN = "\u001b[36m";
+	private static String ANSI_CYAN = "\u001b[36m";
 	/**
 	 * Ansi Colour
 	 */
-	public static final String ANSI_WHITE = "\u001b[37m";
-	public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
-	public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
-	public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
-	public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
-	public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
-	public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
-	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
-	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+	private static String ANSI_WHITE = "\u001b[37m";
+	private static String ANSI_BLACK_BACKGROUND = "\u001B[40m";
 
 	private static boolean INVERTED = false;
+	private static boolean renderBlack = true;
 
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
 
@@ -86,14 +87,194 @@ public class LogColourFormatter
 		//Nothing needing to be done
 	}
 
-	public static boolean isINVERTED()
+	public static boolean isInverted()
 	{
 		return INVERTED;
 	}
 
-	public static void setINVERTED(boolean INVERTED)
+	public static void setInverted(boolean INVERTED)
 	{
 		LogColourFormatter.INVERTED = INVERTED;
+	}
+
+	public static boolean isRenderBlack()
+	{
+		return renderBlack;
+	}
+
+	public static void setRenderBlack(boolean renderBlack)
+	{
+		LogColourFormatter.renderBlack = renderBlack;
+	}
+
+	public static String getAnsiRedBackground()
+	{
+		return ANSI_RED_BACKGROUND;
+	}
+
+	public static void setAnsiRedBackground(String ansiRedBackground)
+	{
+		ANSI_RED_BACKGROUND = ansiRedBackground;
+	}
+
+	public static String getAnsiGreenBackground()
+	{
+		return ANSI_GREEN_BACKGROUND;
+	}
+
+	public static void setAnsiGreenBackground(String ansiGreenBackground)
+	{
+		ANSI_GREEN_BACKGROUND = ansiGreenBackground;
+	}
+
+	public static String getAnsiYellowBackground()
+	{
+		return ANSI_YELLOW_BACKGROUND;
+	}
+
+	public static void setAnsiYellowBackground(String ansiYellowBackground)
+	{
+		ANSI_YELLOW_BACKGROUND = ansiYellowBackground;
+	}
+
+	public static String getAnsiBlueBackground()
+	{
+		return ANSI_BLUE_BACKGROUND;
+	}
+
+	public static void setAnsiBlueBackground(String ansiBlueBackground)
+	{
+		ANSI_BLUE_BACKGROUND = ansiBlueBackground;
+	}
+
+	public static String getAnsiPurpleBackground()
+	{
+		return ANSI_PURPLE_BACKGROUND;
+	}
+
+	public static void setAnsiPurpleBackground(String ansiPurpleBackground)
+	{
+		ANSI_PURPLE_BACKGROUND = ansiPurpleBackground;
+	}
+
+	public static String getAnsiCyanBackground()
+	{
+		return ANSI_CYAN_BACKGROUND;
+	}
+
+	public static void setAnsiCyanBackground(String ansiCyanBackground)
+	{
+		ANSI_CYAN_BACKGROUND = ansiCyanBackground;
+	}
+
+	public static String getAnsiWhiteBackground()
+	{
+		return ANSI_WHITE_BACKGROUND;
+	}
+
+	public static void setAnsiWhiteBackground(String ansiWhiteBackground)
+	{
+		ANSI_WHITE_BACKGROUND = ansiWhiteBackground;
+	}
+
+	public static String getAnsiReset()
+	{
+		return ANSI_RESET;
+	}
+
+	public static void setAnsiReset(String ansiReset)
+	{
+		ANSI_RESET = ansiReset;
+	}
+
+	public static String getAnsiBlack()
+	{
+		return ANSI_BLACK;
+	}
+
+	public static void setAnsiBlack(String ansiBlack)
+	{
+		ANSI_BLACK = ansiBlack;
+	}
+
+	public static String getAnsiRed()
+	{
+		return ANSI_RED;
+	}
+
+	public static void setAnsiRed(String ansiRed)
+	{
+		ANSI_RED = ansiRed;
+	}
+
+	public static String getAnsiGreen()
+	{
+		return ANSI_GREEN;
+	}
+
+	public static void setAnsiGreen(String ansiGreen)
+	{
+		ANSI_GREEN = ansiGreen;
+	}
+
+	public static String getAnsiYellow()
+	{
+		return ANSI_YELLOW;
+	}
+
+	public static void setAnsiYellow(String ansiYellow)
+	{
+		ANSI_YELLOW = ansiYellow;
+	}
+
+	public static String getAnsiBlue()
+	{
+		return ANSI_BLUE;
+	}
+
+	public static void setAnsiBlue(String ansiBlue)
+	{
+		ANSI_BLUE = ansiBlue;
+	}
+
+	public static String getAnsiPurple()
+	{
+		return ANSI_PURPLE;
+	}
+
+	public static void setAnsiPurple(String ansiPurple)
+	{
+		ANSI_PURPLE = ansiPurple;
+	}
+
+	public static String getAnsiCyan()
+	{
+		return ANSI_CYAN;
+	}
+
+	public static void setAnsiCyan(String ansiCyan)
+	{
+		ANSI_CYAN = ansiCyan;
+	}
+
+	public static String getAnsiWhite()
+	{
+		return ANSI_WHITE;
+	}
+
+	public static void setAnsiWhite(String ansiWhite)
+	{
+		ANSI_WHITE = ansiWhite;
+	}
+
+	public static String getAnsiBlackBackground()
+	{
+		return ANSI_BLACK_BACKGROUND;
+	}
+
+	public static void setAnsiBlackBackground(String ansiBlackBackground)
+	{
+		ANSI_BLACK_BACKGROUND = ansiBlackBackground;
 	}
 
 	/**
@@ -117,37 +298,40 @@ public class LogColourFormatter
 		if (!INVERTED)
 		{
 			output += ANSI_WHITE;
-			output += ANSI_BLACK_BACKGROUND;
+			if (renderBlack)
+			{
+				output += ANSI_BLACK_BACKGROUND;
+			}
 		}
 		output += "[" + sdf.format(record.getMillis()) + "]-";
 
 		if (record.getLevel() == Level.FINEST)
 		{
-			output += ANSI_RED + ANSI_BLACK_BACKGROUND + record.getMessage();
+			output += ANSI_RED + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
 		}
 		else if (record.getLevel() == Level.FINER)
 		{
-			output += ANSI_CYAN + ANSI_BLACK_BACKGROUND + record.getMessage();
+			output += ANSI_CYAN + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
 		}
 		else if (record.getLevel() == Level.FINE)
 		{
-			output += ANSI_BLUE + ANSI_BLACK_BACKGROUND + record.getMessage();
+			output += ANSI_BLUE + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
 		}
 		else if (record.getLevel() == Level.CONFIG)
 		{
-			output += ANSI_PURPLE + ANSI_BLACK_BACKGROUND + record.getMessage();
+			output += ANSI_PURPLE + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
 		}
 		else if (record.getLevel() == Level.INFO)
 		{
-			output += ANSI_GREEN + ANSI_BLACK_BACKGROUND + record.getMessage();
+			output += ANSI_GREEN + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
 		}
 		else if (record.getLevel() == Level.WARNING)
 		{
-			output += ANSI_YELLOW + ANSI_BLACK_BACKGROUND + record.getMessage();
+			output += ANSI_YELLOW + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
 		}
 		else if (record.getLevel() == Level.SEVERE)
 		{
-			output += ANSI_RED + ANSI_BLACK_BACKGROUND + record.getMessage();
+			output += ANSI_RED + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
 		}
 		output += printException(record).toString();
 		output = processParameters(output, record);
@@ -168,18 +352,17 @@ public class LogColourFormatter
 			if (record.getThrown() == null)
 			{
 				output += ANSI_RESET;
-				output += ANSI_BLACK_BACKGROUND;
+				output += (renderBlack ? ANSI_BLACK_BACKGROUND : "");
 				output += ANSI_WHITE;
 
 			}
 			else
 			{
-				output += ANSI_BLACK;
+				output += (renderBlack ? ANSI_BLACK_BACKGROUND : "");
 			}
 		}
 		return output;
 	}
-
 
 	public SimpleDateFormat getSdf()
 	{

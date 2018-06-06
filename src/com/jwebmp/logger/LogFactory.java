@@ -71,7 +71,7 @@ public class LogFactory
 		//No config
 	}
 
-	public static void configureConsoleColourOutput(Level outputLevel)
+	public static ConsoleSTDOutputHandler configureConsoleColourOutput(Level outputLevel)
 	{
 		Handler[] handles = Logger.getLogger("")
 		                          .getHandlers();
@@ -83,8 +83,10 @@ public class LogFactory
 			}
 		}
 		LogFactory.setDefaultLevel(outputLevel);
+		ConsoleSTDOutputHandler outputHandler = new ConsoleSTDOutputHandler(true);
 		Logger.getLogger("")
-		      .addHandler(new ConsoleSTDOutputHandler(true));
+		      .addHandler(outputHandler);
+		return outputHandler;
 	}
 
 	/**
