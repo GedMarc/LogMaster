@@ -1,12 +1,11 @@
-package za.co.mmagon.logger.logging;
+package com.jwebmp.logger.logging;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.logging.LogRecord;
 
-import static za.co.mmagon.logger.logging.LogColourFormatter.ANSI_RESET;
-
-abstract class LogFormatter extends java.util.logging.Formatter
+abstract class LogFormatter
+		extends java.util.logging.Formatter
 {
 
 	StringBuilder printException(LogRecord record)
@@ -20,7 +19,7 @@ abstract class LogFormatter extends java.util.logging.Formatter
 			{
 				t.printStackTrace(pw);
 			}
-			output.append(ANSI_RESET);
+			output.append(LogColourFormatter.ANSI_RESET);
 			output.append(sw.toString());
 		}
 		return output;

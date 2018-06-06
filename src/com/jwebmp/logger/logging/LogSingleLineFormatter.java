@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package za.co.mmagon.logger.logging;
+package com.jwebmp.logger.logging;
 
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
@@ -26,7 +26,8 @@ import java.util.logging.LogRecord;
  * @author GedMarc
  * @since 14 Dec 2016
  */
-public class LogSingleLineFormatter extends LogFormatter
+public class LogSingleLineFormatter
+		extends LogFormatter
 {
 	/**
 	 * Ansi Colour
@@ -53,13 +54,13 @@ public class LogSingleLineFormatter extends LogFormatter
 	public String format(LogRecord record)
 	{
 		if (record.getMessage() == null || record.getMessage()
-				                                   .trim()
-				                                   .isEmpty())
+		                                         .trim()
+		                                         .isEmpty())
 		{
 			return "";
 		}
 		if (record.getMessage()
-				    .contains("visiting unvisited references"))
+		          .contains("visiting unvisited references"))
 		{
 			return "";
 		}
@@ -70,50 +71,50 @@ public class LogSingleLineFormatter extends LogFormatter
 		String message = "";
 
 		if (record.getLevel()
-				    .getLocalizedName()
-				    .equals(Level.FINEST.getLocalizedName()))
+		          .getLocalizedName()
+		          .equals(Level.FINEST.getLocalizedName()))
 		{
 			message += record.getMessage();
 		}
 		else if (record.getLevel()
-				         .getLocalizedName()
-				         .equals(Level.FINER.getLocalizedName()))
+		               .getLocalizedName()
+		               .equals(Level.FINER.getLocalizedName()))
 		{
 			message += record.getMessage();
 		}
 		else if (record.getLevel()
-				         .getLocalizedName()
-				         .equals(Level.FINE.getLocalizedName()))
+		               .getLocalizedName()
+		               .equals(Level.FINE.getLocalizedName()))
 		{
 			message += record.getMessage();
 		}
 		else if (record.getLevel()
-				         .getLocalizedName()
-				         .equals(Level.CONFIG.getLocalizedName()))
+		               .getLocalizedName()
+		               .equals(Level.CONFIG.getLocalizedName()))
 		{
 			message += record.getMessage();
 		}
 		else if (record.getLevel()
-				         .getLocalizedName()
-				         .equals(Level.INFO.getLocalizedName()))
+		               .getLocalizedName()
+		               .equals(Level.INFO.getLocalizedName()))
 		{
 			message += record.getMessage();
 		}
 		else if (record.getLevel()
-				         .getLocalizedName()
-				         .equals(Level.WARNING.getLocalizedName()))
+		               .getLocalizedName()
+		               .equals(Level.WARNING.getLocalizedName()))
 		{
 			message += record.getMessage();
 		}
 		else if (record.getLevel()
-				         .getLocalizedName()
-				         .equals(Level.SEVERE.getLocalizedName()))
+		               .getLocalizedName()
+		               .equals(Level.SEVERE.getLocalizedName()))
 		{
 			message += record.getMessage();
 		}
 
 		if (message.trim()
-				    .isEmpty())
+		           .isEmpty())
 		{
 			return "";
 		}
@@ -124,7 +125,7 @@ public class LogSingleLineFormatter extends LogFormatter
 
 		output += " - ";
 		output += "[" + record.getLevel()
-				                .getLocalizedName() + "]";
+		                      .getLocalizedName() + "]";
 		return output + System.getProperty("line.separator");
 	}
 }

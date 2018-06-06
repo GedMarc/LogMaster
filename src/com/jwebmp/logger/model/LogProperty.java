@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package za.co.mmagon.logger.model;
+package com.jwebmp.logger.model;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -25,7 +25,8 @@ import java.util.Objects;
  * @author GedMarc
  * @since Nov 22, 2016
  */
-public class LogProperty implements Serializable
+public class LogProperty
+		implements Serializable
 {
 
 	private static final long serialVersionUID = 1L;
@@ -75,8 +76,10 @@ public class LogProperty implements Serializable
 	/**
 	 * Returns a new log entry property and all registered global properties in the log factory
 	 *
-	 * @param name  The name of the property (usually message)
-	 * @param value The value of the property
+	 * @param name
+	 * 		The name of the property (usually message)
+	 * @param value
+	 * 		The value of the property
 	 *
 	 * @return The new log property
 	 */
@@ -86,6 +89,44 @@ public class LogProperty implements Serializable
 		props.setPropertyName(name);
 		props.setPropertyValue(value);
 		return props;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int hash = 3;
+		hash = 59 * hash + Objects.hashCode(propertyName);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+		{
+			return true;
+		}
+		if (obj == null)
+		{
+			return false;
+		}
+		if (getClass() != obj.getClass())
+		{
+			return false;
+		}
+		LogProperty other = (LogProperty) obj;
+		return Objects.equals(propertyName, other.propertyName);
+	}
+
+	/**
+	 * Returns a square bracket display of the properties
+	 *
+	 * @return
+	 */
+	@Override
+	public String toString()
+	{
+		return "[" + getPropertyName() + "]-[" + getPropertyValue() + "];";
 	}
 
 	/**
@@ -126,43 +167,5 @@ public class LogProperty implements Serializable
 	public void setPropertyValue(String propertyValue)
 	{
 		this.propertyValue = propertyValue;
-	}
-
-	@Override
-	public int hashCode()
-	{
-		int hash = 3;
-		hash = 59 * hash + Objects.hashCode(this.propertyName);
-		return hash;
-	}
-
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-		{
-			return true;
-		}
-		if (obj == null)
-		{
-			return false;
-		}
-		if (getClass() != obj.getClass())
-		{
-			return false;
-		}
-		final LogProperty other = (LogProperty) obj;
-		return Objects.equals(this.propertyName, other.propertyName);
-	}
-
-	/**
-	 * Returns a square bracket display of the properties
-	 *
-	 * @return
-	 */
-	@Override
-	public String toString()
-	{
-		return "[" + getPropertyName() + "]-[" + getPropertyValue() + "];";
 	}
 }

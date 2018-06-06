@@ -1,8 +1,8 @@
-package za.co.mmagon.logger;
+package com.jwebmp.logger;
 
+import com.jwebmp.logger.handlers.ConsoleSTDOutputHandler;
+import com.jwebmp.logger.model.LogEntry;
 import org.junit.jupiter.api.Test;
-import za.co.mmagon.logger.handlers.ConsoleSTDOutputHandler;
-import za.co.mmagon.logger.model.LogEntry;
 
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -33,7 +33,8 @@ public class LogFactoryTest
 		log.config("========================================================================");
 		log.fine("This is a fine message"); //not printing
 		log.config("========================================================================");
-		LogEntry le = LogEntry.newEntry().setMessage("Check the formmating");
+		LogEntry le = LogEntry.newEntry()
+		                      .setMessage("Check the formmating");
 		log.finest(le.getMessage());
 
 		log.config("========================================================================");
@@ -50,8 +51,11 @@ public class LogFactoryTest
 	@Test
 	public void testColourOutput()
 	{
-		Logger log = LogFactory.getInstance().getLogger("Colour Test");
-		LogManager.getLogManager().getLogger("").addHandler(new ConsoleSTDOutputHandler());
+		Logger log = LogFactory.getInstance()
+		                       .getLogger("Colour Test");
+		LogManager.getLogManager()
+		          .getLogger("")
+		          .addHandler(new ConsoleSTDOutputHandler());
 		log.severe("Coloured Severe");
 	}
 }

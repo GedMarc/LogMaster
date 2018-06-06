@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package za.co.mmagon.logger.handlers;
+package com.jwebmp.logger.handlers;
 
-import za.co.mmagon.logger.LogFactory;
-import za.co.mmagon.logger.logging.LogColourFormatter;
-import za.co.mmagon.logger.logging.LogSingleLineFormatter;
+import com.jwebmp.logger.LogFactory;
+import com.jwebmp.logger.logging.LogColourFormatter;
+import com.jwebmp.logger.logging.LogSingleLineFormatter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +33,9 @@ import java.util.logging.LogRecord;
  * @version 1.0
  * @since 13 Dec 2016
  */
-public class ConsoleSTDOutputHandler extends ConsoleHandler implements ConsoleOutput<ConsoleSTDOutputHandler>
+public class ConsoleSTDOutputHandler
+		extends ConsoleHandler
+		implements ConsoleOutput<ConsoleSTDOutputHandler>
 {
 
 	/**
@@ -49,9 +51,8 @@ public class ConsoleSTDOutputHandler extends ConsoleHandler implements ConsoleOu
 	{
 		setLevel(LogFactory.getDefaultLevel());
 		setOutputStream(System.out);
-		setFilter((LogRecord record) ->
-				          !(record.getMessage() == null || record.getMessage().isEmpty())
-		         );
+		setFilter((LogRecord record) -> !(record.getMessage() == null || record.getMessage()
+		                                                                       .isEmpty()));
 		setFormatter(new LogSingleLineFormatter());
 	}
 
@@ -63,9 +64,8 @@ public class ConsoleSTDOutputHandler extends ConsoleHandler implements ConsoleOu
 	{
 		setLevel(LogFactory.getDefaultLevel());
 		setOutputStream(System.out);
-		setFilter((LogRecord record) ->
-				          record != null && !(record.getMessage() == null || record.getMessage().isEmpty())
-		         );
+		setFilter((LogRecord record) -> record != null && !(record.getMessage() == null || record.getMessage()
+		                                                                                         .isEmpty()));
 		setFormatter(new LogColourFormatter());
 	}
 

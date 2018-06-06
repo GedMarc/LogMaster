@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package za.co.mmagon.logger.logging;
+package com.jwebmp.logger.logging;
 
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
@@ -26,7 +26,8 @@ import java.util.logging.LogRecord;
  * @author GedMarc
  * @since 14 Dec 2016
  */
-public class LogColourFormatter extends LogFormatter
+public class LogColourFormatter
+		extends LogFormatter
 {
 	/**
 	 * Ansi Colour
@@ -106,8 +107,8 @@ public class LogColourFormatter extends LogFormatter
 	public String format(LogRecord record)
 	{
 		if (record.getMessage() == null || record.getMessage()
-				                                   .trim()
-				                                   .isEmpty())
+		                                         .trim()
+		                                         .isEmpty())
 		{
 			return null;
 		}
@@ -155,7 +156,7 @@ public class LogColourFormatter extends LogFormatter
 		output += " - ";
 
 		output += "[" + record.getLevel()
-				                .getLocalizedName() + "]";
+		                      .getLocalizedName() + "]";
 
 		return output + System.getProperty("line.separator");
 	}

@@ -14,57 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package za.co.mmagon.logger.model;
+package com.jwebmp.logger.model;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Marc Magon
- * @since 16 Jul 2017
  */
-public enum LogProperties
+public class LogEntryTest
 {
-	Level("Level"),
-	Date,
-	Message,
-	Name,
-	Method,
-	Class,
-	Exception("\nException");
-	/**
-	 * Any sub data
-	 */
-	private String data;
 
-	/**
-	 * A new LogProperties
-	 */
-	LogProperties()
+	public LogEntryTest()
 	{
+	}
+
+	@Test
+	public void testEntry()
+	{
+		LogEntry le = LogEntry.newEntry();
+		System.out.println(le); //mustn't print
 
 	}
 
-	/**
-	 * A new LogProperties with data
-	 */
-	LogProperties(String data)
-	{
-
-	}
-
-	/**
-	 * Returns the name or the data contained within
-	 *
-	 * @return
-	 */
-	@Override
-	public String toString()
-	{
-		if (data != null && !data.isEmpty())
-		{
-			return data;
-		}
-		else
-		{
-			return name();
-		}
-	}
 }
