@@ -10,7 +10,6 @@
 
     <artifactId>log-master</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.0_0-SNAPSHOT</version>
 
     <name>Log Master</name>
     <description>Provides Asynchronous and Dynamic Log Handler support for JDK1.8 logging API.
