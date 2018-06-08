@@ -291,6 +291,7 @@ public class LogColourFormatter
 		                                         .trim()
 		                                         .isEmpty())
 		{
+			System.out.println("No Record Message");
 			return null;
 		}
 
@@ -338,6 +339,10 @@ public class LogColourFormatter
 		output = processInverted(output, record);
 
 		output += " - ";
+		if (output.equalsIgnoreCase(" - "))
+		{
+			output += "Empty Log?";
+		}
 
 		output += "[" + record.getLevel()
 		                      .getLocalizedName() + "]";
