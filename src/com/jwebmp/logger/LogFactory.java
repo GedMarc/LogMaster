@@ -18,9 +18,9 @@ package com.jwebmp.logger;
 
 import com.jwebmp.logger.handlers.ConsoleSTDOutputHandler;
 
-import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.*;
 
 import static java.util.logging.Level.*;
@@ -57,7 +57,7 @@ public class LogFactory
 	/**
 	 * The log handles that get operated on asynchronously
 	 */
-	private final List<Handler> logHandles = new ArrayList<>();
+	private final Set<Handler> logHandles = new HashSet<>();
 	/**
 	 * The actual async logger
 	 */
@@ -73,20 +73,27 @@ public class LogFactory
 
 	public static ConsoleSTDOutputHandler configureConsoleColourOutput(Level outputLevel)
 	{
+		instance.reloadHandlers();
+		LogFactory.setDefaultLevel(outputLevel);
+		ConsoleSTDOutputHandler.getInstance()
+		                       .setColoured(true)
+		                       .setLevel(outputLevel);
+		instance.logHandles.add(ConsoleSTDOutputHandler.getInstance());
+		return ConsoleSTDOutputHandler.getInstance();
+	}
+
+	private void reloadHandlers()
+	{
 		Handler[] handles = Logger.getLogger("")
 		                          .getHandlers();
+		instance.logHandles.clear();
 		for (Handler handle : handles)
 		{
 			if (handle != null)
 			{
-				handle.setLevel(outputLevel);
+				instance.logHandles.add(handle);
 			}
 		}
-		LogFactory.setDefaultLevel(outputLevel);
-		ConsoleSTDOutputHandler outputHandler = new ConsoleSTDOutputHandler(true);
-		Logger.getLogger("")
-		      .addHandler(outputHandler);
-		return outputHandler;
 	}
 
 	/**
@@ -94,9 +101,20 @@ public class LogFactory
 	 *
 	 * @return
 	 */
-	public List<Handler> getLogHandles()
+	public Set<Handler> getLogHandles()
 	{
 		return logHandles;
+	}
+
+	public static ConsoleSTDOutputHandler configureConsoleSingleLineOutput(Level outputLevel)
+	{
+		instance.reloadHandlers();
+		LogFactory.setDefaultLevel(outputLevel);
+		ConsoleSTDOutputHandler.getInstance()
+		                       .setColoured(false)
+		                       .setLevel(outputLevel);
+		instance.logHandles.add(ConsoleSTDOutputHandler.getInstance());
+		return ConsoleSTDOutputHandler.getInstance();
 	}
 
 	/**
@@ -154,22 +172,6 @@ public class LogFactory
 	public static LogFactory getInstance()
 	{
 		return instance;
-	}
-
-	public static void configureConsoleSingleLineOutput(Level outputLevel)
-	{
-		Handler[] handles = Logger.getLogger("")
-		                          .getHandlers();
-		for (Handler handle : handles)
-		{
-			if (handle != null)
-			{
-				handle.setLevel(outputLevel);
-			}
-		}
-		LogFactory.setDefaultLevel(outputLevel);
-		Logger.getLogger("")
-		      .addHandler(new ConsoleSTDOutputHandler());
 	}
 
 	/**

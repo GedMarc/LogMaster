@@ -8,7 +8,7 @@
         <version>0.0.0_0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>log-master</artifactId>
+    <artifactId>guiced-log-master</artifactId>
     <packaging>jar</packaging>
 
     <name>Log Master</name>

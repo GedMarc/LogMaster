@@ -19,10 +19,13 @@ package com.jwebmp.logger.handlers;
 import com.jwebmp.logger.LogFactory;
 import com.jwebmp.logger.logging.LogColourFormatter;
 import com.jwebmp.logger.logging.LogSingleLineFormatter;
+import com.sun.istack.internal.Nullable;
 
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.ConsoleHandler;
+import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -38,11 +41,16 @@ public class ConsoleSTDOutputHandler
 		implements ConsoleOutput<ConsoleSTDOutputHandler>
 {
 
+	private static final ConsoleSTDOutputHandler instance = new ConsoleSTDOutputHandler();
+
 	/**
 	 * A list of ignored properties per level
 	 */
 	private static final Map<Level, String> levelIgnoredProperties = new HashMap<>();
-	private static final LogColourFormatter logFormatter = new LogColourFormatter();
+	private Formatter logFormatter = new LogColourFormatter();
+
+	private boolean coloured;
+	private Level level;
 
 	/**
 	 * Construct a new instance of the std output handler
@@ -50,11 +58,7 @@ public class ConsoleSTDOutputHandler
 	@SuppressWarnings("all")
 	public ConsoleSTDOutputHandler()
 	{
-		setLevel(LogFactory.getDefaultLevel());
-		setOutputStream(System.out);
-		setFilter((LogRecord record) -> !(record.getMessage() == null || record.getMessage()
-		                                                                       .isEmpty()));
-		setFormatter(new LogSingleLineFormatter());
+		this(false);
 	}
 
 	/**
@@ -64,15 +68,23 @@ public class ConsoleSTDOutputHandler
 	public ConsoleSTDOutputHandler(boolean coloured)
 	{
 		setLevel(LogFactory.getDefaultLevel());
-		setOutputStream(System.out);
-		setFilter((LogRecord record) -> record != null && !(record.getMessage() == null || record.getMessage()
-		                                                                                         .isEmpty()));
-		setFormatter(logFormatter);
+		setColoured(coloured);
 	}
 
-	public static LogColourFormatter getLogFormatter()
+	public static Formatter getLogFormatter()
 	{
-		return logFormatter;
+		return instance.logFormatter;
+	}
+
+	public void setLogFormatter(Formatter logFormatter)
+	{
+		this.logFormatter = logFormatter;
+
+	}
+
+	public static ConsoleSTDOutputHandler getInstance()
+	{
+		return instance;
 	}
 
 	/**
@@ -84,4 +96,62 @@ public class ConsoleSTDOutputHandler
 	{
 		return levelIgnoredProperties;
 	}
+
+	public void configure(@Nullable OutputStream outputStream, Formatter logFormmater, Level level)
+	{
+		if (outputStream != null)
+		{
+			setOutputStream(outputStream);
+		}
+		setFilter((LogRecord record) -> record != null && !(record.getMessage() == null || record.getMessage()
+		                                                                                         .isEmpty()));
+		logFormatter = logFormmater;
+		setLevel(level);
+	}
+
+	public boolean isColoured()
+	{
+		return coloured;
+	}
+
+	public ConsoleSTDOutputHandler setColoured(boolean coloured)
+	{
+		this.coloured = coloured;
+		if (coloured)
+		{
+			logFormatter = new LogColourFormatter();
+		}
+		else
+		{
+			logFormatter = new LogSingleLineFormatter();
+		}
+		return this;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj == null)
+		{
+			return false;
+		}
+		return obj.getClass()
+		          .getCanonicalName()
+		          .equals(getClass().getCanonicalName());
+	}
+
+	@Override
+	public Level getLevel()
+	{
+		return level;
+	}
+
+	@Override
+	public void setLevel(Level level)
+	{
+		this.level = level;
+		super.setLevel(level);
+	}
+
+
 }
