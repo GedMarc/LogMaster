@@ -19,7 +19,6 @@ package com.jwebmp.logger.handlers;
 import com.jwebmp.logger.LogFactory;
 import com.jwebmp.logger.logging.LogColourFormatter;
 import com.jwebmp.logger.logging.LogSingleLineFormatter;
-import com.sun.istack.internal.Nullable;
 
 import java.io.OutputStream;
 import java.util.HashMap;
@@ -97,7 +96,7 @@ public class ConsoleSTDOutputHandler
 		return levelIgnoredProperties;
 	}
 
-	public void configure(@Nullable OutputStream outputStream, Formatter logFormmater, Level level)
+	public void configure(OutputStream outputStream, Formatter logFormmater, Level level)
 	{
 		if (outputStream != null)
 		{
