@@ -55,7 +55,7 @@ public class LogFactoryTest
 		                       .getLogger("Colour Test");
 		LogManager.getLogManager()
 		          .getLogger("")
-		          .addHandler(new ConsoleSTDOutputHandler());
+		          .addHandler(ConsoleSTDOutputHandler.getInstance());
 		log.severe("Coloured Severe");
 	}
 }

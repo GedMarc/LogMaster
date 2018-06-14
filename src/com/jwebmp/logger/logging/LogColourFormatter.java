@@ -29,6 +29,8 @@ import java.util.logging.LogRecord;
 public class LogColourFormatter
 		extends LogFormatter
 {
+	private static final LogColourFormatter instance = new LogColourFormatter();
+
 	private static String ANSI_RED_BACKGROUND = "\u001B[41m";
 	private static String ANSI_GREEN_BACKGROUND = "\u001B[42m";
 	private static String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
@@ -82,7 +84,7 @@ public class LogColourFormatter
 	/**
 	 * The log colour formatter
 	 */
-	public LogColourFormatter()
+	private LogColourFormatter()
 	{
 		//Nothing needing to be done
 	}
@@ -275,6 +277,11 @@ public class LogColourFormatter
 	public static void setAnsiBlackBackground(String ansiBlackBackground)
 	{
 		ANSI_BLACK_BACKGROUND = ansiBlackBackground;
+	}
+
+	public static LogColourFormatter getInstance()
+	{
+		return instance;
 	}
 
 	/**

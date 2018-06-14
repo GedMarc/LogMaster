@@ -33,7 +33,14 @@ import static java.util.logging.Level.*;
  */
 public class LogFactory
 {
-
+	/**
+	 * The handler for the console logger
+	 */
+	private static final ConsoleSTDOutputHandler consoleLogger = ConsoleSTDOutputHandler.getInstance();
+	/**
+	 * The log handles that get operated on asynchronously
+	 */
+	private static final Set<Handler> logHandles = new HashSet<>();
 	/**
 	 * The instance of the log factory
 	 */
@@ -51,14 +58,6 @@ public class LogFactory
 	 */
 	private static boolean async = false;
 	/**
-	 * The handler for the console logger
-	 */
-	private final ConsoleSTDOutputHandler consoleLogger = new ConsoleSTDOutputHandler();
-	/**
-	 * The log handles that get operated on asynchronously
-	 */
-	private final Set<Handler> logHandles = new HashSet<>();
-	/**
 	 * The actual async logger
 	 */
 	private final AsyncLogger asyncLogger = new AsyncLogger();
@@ -68,30 +67,36 @@ public class LogFactory
 	 */
 	private LogFactory()
 	{
-		//No config
+		configureConsoleColourOutput(Level.FINE);
 	}
 
 	public static ConsoleSTDOutputHandler configureConsoleColourOutput(Level outputLevel)
 	{
-		instance.reloadHandlers();
+		reloadHandlers();
 		LogFactory.setDefaultLevel(outputLevel);
 		ConsoleSTDOutputHandler.getInstance()
 		                       .setColoured(true)
 		                       .setLevel(outputLevel);
-		instance.logHandles.add(ConsoleSTDOutputHandler.getInstance());
+		logHandles.add(ConsoleSTDOutputHandler.getInstance());
 		return ConsoleSTDOutputHandler.getInstance();
 	}
 
-	private void reloadHandlers()
+	private static void reloadHandlers()
 	{
 		Handler[] handles = Logger.getLogger("")
 		                          .getHandlers();
-		instance.logHandles.clear();
+		logHandles.clear();
 		for (Handler handle : handles)
 		{
 			if (handle != null)
 			{
-				instance.logHandles.add(handle);
+				if (ConsoleHandler.class.isAssignableFrom(handle.getClass()))
+				{
+					Logger.getLogger("")
+					      .removeHandler(handle);
+					continue;
+				}
+				logHandles.add(handle);
 			}
 		}
 	}
@@ -108,12 +113,12 @@ public class LogFactory
 
 	public static ConsoleSTDOutputHandler configureConsoleSingleLineOutput(Level outputLevel)
 	{
-		instance.reloadHandlers();
+		reloadHandlers();
 		LogFactory.setDefaultLevel(outputLevel);
 		ConsoleSTDOutputHandler.getInstance()
 		                       .setColoured(false)
 		                       .setLevel(outputLevel);
-		instance.logHandles.add(ConsoleSTDOutputHandler.getInstance());
+		logHandles.add(ConsoleSTDOutputHandler.getInstance());
 		return ConsoleSTDOutputHandler.getInstance();
 	}
 
@@ -160,6 +165,7 @@ public class LogFactory
 	{
 		Logger newLog = Logger.getLogger(name);
 		newLog.setUseParentHandlers(true);
+		newLog.addHandler(ConsoleSTDOutputHandler.getInstance());
 		newLog.setLevel(DefaultLevel);
 		return newLog;
 	}
