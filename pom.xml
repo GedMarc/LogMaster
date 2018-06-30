@@ -8,7 +8,7 @@
         <version>0.0.0_0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>guiced-log-master</artifactId>
+    <artifactId>jwebmp-log-master</artifactId>
     <packaging>jar</packaging>
 
     <name>Log Master</name>
@@ -16,24 +16,6 @@
         Access via LogFactory.
     </description>
     <url>https://github.com/GedMarc/LogMaster</url>
-
-    <properties>
-        <src.dir>src</src.dir>
-        <test.dir>test</test.dir>
-    </properties>
-
-    <repositories>
-        <repository>
-            <id>jwebmp-snapshot</id>
-            <name>JWebMPArtifactory-snapshots</name>
-            <url>https://jwebmp.com/artifactory/libs-snapshot</url>
-        </repository>
-    </repositories>
-
-    <build>
-        <sourceDirectory>${src.dir}</sourceDirectory>
-        <testSourceDirectory>${test.dir}</testSourceDirectory>
-    </build>
 
     <dependencies>
         <!-- Test Dependencies -->
@@ -57,5 +39,10 @@
             <artifactId>mockito-core</artifactId>
         </dependency>
     </dependencies>
+
+
+    <scm>
+        <url>https://github.com/GedMarc/LogMaster.git</url>
+    </scm>
 
 </project>

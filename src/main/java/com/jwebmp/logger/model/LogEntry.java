@@ -16,6 +16,8 @@
  */
 package com.jwebmp.logger.model;
 
+import com.sun.istack.internal.NotNull;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
@@ -42,7 +44,7 @@ public class LogEntry
 	/**
 	 * The pattern for a property
 	 */
-	private static final Pattern PROPERTY_PATTERN = Pattern.compile("\\[(.*?)\\]-\\[(.*?)\\];");
+	private static final Pattern PROPERTY_PATTERN = Pattern.compile("\\[(.*?)]-\\[(.*?)];");
 	/**
 	 * A list of the properties to display with each entry
 	 */
@@ -77,31 +79,24 @@ public class LogEntry
 	/**
 	 * The actual data of this log entry
 	 */
-	private Serializable data;
+	private Object data;
 	/**
 	 * The original system id of this log entry for identification
 	 */
 	private String originalSourceSystemID;
 
 	/**
-	 * Constructs a new log entry
-	 */
-	private LogEntry()
-	{
-		dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-
-	}
-
-	/**
 	 * Constructs a new log entry with the given entry and level
 	 *
 	 * @param entry
+	 * 		A text entry
 	 * @param level
+	 * 		The level applied
 	 */
-	@SuppressWarnings("")
+	@SuppressWarnings("unused")
 	private LogEntry(String entry, Level level)
 	{
-		dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+		this();
 		setDate(new Date());
 		setLevel(level);
 		LogProperty props = LogProperty.newProperty("message", entry);
@@ -109,11 +104,20 @@ public class LogEntry
 	}
 
 	/**
+	 * Constructs a new log entry
+	 */
+	private LogEntry()
+	{
+		dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+	}
+
+	/**
 	 * *
 	 * Returns the properties of this log entry
 	 *
-	 * @return
+	 * @return A list of Log Properties
 	 */
+	@NotNull
 	public List<LogProperty> getProperties()
 	{
 		if (properties == null)
@@ -127,10 +131,12 @@ public class LogEntry
 	 * Sets the properties of this log entry
 	 *
 	 * @param properties
+	 * 		A list of properties to set for this list
 	 *
-	 * @return
+	 * @return LogEntry
 	 */
-	public LogEntry setProperties(List<LogProperty> properties)
+	@NotNull
+	public LogEntry setProperties(@NotNull List<LogProperty> properties)
 	{
 		this.properties = properties;
 		return this;
@@ -142,8 +148,9 @@ public class LogEntry
 	 * @param record
 	 * 		A log record produced by java logging
 	 *
-	 * @return
+	 * @return A more object based log entry constructed from the log record
 	 */
+	@SuppressWarnings("unused")
 	public static LogEntry newEntry(LogRecord record)
 	{
 		LogEntry le = LogEntry.newEntry();
@@ -196,7 +203,7 @@ public class LogEntry
 	/**
 	 * Creates a new log entry with all global properties attached
 	 *
-	 * @return
+	 * @return A new entry
 	 */
 	public static LogEntry newEntry()
 	{
@@ -214,7 +221,7 @@ public class LogEntry
 	 * @param n
 	 * 		number of digits
 	 *
-	 * @return
+	 * @return The padded string right
 	 */
 	public static String padRight(String s, int n)
 	{
@@ -225,8 +232,9 @@ public class LogEntry
 	 * Returns the properties map form this log entry
 	 *
 	 * @param message
+	 * 		The message to break into key property pairs
 	 *
-	 * @return
+	 * @return The rendered maps
 	 */
 	public Map<String, String> getPropertiesFromMessage(String message)
 	{
@@ -246,7 +254,7 @@ public class LogEntry
 	/**
 	 * Is the parameter a message
 	 *
-	 * @return
+	 * @return If the message is parameterized
 	 */
 	private boolean isParameterMessage()
 	{
@@ -262,8 +270,9 @@ public class LogEntry
 	 * @param n
 	 * 		the number of chars to
 	 *
-	 * @return
+	 * @return The string padded left
 	 */
+	@SuppressWarnings("unused")
 	public static String padLeft(String s, int n)
 	{
 		return String.format("%1$" + n + "s", s);
@@ -272,8 +281,9 @@ public class LogEntry
 	/**
 	 * Returns the actual pattern
 	 *
-	 * @return
+	 * @return The property list
 	 */
+	@SuppressWarnings("unused")
 	public static Pattern getPropertyPattern()
 	{
 		return PROPERTY_PATTERN;
@@ -282,8 +292,9 @@ public class LogEntry
 	/**
 	 * Configuration for the log properties that are displayed
 	 *
-	 * @return
+	 * @return The list of properties to render from the filter list
 	 */
+	@SuppressWarnings("unused")
 	public static Map<LogProperties, Boolean> getDisplayedProperties()
 	{
 		return displayedProperties;
@@ -292,8 +303,9 @@ public class LogEntry
 	/**
 	 * Exception packages that get highlighted
 	 *
-	 * @return
+	 * @return The list of packages to highlight output on
 	 */
+	@SuppressWarnings("unused")
 	public static List<String> getExceptionHighlightedPackages()
 	{
 		return exceptionHighlightedPackages;
@@ -302,7 +314,7 @@ public class LogEntry
 	/**
 	 * Returns the current formatter for the date
 	 *
-	 * @return
+	 * @return An instance of the date formatter
 	 */
 	public SimpleDateFormat getDateFormatter()
 	{
@@ -312,7 +324,7 @@ public class LogEntry
 	/**
 	 * Returns the log entry with the square brackets
 	 *
-	 * @return
+	 * @return A string representation in brackets of the log message
 	 */
 	@Override
 	public String toString()
@@ -345,7 +357,7 @@ public class LogEntry
 	/**
 	 * Returns the message for this log entry
 	 *
-	 * @return
+	 * @return the Message
 	 */
 	public String getMessage()
 	{
@@ -359,7 +371,7 @@ public class LogEntry
 	/**
 	 * Gets the level of this log entry
 	 *
-	 * @return
+	 * @return The level applied
 	 */
 	public Level getLevel()
 	{
@@ -370,8 +382,9 @@ public class LogEntry
 	 * Sets the level of this log entry
 	 *
 	 * @param level
+	 * 		The level
 	 *
-	 * @return
+	 * @return This object
 	 */
 	public LogEntry setLevel(Level level)
 	{
@@ -382,7 +395,7 @@ public class LogEntry
 	/**
 	 * Returns the date of this log entry
 	 *
-	 * @return
+	 * @return The date associated with this entry
 	 */
 	public Date getDate()
 	{
@@ -392,7 +405,7 @@ public class LogEntry
 	/**
 	 * Any attached object that you would want the data from
 	 *
-	 * @return
+	 * @return Any data associated with this entry - customized
 	 */
 	public Object getData()
 	{
@@ -403,10 +416,11 @@ public class LogEntry
 	 * Any attached object you would want to fetch data from
 	 *
 	 * @param data
+	 * 		Any data with this entry
 	 *
-	 * @return
+	 * @return This entry
 	 */
-	public LogEntry setData(Serializable data)
+	public LogEntry setData(Object data)
 	{
 		this.data = data;
 		return this;
@@ -416,8 +430,9 @@ public class LogEntry
 	 * Sets the date of this log entry
 	 *
 	 * @param date
+	 * 		The date of this entry
 	 *
-	 * @return
+	 * @return The log entry
 	 */
 	public LogEntry setDate(Date date)
 	{
@@ -429,8 +444,9 @@ public class LogEntry
 	 * Returns the message for this entry
 	 *
 	 * @param message
+	 * 		Sets the message unmapped into a log entry from bracket form
 	 *
-	 * @return
+	 * @return This log entry with mapped properties
 	 */
 	public LogEntry setMessage(String message)
 	{
@@ -448,13 +464,14 @@ public class LogEntry
 	/**
 	 * The original source system id
 	 *
-	 * @return
+	 * @return an empty string
 	 */
+	@NotNull
 	public String getOriginalSourceSystemID()
 	{
 		if (originalSourceSystemID == null)
 		{
-			originalSourceSystemID = "-";
+			originalSourceSystemID = "";
 		}
 		return originalSourceSystemID;
 	}
@@ -463,18 +480,23 @@ public class LogEntry
 	 * The original source system id
 	 *
 	 * @param originalSourceSystemID
+	 * 		The original source system
+	 *
+	 * @return this;
 	 */
-	public void setOriginalSourceSystemID(String originalSourceSystemID)
+	public LogEntry setOriginalSourceSystemID(String originalSourceSystemID)
 	{
 		this.originalSourceSystemID = originalSourceSystemID;
+		return this;
 	}
 
 	/**
 	 * Returns a specific log property
 	 *
 	 * @param name
+	 * 		The name of the property
 	 *
-	 * @return
+	 * @return The log property of the item
 	 */
 	public LogProperty getProperty(String name)
 	{

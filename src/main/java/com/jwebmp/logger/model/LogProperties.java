@@ -14,18 +14,58 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.jwebmp.logger.handlers;
+package com.jwebmp.logger.model;
 
 /**
- * Defines the output for consoles (not a good idea to have colours and std at the same time)
- *
- * @param <J>
- * 		CRP
- *
  * @author Marc Magon
  * @since 16 Jul 2017
  */
-public interface ConsoleOutput<J extends ConsoleOutput<J>>
+@SuppressWarnings("unused")
+public enum LogProperties
 {
+	Level("Level"),
+	Date,
+	Message,
+	Name,
+	Method,
+	Class,
+	Exception("\nException");
+	/**
+	 * Any sub data
+	 */
+	private String data;
 
+	/**
+	 * A new LogProperties
+	 */
+	LogProperties()
+	{
+
+	}
+
+	/**
+	 * A new LogProperties with data
+	 */
+	LogProperties(String data)
+	{
+
+	}
+
+	/**
+	 * Returns the name or the data contained within
+	 *
+	 * @return The data or the name
+	 */
+	@Override
+	public String toString()
+	{
+		if (data != null && !data.isEmpty())
+		{
+			return data;
+		}
+		else
+		{
+			return name();
+		}
+	}
 }

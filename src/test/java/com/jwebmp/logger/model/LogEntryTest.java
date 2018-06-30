@@ -32,7 +32,13 @@ public class LogEntryTest
 	public void testEntry()
 	{
 		LogEntry le = LogEntry.newEntry();
+		le.setOriginalSourceSystemID("source");
+
 		System.out.println(le); //mustn't print
+		le.getOriginalSourceSystemID();
+
+		LogProperty lp = new LogProperty("Name", "Value");
+		System.out.println(lp.toString());
 
 	}
 

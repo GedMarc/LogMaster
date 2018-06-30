@@ -33,7 +33,6 @@ import java.util.logging.Level;
  */
 public class ConsoleSTDOutputHandler
 		extends ConsoleHandler
-		implements ConsoleOutput<ConsoleSTDOutputHandler>
 {
 
 	private static final ConsoleSTDOutputHandler instance = new ConsoleSTDOutputHandler();
@@ -61,13 +60,17 @@ public class ConsoleSTDOutputHandler
 	@SuppressWarnings("all")
 	private ConsoleSTDOutputHandler(boolean coloured)
 	{
-		//super(System.out, LogColourFormatter.getInstance());
 		setLevel(LogFactory.getDefaultLevel());
 		setColoured(coloured);
 		setFormatter(LogColourFormatter.getInstance());
 		setOutputStream(System.out);
 	}
 
+	/**
+	 * Gets the instance
+	 *
+	 * @return Returns the static instance for the log master
+	 */
 	public static ConsoleSTDOutputHandler getInstance()
 	{
 		return instance;
@@ -76,18 +79,31 @@ public class ConsoleSTDOutputHandler
 	/**
 	 * Returns a non-null list of ignored properties rendered per display
 	 *
-	 * @return
+	 * @return The mapped levels and properties that must be ignored when logging objectively
 	 */
 	public Map<Level, String> getLevelIgnoredProperties()
 	{
 		return levelIgnoredProperties;
 	}
 
+	/**
+	 * If the output handler is working in coloured mode
+	 *
+	 * @return if rendering coloured
+	 */
 	public boolean isColoured()
 	{
 		return coloured;
 	}
 
+	/**
+	 * Sets if the output handler must output in coloured mode
+	 *
+	 * @param coloured
+	 * 		If it must render coloured
+	 *
+	 * @return This handler
+	 */
 	public ConsoleSTDOutputHandler setColoured(boolean coloured)
 	{
 		this.coloured = coloured;
@@ -106,18 +122,28 @@ public class ConsoleSTDOutputHandler
 		          .equals(getClass().getCanonicalName());
 	}
 
+	/**
+	 * Returns the level assigned to this class and not the parent
+	 *
+	 * @return the JDK 8 Level object
+	 */
 	@Override
 	public Level getLevel()
 	{
 		return level;
 	}
 
+	/**
+	 * This this level and the parent level.
+	 *
+	 * @param level
+	 * 		The level to apply
+	 */
 	@Override
 	public void setLevel(Level level)
 	{
 		this.level = level;
 		super.setLevel(level);
 	}
-
 
 }

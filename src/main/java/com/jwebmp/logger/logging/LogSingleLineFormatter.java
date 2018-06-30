@@ -26,6 +26,7 @@ import java.util.logging.LogRecord;
  * @author GedMarc
  * @since 14 Dec 2016
  */
+@SuppressWarnings("unused")
 public class LogSingleLineFormatter
 		extends LogFormatter
 {
@@ -38,6 +39,7 @@ public class LogSingleLineFormatter
 	/**
 	 * The log colour formatter
 	 */
+	@SuppressWarnings("unused")
 	public LogSingleLineFormatter()
 	{
 		//Nothing needing to be done
@@ -47,8 +49,9 @@ public class LogSingleLineFormatter
 	 * Formats according to level
 	 *
 	 * @param record
+	 * 		The log record coming in
 	 *
-	 * @return
+	 * @return The string to render on the output
 	 */
 	@Override
 	public String format(LogRecord record)

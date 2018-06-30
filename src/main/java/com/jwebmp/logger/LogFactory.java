@@ -104,13 +104,21 @@ public class LogFactory
 	/**
 	 * Returns a list of all the current log handlers the async logger triggers
 	 *
-	 * @return
+	 * @return a list of all the registered log handlers
 	 */
 	public Set<Handler> getLogHandles()
 	{
 		return logHandles;
 	}
 
+	/**
+	 * Configures all the JWebMP Loggers to log to console with the given output using the SingleLineFormatter
+	 *
+	 * @param outputLevel
+	 * 		The level to apply
+	 *
+	 * @return The Handler that was added
+	 */
 	public static ConsoleSTDOutputHandler configureConsoleSingleLineOutput(Level outputLevel)
 	{
 		reloadHandlers();
@@ -125,7 +133,7 @@ public class LogFactory
 	/**
 	 * Returns if the log master is asynchronous
 	 *
-	 * @return
+	 * @return if the logging is occuring asynchronous
 	 */
 	public static boolean isAsync()
 	{
@@ -136,6 +144,7 @@ public class LogFactory
 	 * Sets if the log master is asynchronous
 	 *
 	 * @param async
+	 * 		if the logger should log asynchronously
 	 */
 	public static void setAsync(boolean async)
 	{
@@ -146,8 +155,9 @@ public class LogFactory
 	 * Alias for get logger
 	 *
 	 * @param name
+	 * 		Logger name to return
 	 *
-	 * @return
+	 * @return A JDK 8 Logger
 	 */
 	public static Logger getLog(String name)
 	{
@@ -158,8 +168,9 @@ public class LogFactory
 	 * Returns a logger in Async that may or may not log to the console according to configuration
 	 *
 	 * @param name
+	 * 		Returns the logger
 	 *
-	 * @return
+	 * @return The newly created logger
 	 */
 	public Logger getLogger(String name)
 	{
@@ -173,7 +184,7 @@ public class LogFactory
 	/**
 	 * Returns an instance of the log factory
 	 *
-	 * @return
+	 * @return The static instance
 	 */
 	public static LogFactory getInstance()
 	{
@@ -183,7 +194,7 @@ public class LogFactory
 	/**
 	 * Returns the currently assigned default level
 	 *
-	 * @return
+	 * @return The default level assigned to the
 	 */
 	public static Level getDefaultLevel()
 	{
@@ -194,6 +205,7 @@ public class LogFactory
 	 * Sets the default level on all the loggers currently associated, as well as any future loggers
 	 *
 	 * @param DefaultLevel
+	 * 		The default level to apply on all loggers on all registered handlers
 	 */
 	public static void setDefaultLevel(Level DefaultLevel)
 	{
@@ -228,8 +240,9 @@ public class LogFactory
 	/**
 	 * If we should ever log to console
 	 *
-	 * @return
+	 * @return If logging to console is enabled
 	 */
+	@SuppressWarnings("unused")
 	public static boolean isLogToConsole()
 	{
 		return LogToConsole;
@@ -239,7 +252,9 @@ public class LogFactory
 	 * If we should ever log to console
 	 *
 	 * @param LogToConsole
+	 * 		If must log to console
 	 */
+	@SuppressWarnings("unused")
 	public static void setLogToConsole(boolean LogToConsole)
 	{
 		LogFactory.LogToConsole = LogToConsole;
@@ -248,8 +263,9 @@ public class LogFactory
 	/**
 	 * Returns the console logger
 	 *
-	 * @return
+	 * @return The console logger instance
 	 */
+	@SuppressWarnings("unused")
 	public ConsoleSTDOutputHandler getConsoleLogger()
 	{
 		return consoleLogger;
@@ -259,8 +275,9 @@ public class LogFactory
 	 * Adds a log handler to the collection
 	 *
 	 * @param handler
+	 * 		Adds a handler to the managed collection
 	 *
-	 * @return
+	 * @return The inserted handler
 	 */
 	public Handler addLogHandler(Handler handler)
 	{
@@ -271,8 +288,9 @@ public class LogFactory
 	/**
 	 * Returns a direct reference to the async logger
 	 *
-	 * @return
+	 * @return The async logger
 	 */
+	@SuppressWarnings("unused")
 	public AsyncLogger getAsyncLogger()
 	{
 		return asyncLogger;
@@ -294,6 +312,7 @@ public class LogFactory
 		 * A new log thread created from a log record
 		 *
 		 * @param logEntry
+		 * 		The log entry to perform
 		 */
 		public LoggingThread(LogRecord logEntry)
 		{
@@ -332,6 +351,7 @@ public class LogFactory
 		 * Publish the record in a thread
 		 *
 		 * @param record
+		 * 		The log record to publish
 		 */
 		@Override
 		public synchronized void publish(LogRecord record)

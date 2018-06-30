@@ -16,6 +16,9 @@
  */
 package com.jwebmp.logger.model;
 
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -52,7 +55,9 @@ public class LogProperty
 	 * A new log property
 	 *
 	 * @param propertyName
+	 * 		a specific property
 	 * @param propertyValue
+	 * 		the property value
 	 */
 	public LogProperty(String propertyName, String propertyValue)
 	{
@@ -64,9 +69,11 @@ public class LogProperty
 	 * Creates a sortable list of properties that can be customized per handler
 	 *
 	 * @param name
+	 * 		the generalized property name
 	 * @param value
+	 * 		the value
 	 *
-	 * @return
+	 * @return A Log Property
 	 */
 	public static LogProperty newProperty(LogProperties name, String value)
 	{
@@ -121,7 +128,7 @@ public class LogProperty
 	/**
 	 * Returns a square bracket display of the properties
 	 *
-	 * @return
+	 * @return The string
 	 */
 	@Override
 	public String toString()
@@ -132,8 +139,9 @@ public class LogProperty
 	/**
 	 * A specific property name
 	 *
-	 * @return
+	 * @return the property name or null
 	 */
+	@Nullable
 	public String getPropertyName()
 	{
 		return propertyName;
@@ -143,17 +151,21 @@ public class LogProperty
 	 * Sets the property name
 	 *
 	 * @param propertyName
+	 * 		sets the property name
 	 */
-	public void setPropertyName(String propertyName)
+	@NotNull
+	public LogProperty setPropertyName(String propertyName)
 	{
 		this.propertyName = propertyName;
+		return this;
 	}
 
 	/**
 	 * Gets the property value
 	 *
-	 * @return
+	 * @return the property value
 	 */
+	@Nullable
 	public String getPropertyValue()
 	{
 		return propertyValue;
@@ -163,9 +175,12 @@ public class LogProperty
 	 * Sets the property value
 	 *
 	 * @param propertyValue
+	 * 		the property value
 	 */
-	public void setPropertyValue(String propertyValue)
+	@NotNull
+	public LogProperty setPropertyValue(String propertyValue)
 	{
 		this.propertyValue = propertyValue;
+		return this;
 	}
 }
