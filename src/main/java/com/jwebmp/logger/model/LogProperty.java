@@ -16,9 +16,7 @@
  */
 package com.jwebmp.logger.model;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -141,7 +139,6 @@ public class LogProperty
 	 *
 	 * @return the property name or null
 	 */
-	@Nullable
 	public String getPropertyName()
 	{
 		return propertyName;
@@ -165,7 +162,6 @@ public class LogProperty
 	 *
 	 * @return the property value
 	 */
-	@Nullable
 	public String getPropertyValue()
 	{
 		return propertyValue;

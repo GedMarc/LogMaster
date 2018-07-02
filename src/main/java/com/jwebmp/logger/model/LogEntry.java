@@ -16,8 +16,7 @@
  */
 package com.jwebmp.logger.model;
 
-import com.sun.istack.internal.NotNull;
-
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
@@ -451,13 +450,7 @@ public class LogEntry
 	public LogEntry setMessage(String message)
 	{
 		this.message = message;
-		getPropertiesFromMessage(this.message).entrySet()
-		                                      .forEach(entry ->
-		                                               {
-			                                               String key = entry.getKey();
-			                                               String value = entry.getValue();
-			                                               getProperties().add(LogProperty.newProperty(key, value));
-		                                               });
+		getPropertiesFromMessage(this.message).forEach((key, value) -> getProperties().add(LogProperty.newProperty(key, value)));
 		return this;
 	}
 
