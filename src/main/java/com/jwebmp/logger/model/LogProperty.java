@@ -18,7 +18,6 @@ package com.jwebmp.logger.model;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * A default log property
@@ -26,6 +25,7 @@ import java.util.Objects;
  * @author GedMarc
  * @since Nov 22, 2016
  */
+@SuppressWarnings("WeakerAccess")
 public class LogProperty
 		implements Serializable
 {
@@ -99,28 +99,13 @@ public class LogProperty
 	@Override
 	public int hashCode()
 	{
-		int hash = 3;
-		hash = 59 * hash + Objects.hashCode(propertyName);
-		return hash;
+		return super.hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj)
 	{
-		if (this == obj)
-		{
-			return true;
-		}
-		if (obj == null)
-		{
-			return false;
-		}
-		if (getClass() != obj.getClass())
-		{
-			return false;
-		}
-		LogProperty other = (LogProperty) obj;
-		return Objects.equals(propertyName, other.propertyName);
+		return super.equals(obj);
 	}
 
 	/**
@@ -149,6 +134,8 @@ public class LogProperty
 	 *
 	 * @param propertyName
 	 * 		sets the property name
+	 *
+	 * @return This object
 	 */
 	@NotNull
 	public LogProperty setPropertyName(String propertyName)
@@ -172,6 +159,8 @@ public class LogProperty
 	 *
 	 * @param propertyValue
 	 * 		the property value
+	 *
+	 * @return This
 	 */
 	@NotNull
 	public LogProperty setPropertyValue(String propertyValue)

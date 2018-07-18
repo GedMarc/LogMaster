@@ -73,6 +73,7 @@ public class LogColourFormatter
 	/**
 	 * Ansi Colour
 	 */
+
 	private static String ANSI_WHITE = "\u001b[37m";
 	private static String ANSI_BLACK_BACKGROUND = "\u001B[40m";
 
@@ -287,9 +288,9 @@ public class LogColourFormatter
 	/**
 	 * Formats according to level
 	 *
-	 * @param record
+	 * @param record The logging record to format into a string
 	 *
-	 * @return
+	 * @return The message to log
 	 */
 	@Override
 	public String format(LogRecord record)
