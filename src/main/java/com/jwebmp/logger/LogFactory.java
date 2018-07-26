@@ -67,7 +67,7 @@ public class LogFactory
 	 */
 	private LogFactory()
 	{
-		configureConsoleColourOutput(Level.FINE);
+		configureConsoleColourOutput(FINE);
 	}
 
 	public static ConsoleSTDOutputHandler configureConsoleColourOutput(Level outputLevel)
@@ -90,12 +90,6 @@ public class LogFactory
 		{
 			if (handle != null)
 			{
-				if (ConsoleHandler.class.isAssignableFrom(handle.getClass()))
-				{
-					Logger.getLogger("")
-					      .removeHandler(handle);
-					continue;
-				}
 				logHandles.add(handle);
 			}
 		}
@@ -108,6 +102,10 @@ public class LogFactory
 	 */
 	public Set<Handler> getLogHandles()
 	{
+		if(logHandles.isEmpty())
+		{
+			reloadHandlers();
+		}
 		return logHandles;
 	}
 
@@ -176,7 +174,10 @@ public class LogFactory
 	{
 		Logger newLog = Logger.getLogger(name);
 		newLog.setUseParentHandlers(false);
-		newLog.addHandler(ConsoleSTDOutputHandler.getInstance());
+		for (Handler logHandle : getLogHandles())
+		{
+			newLog.addHandler(logHandle);
+		}
 		newLog.setLevel(DefaultLevel);
 		return newLog;
 	}
