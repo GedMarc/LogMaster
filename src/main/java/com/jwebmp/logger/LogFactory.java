@@ -163,6 +163,19 @@ public class LogFactory
 	}
 
 	/**
+	 * Alias for get logger
+	 *
+	 * @param name
+	 * 		Logger name to return
+	 *
+	 * @return A JDK 8 Logger
+	 */
+	public static Logger getLog(Class name)
+	{
+		return getInstance().getLogger(name.toString());
+	}
+
+	/**
 	 * Returns a logger in Async that may or may not log to the console according to configuration
 	 *
 	 * @param name
