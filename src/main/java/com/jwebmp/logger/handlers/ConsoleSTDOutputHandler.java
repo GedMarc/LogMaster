@@ -31,10 +31,14 @@ import java.util.logging.Level;
  * @version 1.0
  * @since 13 Dec 2016
  */
+@SuppressWarnings("unused")
 public class ConsoleSTDOutputHandler
 		extends ConsoleHandler
 {
 
+	/**
+	 * Field instance
+	 */
 	private static final ConsoleSTDOutputHandler instance = new ConsoleSTDOutputHandler();
 
 	/**
@@ -42,7 +46,13 @@ public class ConsoleSTDOutputHandler
 	 */
 	private static final Map<Level, String> levelIgnoredProperties = new HashMap<>();
 
+	/**
+	 * Field coloured
+	 */
 	private boolean coloured;
+	/**
+	 * Field level
+	 */
 	private Level level;
 
 	/**
@@ -73,7 +83,7 @@ public class ConsoleSTDOutputHandler
 	 */
 	public static ConsoleSTDOutputHandler getInstance()
 	{
-		return instance;
+		return ConsoleSTDOutputHandler.instance;
 	}
 
 	/**
@@ -83,7 +93,7 @@ public class ConsoleSTDOutputHandler
 	 */
 	public Map<Level, String> getLevelIgnoredProperties()
 	{
-		return levelIgnoredProperties;
+		return ConsoleSTDOutputHandler.levelIgnoredProperties;
 	}
 
 	/**
@@ -110,6 +120,25 @@ public class ConsoleSTDOutputHandler
 		return this;
 	}
 
+	/**
+	 * Method hashCode ...
+	 *
+	 * @return int
+	 */
+	@Override
+	public int hashCode()
+	{
+		return super.hashCode();
+	}
+
+	/**
+	 * Method equals ...
+	 *
+	 * @param obj
+	 * 		of type Object
+	 *
+	 * @return boolean
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -118,8 +147,8 @@ public class ConsoleSTDOutputHandler
 			return false;
 		}
 		return obj.getClass()
-		          .getCanonicalName()
-		          .equals(getClass().getCanonicalName());
+		          .getName()
+		          .equals(getClass().getName());
 	}
 
 	/**
