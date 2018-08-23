@@ -67,17 +67,16 @@ public class LogFactory
 	 */
 	private LogFactory()
 	{
-		configureConsoleColourOutput(FINE);
 	}
 
 	public static ConsoleSTDOutputHandler configureConsoleColourOutput(Level outputLevel)
 	{
-		reloadHandlers();
+		LogFactory.reloadHandlers();
 		LogFactory.setDefaultLevel(outputLevel);
 		ConsoleSTDOutputHandler.getInstance()
 		                       .setColoured(true)
 		                       .setLevel(outputLevel);
-		logHandles.add(ConsoleSTDOutputHandler.getInstance());
+		LogFactory.logHandles.add(ConsoleSTDOutputHandler.getInstance());
 		return ConsoleSTDOutputHandler.getInstance();
 	}
 
@@ -85,12 +84,12 @@ public class LogFactory
 	{
 		Handler[] handles = Logger.getLogger("")
 		                          .getHandlers();
-		logHandles.clear();
+		LogFactory.logHandles.clear();
 		for (Handler handle : handles)
 		{
 			if (handle != null)
 			{
-				logHandles.add(handle);
+				LogFactory.logHandles.add(handle);
 			}
 		}
 	}
@@ -102,11 +101,11 @@ public class LogFactory
 	 */
 	public Set<Handler> getLogHandles()
 	{
-		if(logHandles.isEmpty())
+		if (LogFactory.logHandles.isEmpty())
 		{
-			reloadHandlers();
+			LogFactory.reloadHandlers();
 		}
-		return logHandles;
+		return LogFactory.logHandles;
 	}
 
 	/**
@@ -119,12 +118,12 @@ public class LogFactory
 	 */
 	public static ConsoleSTDOutputHandler configureConsoleSingleLineOutput(Level outputLevel)
 	{
-		reloadHandlers();
+		LogFactory.reloadHandlers();
 		LogFactory.setDefaultLevel(outputLevel);
 		ConsoleSTDOutputHandler.getInstance()
 		                       .setColoured(false)
 		                       .setLevel(outputLevel);
-		logHandles.add(ConsoleSTDOutputHandler.getInstance());
+		LogFactory.logHandles.add(ConsoleSTDOutputHandler.getInstance());
 		return ConsoleSTDOutputHandler.getInstance();
 	}
 
@@ -135,7 +134,7 @@ public class LogFactory
 	 */
 	public static boolean isAsync()
 	{
-		return async;
+		return LogFactory.async;
 	}
 
 	/**
@@ -159,20 +158,8 @@ public class LogFactory
 	 */
 	public static Logger getLog(String name)
 	{
-		return getInstance().getLogger(name);
-	}
-
-	/**
-	 * Alias for get logger
-	 *
-	 * @param name
-	 * 		Logger name to return
-	 *
-	 * @return A JDK 8 Logger
-	 */
-	public static Logger getLog(Class name)
-	{
-		return getInstance().getLogger(name.toString());
+		return LogFactory.getInstance()
+		                 .getLogger(name);
 	}
 
 	/**
@@ -191,7 +178,7 @@ public class LogFactory
 		{
 			newLog.addHandler(logHandle);
 		}
-		newLog.setLevel(DefaultLevel);
+		newLog.setLevel(LogFactory.DefaultLevel);
 		return newLog;
 	}
 
@@ -202,7 +189,21 @@ public class LogFactory
 	 */
 	public static LogFactory getInstance()
 	{
-		return instance;
+		return LogFactory.instance;
+	}
+
+	/**
+	 * Alias for get logger
+	 *
+	 * @param name
+	 * 		Logger name to return
+	 *
+	 * @return A JDK 8 Logger
+	 */
+	public static Logger getLog(Class name)
+	{
+		return LogFactory.getInstance()
+		                 .getLogger(name.toString());
 	}
 
 	/**
@@ -212,7 +213,7 @@ public class LogFactory
 	 */
 	public static Level getDefaultLevel()
 	{
-		return DefaultLevel == null ? Level.FINE : DefaultLevel;
+		return LogFactory.DefaultLevel == null ? Level.FINE : LogFactory.DefaultLevel;
 	}
 
 	/**
@@ -244,10 +245,10 @@ public class LogFactory
 			}
 		}
 
-		if (async)
+		if (LogFactory.async)
 		{
-			instance.getLogHandles()
-			        .forEach(logHandle -> logHandle.setLevel(DefaultLevel));
+			LogFactory.instance.getLogHandles()
+			                   .forEach(logHandle -> logHandle.setLevel(DefaultLevel));
 		}
 	}
 
@@ -259,7 +260,7 @@ public class LogFactory
 	@SuppressWarnings("unused")
 	public static boolean isLogToConsole()
 	{
-		return LogToConsole;
+		return LogFactory.LogToConsole;
 	}
 
 	/**
@@ -282,7 +283,7 @@ public class LogFactory
 	@SuppressWarnings("unused")
 	public ConsoleSTDOutputHandler getConsoleLogger()
 	{
-		return consoleLogger;
+		return LogFactory.consoleLogger;
 	}
 
 	/**
@@ -295,7 +296,7 @@ public class LogFactory
 	 */
 	public Handler addLogHandler(Handler handler)
 	{
-		logHandles.add(handler);
+		LogFactory.logHandles.add(handler);
 		return handler;
 	}
 
@@ -340,7 +341,7 @@ public class LogFactory
 		@Override
 		public void run()
 		{
-			logHandles.forEach(next -> next.publish(logEntry));
+			LogFactory.logHandles.forEach(next -> next.publish(logEntry));
 		}
 	}
 
