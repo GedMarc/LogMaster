@@ -19,9 +19,12 @@ package com.jwebmp.logger;
 import com.jwebmp.logger.handlers.ConsoleSTDOutputHandler;
 
 import java.util.Enumeration;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.logging.*;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import static java.util.logging.Level.*;
 
@@ -36,31 +39,20 @@ public class LogFactory
 	/**
 	 * The handler for the console logger
 	 */
-	private static final ConsoleSTDOutputHandler consoleLogger = ConsoleSTDOutputHandler.getInstance();
-	/**
-	 * The log handles that get operated on asynchronously
-	 */
-	private static final Set<Handler> logHandles = new HashSet<>();
+	private static ConsoleSTDOutputHandler consoleLogger = ConsoleSTDOutputHandler.getInstance();
+
 	/**
 	 * The instance of the log factory
 	 */
-	private static final LogFactory instance = new LogFactory();
+	private static LogFactory instance = new LogFactory();
 	/**
 	 * Whether or not to log to the console
 	 */
-	private static boolean LogToConsole = true;
+	private static boolean LogToConsole;
 	/**
 	 * The default level for the logging
 	 */
 	private static Level DefaultLevel = FINE;
-	/**
-	 * The asynchronous holder
-	 */
-	private static boolean async = false;
-	/**
-	 * The actual async logger
-	 */
-	private final AsyncLogger asyncLogger = new AsyncLogger();
 
 	/**
 	 * Hidden log factory constructor
@@ -71,41 +63,14 @@ public class LogFactory
 
 	public static ConsoleSTDOutputHandler configureConsoleColourOutput(Level outputLevel)
 	{
-		LogFactory.reloadHandlers();
 		LogFactory.setDefaultLevel(outputLevel);
 		ConsoleSTDOutputHandler.getInstance()
 		                       .setColoured(true)
 		                       .setLevel(outputLevel);
-		LogFactory.logHandles.add(ConsoleSTDOutputHandler.getInstance());
+		LogManager.getLogManager()
+		          .getLogger("")
+		          .addHandler(ConsoleSTDOutputHandler.getInstance());
 		return ConsoleSTDOutputHandler.getInstance();
-	}
-
-	private static void reloadHandlers()
-	{
-		Handler[] handles = Logger.getLogger("")
-		                          .getHandlers();
-		LogFactory.logHandles.clear();
-		for (Handler handle : handles)
-		{
-			if (handle != null)
-			{
-				LogFactory.logHandles.add(handle);
-			}
-		}
-	}
-
-	/**
-	 * Returns a list of all the current log handlers the async logger triggers
-	 *
-	 * @return a list of all the registered log handlers
-	 */
-	public Set<Handler> getLogHandles()
-	{
-		if (LogFactory.logHandles.isEmpty())
-		{
-			LogFactory.reloadHandlers();
-		}
-		return LogFactory.logHandles;
 	}
 
 	/**
@@ -118,34 +83,14 @@ public class LogFactory
 	 */
 	public static ConsoleSTDOutputHandler configureConsoleSingleLineOutput(Level outputLevel)
 	{
-		LogFactory.reloadHandlers();
 		LogFactory.setDefaultLevel(outputLevel);
 		ConsoleSTDOutputHandler.getInstance()
 		                       .setColoured(false)
 		                       .setLevel(outputLevel);
-		LogFactory.logHandles.add(ConsoleSTDOutputHandler.getInstance());
+		LogManager.getLogManager()
+		          .getLogger("")
+		          .addHandler(ConsoleSTDOutputHandler.getInstance());
 		return ConsoleSTDOutputHandler.getInstance();
-	}
-
-	/**
-	 * Returns if the log master is asynchronous
-	 *
-	 * @return if the logging is occuring asynchronous
-	 */
-	public static boolean isAsync()
-	{
-		return LogFactory.async;
-	}
-
-	/**
-	 * Sets if the log master is asynchronous
-	 *
-	 * @param async
-	 * 		if the logger should log asynchronously
-	 */
-	public static void setAsync(boolean async)
-	{
-		LogFactory.async = async;
 	}
 
 	/**
@@ -172,12 +117,8 @@ public class LogFactory
 	 */
 	public Logger getLogger(String name)
 	{
-		Logger newLog = Logger.getLogger(name);
-		newLog.setUseParentHandlers(false);
-		for (Handler logHandle : getLogHandles())
-		{
-			newLog.addHandler(logHandle);
-		}
+		Logger newLog = Logger.getLogger("com.jwebmp." + name);
+		newLog.setUseParentHandlers(true);
 		newLog.setLevel(LogFactory.DefaultLevel);
 		return newLog;
 	}
@@ -193,27 +134,13 @@ public class LogFactory
 	}
 
 	/**
-	 * Alias for get logger
-	 *
-	 * @param name
-	 * 		Logger name to return
-	 *
-	 * @return A JDK 8 Logger
-	 */
-	public static Logger getLog(Class name)
-	{
-		return LogFactory.getInstance()
-		                 .getLogger(name.toString());
-	}
-
-	/**
 	 * Returns the currently assigned default level
 	 *
 	 * @return The default level assigned to the
 	 */
 	public static Level getDefaultLevel()
 	{
-		return LogFactory.DefaultLevel == null ? Level.FINE : LogFactory.DefaultLevel;
+		return LogFactory.DefaultLevel == null ? FINE : LogFactory.DefaultLevel;
 	}
 
 	/**
@@ -228,9 +155,15 @@ public class LogFactory
 
 		Enumeration<String> enums = LogManager.getLogManager()
 		                                      .getLoggerNames();
+		Set<String> newSet = new LinkedHashSet<>();
+		newSet.add("");
+
 		while (enums.hasMoreElements())
 		{
-			String nextElement = enums.nextElement();
+			newSet.add(enums.nextElement());
+		}
+		for (String nextElement : newSet)
+		{
 			Logger logger = LogManager.getLogManager()
 			                          .getLogger(nextElement);
 			if (logger != null)
@@ -244,12 +177,20 @@ public class LogFactory
 				}
 			}
 		}
+	}
 
-		if (LogFactory.async)
-		{
-			LogFactory.instance.getLogHandles()
-			                   .forEach(logHandle -> logHandle.setLevel(DefaultLevel));
-		}
+	/**
+	 * Alias for get logger
+	 *
+	 * @param name
+	 * 		Logger name to return
+	 *
+	 * @return A JDK 8 Logger
+	 */
+	public static Logger getLog(Class name)
+	{
+		return LogFactory.getInstance()
+		                 .getLogger(name.toString());
 	}
 
 	/**
@@ -285,108 +226,4 @@ public class LogFactory
 	{
 		return LogFactory.consoleLogger;
 	}
-
-	/**
-	 * Adds a log handler to the collection
-	 *
-	 * @param handler
-	 * 		Adds a handler to the managed collection
-	 *
-	 * @return The inserted handler
-	 */
-	public Handler addLogHandler(Handler handler)
-	{
-		LogFactory.logHandles.add(handler);
-		return handler;
-	}
-
-	/**
-	 * Returns a direct reference to the async logger
-	 *
-	 * @return The async logger
-	 */
-	@SuppressWarnings("unused")
-	public AsyncLogger getAsyncLogger()
-	{
-		return asyncLogger;
-	}
-
-	/**
-	 * The physical thread the async logger runs through. Published through the log handles list
-	 */
-	public class LoggingThread
-			extends Thread
-	{
-
-		/**
-		 * The log record coming in
-		 */
-		private final LogRecord logEntry;
-
-		/**
-		 * A new log thread created from a log record
-		 *
-		 * @param logEntry
-		 * 		The log entry to perform
-		 */
-		public LoggingThread(LogRecord logEntry)
-		{
-			super("LoggingThread");
-			this.logEntry = logEntry;
-		}
-
-		/**
-		 * Publish to each log handler
-		 */
-		@Override
-		public void run()
-		{
-			LogFactory.logHandles.forEach(next -> next.publish(logEntry));
-		}
-	}
-
-	/**
-	 * The Async Log Handler
-	 */
-	public class AsyncLogger
-			extends java.util.logging.Handler
-	{
-
-		private LoggingThread thread;
-
-		/**
-		 * Default construction
-		 */
-		public AsyncLogger()
-		{
-			//Nothing needed to be done on load
-		}
-
-		/**
-		 * Publish the record in a thread
-		 *
-		 * @param record
-		 * 		The log record to publish
-		 */
-		@Override
-		public synchronized void publish(LogRecord record)
-		{
-			thread = new LoggingThread(record);
-			thread.start();
-			flush();
-		}
-
-		@Override
-		public void flush()
-		{
-			//Nothing Needed
-		}
-
-		@Override
-		public void close()
-		{
-			//Nothing needed
-		}
-	}
-
 }
