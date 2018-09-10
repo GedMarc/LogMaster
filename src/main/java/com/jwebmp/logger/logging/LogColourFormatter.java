@@ -288,7 +288,8 @@ public class LogColourFormatter
 	/**
 	 * Formats according to level
 	 *
-	 * @param record The logging record to format into a string
+	 * @param record
+	 * 		The logging record to format into a string
 	 *
 	 * @return The message to log
 	 */
@@ -314,31 +315,42 @@ public class LogColourFormatter
 		}
 		output += "[" + sdf.format(record.getMillis()) + "]-";
 
-		if (record.getLevel() == Level.FINEST)
+		int level = record.getLevel()
+		                  .intValue();
+		int desiredLevel = Level.INFO.intValue();
+
+		if (record.getLevel()
+		          .equals(Level.FINEST))
 		{
 			output += ANSI_RED + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
 		}
-		else if (record.getLevel() == Level.FINER)
+		else if (record.getLevel()
+		               .equals(Level.FINER))
 		{
 			output += ANSI_CYAN + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
 		}
-		else if (record.getLevel() == Level.FINE)
+		else if (record.getLevel()
+		               .equals(Level.FINE))
 		{
 			output += ANSI_BLUE + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
 		}
-		else if (record.getLevel() == Level.CONFIG)
+		else if (record.getLevel()
+		               .equals(Level.CONFIG))
 		{
 			output += ANSI_PURPLE + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
 		}
-		else if (record.getLevel() == Level.INFO)
+		else if (record.getLevel()
+		               .equals(Level.INFO))
 		{
 			output += ANSI_GREEN + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
 		}
-		else if (record.getLevel() == Level.WARNING)
+		else if (record.getLevel()
+		               .equals(Level.WARNING))
 		{
 			output += ANSI_YELLOW + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
 		}
-		else if (record.getLevel() == Level.SEVERE)
+		else if (record.getLevel()
+		               .equals(Level.SEVERE))
 		{
 			output += ANSI_RED + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
 		}
