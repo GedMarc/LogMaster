@@ -315,10 +315,9 @@ public class LogColourFormatter
 		}
 		output += "[" + sdf.format(record.getMillis()) + "]-";
 
-		int level = record.getLevel()
-		                  .intValue();
-		int desiredLevel = Level.INFO.intValue();
-
+		record.setMessage(record.getMessage()
+		                        .replace("\n", "")
+		                        .replace("\t", " "));
 		if (record.getLevel()
 		          .equals(Level.FINEST))
 		{
