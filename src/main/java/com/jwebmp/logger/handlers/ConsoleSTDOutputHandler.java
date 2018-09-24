@@ -147,8 +147,7 @@ public class ConsoleSTDOutputHandler
 			return false;
 		}
 		return obj.getClass()
-		          .getName()
-		          .equals(getClass().getName());
+		          .isAssignableFrom(obj.getClass());
 	}
 
 	/**
