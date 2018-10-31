@@ -19,7 +19,6 @@ package com.jwebmp.logger.model;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Serializable;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -36,10 +35,10 @@ import java.util.regex.Pattern;
  * @since Nov 22, 2016
  */
 public class LogEntry
-		implements Serializable
+
 {
 
-	private static final long serialVersionUID = 1L;
+
 	/**
 	 * The pattern for a property
 	 */

@@ -17,7 +17,6 @@
 package com.jwebmp.logger.model;
 
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 /**
  * A default log property
@@ -27,10 +26,9 @@ import java.io.Serializable;
  */
 @SuppressWarnings("WeakerAccess")
 public class LogProperty
-		implements Serializable
+
 {
 
-	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Any new name
