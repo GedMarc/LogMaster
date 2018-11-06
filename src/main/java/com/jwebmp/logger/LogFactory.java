@@ -63,6 +63,7 @@ public class LogFactory
 
 	public static ConsoleSTDOutputHandler configureConsoleColourOutput(Level outputLevel)
 	{
+		//System.setErr(System.out);
 		LogFactory.setDefaultLevel(outputLevel);
 		ConsoleSTDOutputHandler.getInstance()
 		                       .setColoured(true)
@@ -83,6 +84,7 @@ public class LogFactory
 	 */
 	public static ConsoleSTDOutputHandler configureConsoleSingleLineOutput(Level outputLevel)
 	{
+		//System.setErr(System.out);
 		LogFactory.setDefaultLevel(outputLevel);
 		ConsoleSTDOutputHandler.getInstance()
 		                       .setColoured(false)
