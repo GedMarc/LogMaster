@@ -12,8 +12,7 @@
     <packaging>jar</packaging>
 
     <name>Log Master</name>
-    <description>Provides Asynchronous and Dynamic Log Handler support for JDK1.8 logging API.
-        Access via LogFactory.
+    <description>Provides Asynchronous and Dynamic Log Handler support for JDK1.8 logging API. Access via LogFactory.
     </description>
     <url>https://github.com/GedMarc/LogMaster</url>
 
