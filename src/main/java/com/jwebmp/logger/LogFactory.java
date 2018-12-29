@@ -54,6 +54,8 @@ public class LogFactory
 	 */
 	private static Level DefaultLevel = FINE;
 
+	private static boolean configured;
+
 	/**
 	 * Hidden log factory constructor
 	 */
@@ -68,9 +70,13 @@ public class LogFactory
 		ConsoleSTDOutputHandler.getInstance()
 		                       .setColoured(true)
 		                       .setLevel(outputLevel);
-		LogManager.getLogManager()
-		          .getLogger("")
-		          .addHandler(ConsoleSTDOutputHandler.getInstance());
+		if (!configured)
+		{
+			LogManager.getLogManager()
+			          .getLogger("")
+			          .addHandler(ConsoleSTDOutputHandler.getInstance());
+			configured = true;
+		}
 		return ConsoleSTDOutputHandler.getInstance();
 	}
 
