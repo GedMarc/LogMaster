@@ -17,7 +17,7 @@
 package com.jwebmp.logger.model;
 
 /**
- * @author Marc Magon
+ * @author GedMarc
  * @since 16 Jul 2017
  */
 @SuppressWarnings("unused")
