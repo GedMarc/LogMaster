@@ -19,6 +19,7 @@
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
+            <type>jar</type>
         </dependency>
 
         <!-- Test Dependencies -->
