@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.jwebmp.logger.logging;
+package com.guicedee.logger.logging;
 
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
@@ -70,7 +70,7 @@ public class LogSingleLineFormatter
 
 		String output = "";
 
-		output += "[" + sdf.format(record.getMillis()) + "]-";
+		output += "[" + sdf.format(record.getMillis()) + "]-[";
 		String message = "";
 
 		if (record.getLevel()
@@ -126,9 +126,10 @@ public class LogSingleLineFormatter
 		output += printException(record).toString();
 		output = processParameters(output, record);
 
-		output += " - ";
+		output += "]-";
 		output += "[" + record.getLevel()
 		                      .getLocalizedName() + "]";
+		output += "-[" + record.getLoggerName() + "]";
 		return output + System.getProperty("line.separator");
 	}
 }

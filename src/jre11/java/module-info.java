@@ -1,8 +1,9 @@
-module com.jwebmp.logmaster {
-	exports com.jwebmp.logger;
-	exports com.jwebmp.logger.logging;
-	exports com.jwebmp.logger.handlers;
+module com.guicedee.logmaster {
+	exports com.guicedee.logger;
+	exports com.guicedee.logger.logging;
+	exports com.guicedee.logger.handlers;
 
 	requires transitive java.logging;
 	requires java.validation;
+
 }

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.jwebmp.logger.logging;
+package com.guicedee.logger.logging;
 
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
@@ -313,7 +313,7 @@ public class LogColourFormatter
 				output += ANSI_BLACK_BACKGROUND;
 			}
 		}
-		output += "[" + sdf.format(record.getMillis()) + "]-";
+		output += "[" + sdf.format(record.getMillis()) + "]-[";
 
 		record.setMessage(record.getMessage()
 		                        .replace("\n", "")
@@ -357,14 +357,16 @@ public class LogColourFormatter
 		output = processParameters(output, record);
 		output = processInverted(output, record);
 
-		output += " - ";
-		if (output.equalsIgnoreCase(" - "))
+		output += "]-";
+		if (output.equalsIgnoreCase("]-"))
 		{
-			output += "Empty Log?";
+			output += "[Empty Log?]-";
 		}
 
 		output += "[" + record.getLevel()
 		                      .getLocalizedName() + "]";
+
+		output += "-[" + record.getLoggerName() + "]";
 
 		return output + System.getProperty("line.separator");
 	}

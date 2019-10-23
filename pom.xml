@@ -3,10 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.jwebmp.jpms.guicedee</groupId>
+        <groupId>com.guicedee</groupId>
         <artifactId>guiced-ee-modules</artifactId>
         <version>0.0.0_0-SNAPSHOT</version>
     </parent>
+
     <artifactId>guiced-log-master</artifactId>
     <packaging>jar</packaging>
 
@@ -20,7 +21,7 @@
             <groupId>com.jwebmp.jpms.thirdparty</groupId>
             <artifactId>jakarta.validation-api</artifactId>
             <type>jar</type>
-            <version>${project.version}</version>
+            
         </dependency>
 
         <!-- Test Dependencies -->

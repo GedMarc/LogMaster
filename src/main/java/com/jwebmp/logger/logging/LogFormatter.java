@@ -1,4 +1,4 @@
-package com.jwebmp.logger.logging;
+package com.guicedee.logger.logging;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

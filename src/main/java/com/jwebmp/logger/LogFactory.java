@@ -14,9 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.jwebmp.logger;
+package com.guicedee.logger;
 
-import com.jwebmp.logger.handlers.ConsoleSTDOutputHandler;
+import com.guicedee.logger.handlers.ConsoleSTDOutputHandler;
+import com.guicedee.logger.logging.LogColourFormatter;
 
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
@@ -53,7 +54,9 @@ public class LogFactory
 	 * The default level for the logging
 	 */
 	private static Level DefaultLevel = FINE;
-
+	/**
+	 * If this factory is configured
+	 */
 	private static boolean configured;
 
 	/**
@@ -61,10 +64,14 @@ public class LogFactory
 	 */
 	private LogFactory()
 	{
+		//Nothing required
 	}
+
+
 
 	public static ConsoleSTDOutputHandler configureConsoleColourOutput(Level outputLevel)
 	{
+		setLogToConsole(true);
 		//System.setErr(System.out);
 		LogFactory.setDefaultLevel(outputLevel);
 		ConsoleSTDOutputHandler.getInstance()
@@ -90,16 +97,42 @@ public class LogFactory
 	 */
 	public static ConsoleSTDOutputHandler configureConsoleSingleLineOutput(Level outputLevel)
 	{
-		//System.setErr(System.out);
-		LogFactory.setDefaultLevel(outputLevel);
+		setLogToConsole(true);
 		ConsoleSTDOutputHandler.getInstance()
 		                       .setColoured(false)
 		                       .setLevel(outputLevel);
 		LogManager.getLogManager()
 		          .getLogger("")
 		          .addHandler(ConsoleSTDOutputHandler.getInstance());
+
+		LogFactory.setDefaultLevel(outputLevel);
+
 		return ConsoleSTDOutputHandler.getInstance();
 	}
+
+	/**
+	 * Configures all the JWebMP Loggers to log to console with the given output using the SingleLineFormatter
+	 *
+	 * @param outputLevel
+	 * 		The level to apply
+	 *
+	 * @return The Handler that was added
+	 */
+	public static ConsoleSTDOutputHandler configureConsoleSingleLineOutput(Level outputLevel,boolean inverted)
+	{
+		//System.setErr(System.out);
+		LogFactory.setDefaultLevel(outputLevel);
+		setLogToConsole(true);
+		LogColourFormatter.setInverted(inverted);
+		ConsoleSTDOutputHandler.getInstance()
+				.setColoured(false)
+				.setLevel(outputLevel);
+		LogManager.getLogManager()
+				.getLogger("")
+				.addHandler(ConsoleSTDOutputHandler.getInstance());
+		return ConsoleSTDOutputHandler.getInstance();
+	}
+
 
 	/**
 	 * Alias for get logger
@@ -125,7 +158,7 @@ public class LogFactory
 	 */
 	public Logger getLogger(String name)
 	{
-		Logger newLog = Logger.getLogger("com.jwebmp." + name);
+		Logger newLog = Logger.getLogger("com.guicedee.jpms." + name);
 		newLog.setUseParentHandlers(true);
 		newLog.setLevel(LogFactory.DefaultLevel);
 		return newLog;
@@ -151,15 +184,30 @@ public class LogFactory
 		return LogFactory.DefaultLevel == null ? FINE : LogFactory.DefaultLevel;
 	}
 
+
 	/**
 	 * Sets the default level on all the loggers currently associated, as well as any future loggers
 	 *
-	 * @param DefaultLevel
+	 * @param newLevel
 	 * 		The default level to apply on all loggers on all registered handlers
 	 */
-	public static void setDefaultLevel(Level DefaultLevel)
+	public static void setGroupLevel(String category, Level newLevel)
 	{
-		LogFactory.DefaultLevel = DefaultLevel;
+		ConsoleSTDOutputHandler.getLogPackagesLevels().put(category,newLevel);
+	}
+	/**
+	 * Sets the default level on all the loggers currently associated, as well as any future loggers
+	 *
+	 * @param level
+	 * 		The default level to apply on all loggers on all registered handlers
+	 */
+	public static void setDefaultLevel(Level level)
+	{
+		LogFactory.DefaultLevel = level;
+
+		Logger.getGlobal().setLevel(level);
+		Logger.getAnonymousLogger().setLevel(level);
+		Logger.getLogger("").setLevel(level);
 
 		Enumeration<String> enums = LogManager.getLogManager()
 		                                      .getLoggerNames();
@@ -180,7 +228,7 @@ public class LogFactory
 				{
 					if (handler != null)
 					{
-						handler.setLevel(DefaultLevel);
+						handler.setLevel(level);
 					}
 				}
 			}
