@@ -158,7 +158,7 @@ public class LogFactory
 	 */
 	public Logger getLogger(String name)
 	{
-		Logger newLog = Logger.getLogger("com.guicedee.jpms." + name);
+		Logger newLog = Logger.getLogger("com.guicedee." + name);
 		newLog.setUseParentHandlers(true);
 		newLog.setLevel(LogFactory.DefaultLevel);
 		return newLog;
