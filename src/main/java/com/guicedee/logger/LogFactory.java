@@ -68,7 +68,6 @@ public class LogFactory
 	}
 
 
-
 	public static ConsoleSTDOutputHandler configureConsoleColourOutput(Level outputLevel)
 	{
 		setLogToConsole(true);
@@ -118,19 +117,48 @@ public class LogFactory
 	 *
 	 * @return The Handler that was added
 	 */
-	public static ConsoleSTDOutputHandler configureConsoleSingleLineOutput(Level outputLevel,boolean inverted)
+	public static ConsoleSTDOutputHandler configureConsoleSingleLineOutput(Level outputLevel, boolean inverted)
 	{
 		//System.setErr(System.out);
 		LogFactory.setDefaultLevel(outputLevel);
 		setLogToConsole(true);
 		LogColourFormatter.setInverted(inverted);
 		ConsoleSTDOutputHandler.getInstance()
-				.setColoured(false)
-				.setLevel(outputLevel);
+		                       .setColoured(false)
+		                       .setLevel(outputLevel);
 		LogManager.getLogManager()
-				.getLogger("")
-				.addHandler(ConsoleSTDOutputHandler.getInstance());
+		          .getLogger("")
+		          .addHandler(ConsoleSTDOutputHandler.getInstance());
 		return ConsoleSTDOutputHandler.getInstance();
+	}
+
+	/**
+	 * Sets some of the configurations to a not so floody log
+	 * <p>
+	 * LogFactory.setGroupLevel("org.hibernate", Level.INFO);
+	 * LogFactory.setGroupLevel("btm", Level.INFO);
+	 * LogFactory.setGroupLevel("com.microsoft.sqlserver.jdbc", Level.INFO);
+	 * LogFactory.setGroupLevel("com.hazelcast", Level.INFO);
+	 * LogFactory.setGroupLevel("javax.net", Level.INFO);
+	 * LogFactory.setGroupLevel("org.apache.cxf", Level.CONFIG);
+	 * LogFactory.setGroupLevel("jdk.event.security", Level.INFO);
+	 * LogFactory.setGroupLevel("javax.xml.bind", Level.CONFIG);
+	 * LogFactory.setGroupLevel("com.google.inject.internal.util.Stopwatch", Level.INFO);
+	 * LogFactory.setGroupLevel("javax.enterprise.resource.webcontainer.jsf", Level.INFO);
+	 */
+	public static void configureDefaultLogHiding()
+	{
+		LogFactory.setGroupLevel("org.hibernate", Level.INFO);
+		LogFactory.setGroupLevel("btm", Level.INFO);
+		LogFactory.setGroupLevel("com.microsoft.sqlserver.jdbc", Level.INFO);
+		LogFactory.setGroupLevel("com.hazelcast", Level.INFO);
+		LogFactory.setGroupLevel("javax.net", Level.INFO);
+		LogFactory.setGroupLevel("org.apache.cxf", Level.CONFIG);
+		LogFactory.setGroupLevel("jdk.event.security", Level.INFO);
+		LogFactory.setGroupLevel("javax.xml.bind", Level.CONFIG);
+		LogFactory.setGroupLevel("com.google.inject.internal.util.Stopwatch", Level.INFO);
+		LogFactory.setGroupLevel("javax.enterprise.resource.webcontainer.jsf", Level.INFO);
+
 	}
 
 
@@ -193,8 +221,10 @@ public class LogFactory
 	 */
 	public static void setGroupLevel(String category, Level newLevel)
 	{
-		ConsoleSTDOutputHandler.getLogPackagesLevels().put(category,newLevel);
+		ConsoleSTDOutputHandler.getLogPackagesLevels()
+		                       .put(category, newLevel);
 	}
+
 	/**
 	 * Sets the default level on all the loggers currently associated, as well as any future loggers
 	 *
@@ -205,9 +235,12 @@ public class LogFactory
 	{
 		LogFactory.DefaultLevel = level;
 
-		Logger.getGlobal().setLevel(level);
-		Logger.getAnonymousLogger().setLevel(level);
-		Logger.getLogger("").setLevel(level);
+		Logger.getGlobal()
+		      .setLevel(level);
+		Logger.getAnonymousLogger()
+		      .setLevel(level);
+		Logger.getLogger("")
+		      .setLevel(level);
 
 		Enumeration<String> enums = LogManager.getLogManager()
 		                                      .getLoggerNames();
