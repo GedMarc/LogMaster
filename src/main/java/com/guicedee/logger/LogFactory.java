@@ -136,6 +136,10 @@ public class LogFactory
 	 * Sets some of the configurations to a not so floody log
 	 * <p>
 	 * LogFactory.setGroupLevel("org.hibernate", Level.INFO);
+	 * LogFactory.setGroupLevel("io.undertow.request", Level.INFO);
+	 * LogFactory.setGroupLevel("javax.faces.component", Level.INFO);
+	 * LogFactory.setGroupLevel("com.google.inject", Level.CONFIG);
+	 * LogFactory.setGroupLevel("org.xnio", Level.INFO);
 	 * LogFactory.setGroupLevel("btm", Level.INFO);
 	 * LogFactory.setGroupLevel("com.microsoft.sqlserver.jdbc", Level.INFO);
 	 * LogFactory.setGroupLevel("com.hazelcast", Level.INFO);
@@ -143,12 +147,15 @@ public class LogFactory
 	 * LogFactory.setGroupLevel("org.apache.cxf", Level.CONFIG);
 	 * LogFactory.setGroupLevel("jdk.event.security", Level.INFO);
 	 * LogFactory.setGroupLevel("javax.xml.bind", Level.CONFIG);
-	 * LogFactory.setGroupLevel("com.google.inject.internal.util.Stopwatch", Level.INFO);
 	 * LogFactory.setGroupLevel("javax.enterprise.resource.webcontainer.jsf", Level.INFO);
 	 */
 	public static void configureDefaultLogHiding()
 	{
 		LogFactory.setGroupLevel("org.hibernate", Level.INFO);
+		LogFactory.setGroupLevel("io.undertow.request", Level.INFO);
+		LogFactory.setGroupLevel("javax.faces.component", Level.INFO);
+		LogFactory.setGroupLevel("com.google.inject", Level.CONFIG);
+		LogFactory.setGroupLevel("org.xnio", Level.INFO);
 		LogFactory.setGroupLevel("btm", Level.INFO);
 		LogFactory.setGroupLevel("com.microsoft.sqlserver.jdbc", Level.INFO);
 		LogFactory.setGroupLevel("com.hazelcast", Level.INFO);
@@ -156,7 +163,6 @@ public class LogFactory
 		LogFactory.setGroupLevel("org.apache.cxf", Level.CONFIG);
 		LogFactory.setGroupLevel("jdk.event.security", Level.INFO);
 		LogFactory.setGroupLevel("javax.xml.bind", Level.CONFIG);
-		LogFactory.setGroupLevel("com.google.inject.internal.util.Stopwatch", Level.INFO);
 		LogFactory.setGroupLevel("javax.enterprise.resource.webcontainer.jsf", Level.INFO);
 
 	}
