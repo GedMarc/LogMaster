@@ -162,6 +162,8 @@ public class LogFactory
 		LogFactory.setGroupLevel("javax.net", Level.INFO);
 		LogFactory.setGroupLevel("org.apache.cxf", Level.CONFIG);
 		LogFactory.setGroupLevel("jdk.event.security", Level.INFO);
+		LogFactory.setGroupLevel("sun.rmi.loader", Level.INFO);
+		LogFactory.setGroupLevel("sun.rmi.transport.tcp", Level.INFO);
 		LogFactory.setGroupLevel("javax.xml.bind", Level.CONFIG);
 		LogFactory.setGroupLevel("javax.enterprise.resource.webcontainer.jsf", Level.INFO);
 
