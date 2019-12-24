@@ -165,6 +165,8 @@ public class LogFactory
 		LogFactory.setGroupLevel("sun.rmi.loader", Level.INFO);
 		LogFactory.setGroupLevel("sun.rmi.transport.tcp", Level.INFO);
 		LogFactory.setGroupLevel("javax.xml.bind", Level.CONFIG);
+		LogFactory.setGroupLevel("io.undertow.session", Level.INFO);
+		LogFactory.setGroupLevel("io.undertow.websockets.core.request", Level.INFO);
 		LogFactory.setGroupLevel("javax.enterprise.resource.webcontainer.jsf", Level.INFO);
 
 	}
