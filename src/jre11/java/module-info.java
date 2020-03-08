@@ -4,6 +4,6 @@ module com.guicedee.logmaster {
 	exports com.guicedee.logger.handlers;
 
 	requires transitive java.logging;
-	requires java.validation;
+	requires transitive java.validation;
 
 }
