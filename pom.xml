@@ -20,7 +20,6 @@
         <dependency>
              <groupId>com.guicedee.services</groupId>
             <artifactId>jakarta.validation-api</artifactId>
-            <type>jar</type>
         </dependency>
     </dependencies>
 
