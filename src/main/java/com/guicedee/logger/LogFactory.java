@@ -137,23 +137,23 @@ public class LogFactory
 	 * <p>
 	 * LogFactory.setGroupLevel("org.hibernate", Level.INFO);
 	 * LogFactory.setGroupLevel("io.undertow.request", Level.INFO);
-	 * LogFactory.setGroupLevel("javax.faces.component", Level.INFO);
+	 * LogFactory.setGroupLevel("jakarta.faces.component", Level.INFO);
 	 * LogFactory.setGroupLevel("com.google.inject", Level.CONFIG);
 	 * LogFactory.setGroupLevel("org.xnio", Level.INFO);
 	 * LogFactory.setGroupLevel("btm", Level.INFO);
 	 * LogFactory.setGroupLevel("com.microsoft.sqlserver.jdbc", Level.INFO);
 	 * LogFactory.setGroupLevel("com.hazelcast", Level.INFO);
-	 * LogFactory.setGroupLevel("javax.net", Level.INFO);
+	 * LogFactory.setGroupLevel("jakarta.net", Level.INFO);
 	 * LogFactory.setGroupLevel("org.apache.cxf", Level.CONFIG);
 	 * LogFactory.setGroupLevel("jdk.event.security", Level.INFO);
-	 * LogFactory.setGroupLevel("javax.xml.bind", Level.CONFIG);
-	 * LogFactory.setGroupLevel("javax.enterprise.resource.webcontainer.jsf", Level.INFO);
+	 * LogFactory.setGroupLevel("jakarta.xml.bind", Level.CONFIG);
+	 * LogFactory.setGroupLevel("jakarta.enterprise.resource.webcontainer.jsf", Level.INFO);
 	 */
 	public static void configureDefaultLogHiding()
 	{
 		LogFactory.setGroupLevel("org.hibernate", Level.INFO);
 		LogFactory.setGroupLevel("io.undertow.request", Level.INFO);
-		LogFactory.setGroupLevel("javax.faces.component", Level.INFO);
+		LogFactory.setGroupLevel("jakarta.faces.component", Level.INFO);
 		LogFactory.setGroupLevel("com.google.inject", Level.CONFIG);
 		LogFactory.setGroupLevel("org.xnio", Level.INFO);
 		LogFactory.setGroupLevel("btm", Level.INFO);
@@ -164,10 +164,10 @@ public class LogFactory
 		LogFactory.setGroupLevel("jdk.event.security", Level.INFO);
 		LogFactory.setGroupLevel("sun.rmi.loader", Level.INFO);
 		LogFactory.setGroupLevel("sun.rmi.transport.tcp", Level.INFO);
-		LogFactory.setGroupLevel("javax.xml.bind", Level.CONFIG);
+		LogFactory.setGroupLevel("jakarta.xml.bind", Level.CONFIG);
 		LogFactory.setGroupLevel("io.undertow.session", Level.INFO);
 		LogFactory.setGroupLevel("io.undertow.websockets.core.request", Level.INFO);
-		LogFactory.setGroupLevel("javax.enterprise.resource.webcontainer.jsf", Level.INFO);
+		LogFactory.setGroupLevel("jakarta.enterprise.resource.webcontainer.jsf", Level.INFO);
 
 	}
 

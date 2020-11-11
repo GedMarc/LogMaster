@@ -16,7 +16,7 @@
  */
 package com.guicedee.logger.model;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * A default log property
