@@ -12,3 +12,4 @@ persistence.xml
 /nbproject/
 /-nbproject/
 **/*.iml
+/.flattened-pom.xml
