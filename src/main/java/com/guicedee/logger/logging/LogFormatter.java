@@ -38,7 +38,13 @@ abstract class LogFormatter
 				}
 				String replace = "\\{" + n + "}";
 				String replacable = o.toString();
-				output = output.replaceAll(replace, replacable);
+				try
+				{
+					output = output.replaceAll(replace, replacable);
+				}catch (IllegalArgumentException iae)
+				{
+					//
+				}
 			}
 		}
 		return output;

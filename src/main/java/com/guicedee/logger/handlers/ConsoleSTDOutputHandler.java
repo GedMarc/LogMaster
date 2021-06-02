@@ -95,6 +95,9 @@ public class ConsoleSTDOutputHandler
 			String key = entry.getKey();
 			Level value = entry.getValue();
 			String loggerName = record.getLoggerName();
+			if(loggerName == null)
+				loggerName = "";
+			
 			if (loggerName.startsWith(key)) {
 				found = true;
 				if (value.intValue() < record.getLevel()
