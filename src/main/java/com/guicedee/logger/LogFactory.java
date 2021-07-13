@@ -160,7 +160,7 @@ public class LogFactory
 		LogFactory.setGroupLevel("com.microsoft.sqlserver.jdbc", Level.INFO);
 		LogFactory.setGroupLevel("com.hazelcast", Level.INFO);
 		LogFactory.setGroupLevel("javax.net", Level.INFO);
-		LogFactory.setGroupLevel("org.apache.cxf", Level.CONFIG);
+		LogFactory.setGroupLevel("org.apache.cxf", Level.INFO);
 		LogFactory.setGroupLevel("jdk.event.security", Level.INFO);
 		LogFactory.setGroupLevel("sun.rmi.loader", Level.INFO);
 		LogFactory.setGroupLevel("sun.rmi.transport.tcp", Level.INFO);
@@ -170,7 +170,17 @@ public class LogFactory
 		LogFactory.setGroupLevel("jakarta.enterprise.resource.webcontainer.jsf", Level.INFO);
 
 	}
-
+	
+	public static void configureLoggersToJDK()
+	{
+		System.setProperty("hazelcast.logging.type","jdk");
+		System.setProperty("org.jboss.logging.provider", "jdk");
+	}
+	
+	public static void configureOutputToLog4j()
+	{
+		System.setProperty("java.util.logging.manager","org.apache.logging.log4j.jul.LogManager");
+	}
 
 	/**
 	 * Alias for get logger
