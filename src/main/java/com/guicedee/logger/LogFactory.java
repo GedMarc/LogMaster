@@ -167,6 +167,13 @@ public class LogFactory
 		LogFactory.setGroupLevel("jakarta.xml.bind", Level.CONFIG);
 		LogFactory.setGroupLevel("io.undertow.session", Level.INFO);
 		LogFactory.setGroupLevel("io.undertow.websockets.core.request", Level.INFO);
+		LogFactory.setGroupLevel("org.apache.cxf.phase", Level.INFO);
+		LogFactory.setGroupLevel("org.apache.cxf.ws.policy", Level.INFO);
+		LogFactory.setGroupLevel("org.apache.cxf.interceptor", Level.INFO);
+		LogFactory.setGroupLevel("org.apache.cxf.jaxrs.interceptor", Level.INFO);
+		LogFactory.setGroupLevel("org.apache.cxf.ws.addressing", Level.INFO);
+		LogFactory.setGroupLevel("org.apache.cxf.transport.http", Level.INFO);
+		LogFactory.setGroupLevel("org.apache.cxf.transport.servlet", Level.INFO);
 		LogFactory.setGroupLevel("jakarta.enterprise.resource.webcontainer.jsf", Level.INFO);
 
 	}

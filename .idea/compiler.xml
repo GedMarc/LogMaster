@@ -2,12 +2,6 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="guiced-log-master (1)" />
-      </profile>
       <profile name="Annotation profile for Guiced Log Master" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -19,19 +13,20 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.4.2.Final/mapstruct-1.4.2.Final.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar" />
         </processorPath>
+        <module name="guiced-log-master (1)" />
         <module name="guiced-log-master" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="guiced-log-master" target="16" />
-      <module name="guiced-log-master (1)" target="1.5" />
+      <module name="guiced-log-master (1)" target="16" />
       <module name="guiced-log-master (2)" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="guiced-log-master" options="-AaddGeneratedAnnotation=false -Adebug=true" />
-      <module name="guiced-log-master (1)" options="" />
+      <module name="guiced-log-master (1)" options="-AaddGeneratedAnnotation=false -Adebug=true" />
     </option>
   </component>
 </project>
