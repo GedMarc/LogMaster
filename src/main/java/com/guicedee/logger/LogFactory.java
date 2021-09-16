@@ -136,6 +136,7 @@ public class LogFactory
 	 * Sets some of the configurations to a not so floody log
 	 * <p>
 	 * LogFactory.setGroupLevel("org.hibernate", Level.INFO);
+	 * LogFactory.setGroupLevel("java.io.serialization", Level.INFO);
 	 * LogFactory.setGroupLevel("io.undertow.request", Level.INFO);
 	 * LogFactory.setGroupLevel("jakarta.faces.component", Level.INFO);
 	 * LogFactory.setGroupLevel("com.google.inject", Level.CONFIG);
@@ -152,6 +153,8 @@ public class LogFactory
 	public static void configureDefaultLogHiding()
 	{
 		LogFactory.setGroupLevel("org.hibernate", Level.INFO);
+		LogFactory.setGroupLevel("java.io.serialization", Level.INFO);
+		LogFactory.setGroupLevel("java.io", Level.INFO);
 		LogFactory.setGroupLevel("io.undertow.request", Level.INFO);
 		LogFactory.setGroupLevel("jakarta.faces.component", Level.INFO);
 		LogFactory.setGroupLevel("com.google.inject", Level.CONFIG);
@@ -175,7 +178,12 @@ public class LogFactory
 		LogFactory.setGroupLevel("org.apache.cxf.transport.http", Level.INFO);
 		LogFactory.setGroupLevel("org.apache.cxf.transport.servlet", Level.INFO);
 		LogFactory.setGroupLevel("jakarta.enterprise.resource.webcontainer.jsf", Level.INFO);
-
+		LogFactory.setGroupLevel("sun.awt.windows", Level.INFO);
+		LogFactory.setGroupLevel("sun.awt.windows.WToolkit", Level.INFO);
+		LogFactory.setGroupLevel("sun.awt.windows.WDesktopProperties", Level.INFO);
+		LogFactory.setGroupLevel("sun.awt.multiscreen.SunDisplayChanger", Level.INFO);
+		LogFactory.setGroupLevel("java.awt.event", Level.INFO);
+		LogFactory.setGroupLevel("java.awt.event.EventDispatchThread", Level.INFO);
 	}
 	
 	public static void configureLoggersToJDK()
