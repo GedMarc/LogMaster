@@ -1,6 +1,7 @@
 /build/
 /dist/
 /target/
+/.idea/
 
 Thumbs.db
 nbproject/build-native.xml~
