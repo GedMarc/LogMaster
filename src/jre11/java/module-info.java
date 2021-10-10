@@ -5,5 +5,7 @@ module com.guicedee.logmaster {
 
 	requires transitive java.logging;
 	requires static jakarta.validation;
+	
+	requires static org.apache.logging.log4j.core;
 
 }

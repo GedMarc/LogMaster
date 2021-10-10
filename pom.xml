@@ -17,10 +17,20 @@
     <url>https://github.com/GedMarc/LogMaster</url>
 
     <dependencies>
+
         <dependency>
              <groupId>com.guicedee.services</groupId>
             <artifactId>jakarta.validation-api</artifactId>
         </dependency>
+
+
+        <dependency>
+            <groupId>com.guicedee.services</groupId>
+            <artifactId>log4j-core</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+
     </dependencies>
 
     <scm>
