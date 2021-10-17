@@ -47,7 +47,7 @@ public class Log4j2Utils
 // create a console appender
 		AppenderComponentBuilder appenderBuilder = builder.newAppender(logName, "RollingFile")
 		                                                  .addAttribute("fileName", "logs/" + logName + ".log")
-		                                                  .addAttribute("filePattern", "logs/" + logName + "-%d{yyyy-MM-dd-HH-mm-ss}.log.gz")
+		                                                  .addAttribute("filePattern", "logs/$${date:yyyy-MM}/" + logName + "-%d{yyyy-MM-dd-HH-mm-ss}.log.gz")
 		                                                  .add(layoutBuilder)
 		                                                  .addComponent(triggeringPolicy);
 		
