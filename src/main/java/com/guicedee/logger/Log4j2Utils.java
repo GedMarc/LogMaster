@@ -14,6 +14,11 @@ import java.util.*;
 public class Log4j2Utils
 {
 	
+	public static Logger getLogger(String name)
+	{
+		return LogManager.getLogger(name);
+	}
+	
 	public static Logger createLog4j2RollingLog(String configName, String logName,String rollingFilename, Level level)
 	{
 		return createLog4j2RollingLog(configName, logName,"%d %p %c [%t] %m%n",rollingFilename, level);

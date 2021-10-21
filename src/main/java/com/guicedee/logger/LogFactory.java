@@ -58,6 +58,10 @@ public class LogFactory
 	 * If this factory is configured
 	 */
 	private static boolean configured;
+	/**
+	 * Log4J2
+	 */
+	private static boolean log4j2;
 
 	/**
 	 * Hidden log factory constructor
@@ -195,6 +199,10 @@ public class LogFactory
 	public static void configureOutputToLog4j()
 	{
 		System.setProperty("java.util.logging.manager","org.apache.logging.log4j.jul.LogManager");
+		System.setProperty("org.jboss.logging.provider", "log4j2");
+		System.setProperty("hazelcast.logging.type", "log4j2");
+		log4j2 = true;
+		
 	}
 
 	/**
