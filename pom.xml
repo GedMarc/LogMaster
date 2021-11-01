@@ -19,6 +19,11 @@
     </description>
     <url>https://github.com/GedMarc/LogMaster</url>
 
+    <properties>
+        <ignore.moditect>true</ignore.moditect>
+        <flatten.pom>false</flatten.pom>
+    </properties>
+
     <dependencies>
 
         <dependency>
