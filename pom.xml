@@ -38,7 +38,16 @@
         <url>https://github.com/GedMarc/LogMaster.git</url>
     </scm>
 
-    <build>
+    <profiles>
+        <profile>
+        <id>ignore-moditect</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+
+    <!--<build>
         <plugins>
             <plugin>
                 <groupId>org.moditect</groupId>
@@ -58,6 +67,6 @@
             </plugin>
 
         </plugins>
-    </build>
+    </build>-->
 
 </project>
