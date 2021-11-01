@@ -4,10 +4,11 @@
 
     <parent>
         <groupId>com.guicedee</groupId>
-        <artifactId>guicedee-projects</artifactId>
+        <artifactId>dev-kit</artifactId>
         <version>0.0.0_0-SNAPSHOT</version>
     </parent>
 
+    <groupId>com.guicedee</groupId>
     <artifactId>guiced-log-master</artifactId>
     <packaging>jar</packaging>
 
