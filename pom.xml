@@ -33,8 +33,7 @@
 
         <dependency>
             <groupId>com.guicedee.services</groupId>
-            <artifactId>log4j-core</artifactId>
-            <optional>true</optional>
+            <artifactId>slf4j</artifactId>
         </dependency>
 
     </dependencies>
