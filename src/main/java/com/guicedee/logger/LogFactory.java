@@ -188,6 +188,11 @@ public class LogFactory
 		LogFactory.setGroupLevel("sun.awt.multiscreen.SunDisplayChanger", Level.INFO);
 		LogFactory.setGroupLevel("java.awt.event", Level.INFO);
 		LogFactory.setGroupLevel("java.awt.event.EventDispatchThread", Level.INFO);
+		
+		
+		LogFactory.setGroupLevel("org.postgres", SEVERE);
+		LogFactory.setGroupLevel("org.postgres.jdbc", SEVERE);
+		LogFactory.setGroupLevel("org.postgres.core", SEVERE);
 	}
 	
 	public static void configureLoggersToJDK()
