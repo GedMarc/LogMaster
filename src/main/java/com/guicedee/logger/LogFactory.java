@@ -193,6 +193,9 @@ public class LogFactory
 		LogFactory.setGroupLevel("org.postgres", SEVERE);
 		LogFactory.setGroupLevel("org.postgres.jdbc", SEVERE);
 		LogFactory.setGroupLevel("org.postgres.core", SEVERE);
+		LogFactory.setGroupLevel("javax.management.remote.misc", WARNING);
+		LogFactory.setGroupLevel("javax.management.remote", WARNING);
+		LogFactory.setGroupLevel("javax.management.mbeanserver", WARNING);
 	}
 	
 	public static void configureLoggersToJDK()
