@@ -17,6 +17,10 @@
 package com.guicedee.logger.logging;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -80,7 +84,7 @@ public class LogColourFormatter
 	private static boolean INVERTED = false;
 	private static boolean renderBlack = true;
 
-	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
+	private static final DateTimeFormatter sdf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS");
 
 	/**
 	 * The log colour formatter
@@ -304,99 +308,84 @@ public class LogColourFormatter
 			return null;
 		}
 
-		String output = "";
+		StringBuilder output = new StringBuilder();
 		if (!INVERTED)
 		{
-			output += ANSI_WHITE;
+			output.append(ANSI_WHITE);
 			if (renderBlack)
 			{
-				output += ANSI_BLACK_BACKGROUND;
+				output.append(ANSI_BLACK_BACKGROUND);
 			}
 		}
-		output += "[" + sdf.format(record.getMillis()) + "]-[";
-
-		record.setMessage(record.getMessage()
-		                        .replace("\n", "")
-		                        .replace("\t", " "));
+		LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(record.getMillis()), ZoneId.systemDefault());
+		output.append("[").append(sdf.format(localDateTime)).append("]-[");
 		if (record.getLevel()
 		          .equals(Level.FINEST))
 		{
-			output += ANSI_RED + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
+			output.append(ANSI_RED).append(renderBlack ? ANSI_BLACK_BACKGROUND : "");
 		}
 		else if (record.getLevel()
 		               .equals(Level.FINER))
 		{
-			output += ANSI_CYAN + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
+			output.append(ANSI_CYAN).append(renderBlack ? ANSI_BLACK_BACKGROUND : "");
 		}
 		else if (record.getLevel()
 		               .equals(Level.FINE))
 		{
-			output += ANSI_BLUE + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
+			output.append(ANSI_BLUE).append(renderBlack ? ANSI_BLACK_BACKGROUND : "");
 		}
 		else if (record.getLevel()
 		               .equals(Level.CONFIG))
 		{
-			output += ANSI_PURPLE + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
+			output.append(ANSI_PURPLE).append(renderBlack ? ANSI_BLACK_BACKGROUND : "");
 		}
 		else if (record.getLevel()
 		               .equals(Level.INFO))
 		{
-			output += ANSI_GREEN + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
+			output.append(ANSI_GREEN).append(renderBlack ? ANSI_BLACK_BACKGROUND : "");
 		}
 		else if (record.getLevel()
 		               .equals(Level.WARNING))
 		{
-			output += ANSI_YELLOW + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
+			output.append(ANSI_YELLOW).append(renderBlack ? ANSI_BLACK_BACKGROUND : "");
 		}
 		else if (record.getLevel()
 		               .equals(Level.SEVERE))
 		{
-			output += ANSI_RED + (renderBlack ? ANSI_BLACK_BACKGROUND : "") + record.getMessage();
+			output.append(ANSI_RED).append(renderBlack ? ANSI_BLACK_BACKGROUND : "");
 		}
-		output += printException(record).toString();
-		output = processParameters(output, record);
-		output = processInverted(output, record);
+		if(record.getThrown() != null)
+			output.append(printException(record).toString());
+		else
+			output.append(record.getMessage());
 
-		output += "]-";
-		if (output.equalsIgnoreCase("]-"))
-		{
-			output += "[Empty Log?]-";
-		}
-
-		output += "[" + record.getLevel()
-		                      .getLocalizedName() + "]";
-
-		output += "-[" + record.getLoggerName() + "]";
-
-		return output + System.getProperty("line.separator");
+		processParameters(output, record);
+		processInverted(output, record);
+		output.append("]-");
+		output.append("[").append(record.getLevel()
+                .getLocalizedName()).append("]");
+		output.append("-[").append(record.getLoggerName()).append("]");
+		output.append(System.getProperty("line.separator"));
+		output.append(LogColourFormatter.getAnsiReset());
+		return output.toString();
 	}
 
-	private String processInverted(String output, LogRecord record)
+	private StringBuilder processInverted(StringBuilder output, LogRecord record)
 	{
 		if (!INVERTED)
 		{
 			if (record.getThrown() == null)
 			{
-				output += ANSI_RESET;
-				output += (renderBlack ? ANSI_BLACK_BACKGROUND : "");
-				output += ANSI_WHITE;
+				output.append(ANSI_RESET);
+				output.append(renderBlack ? ANSI_BLACK_BACKGROUND : "");
+				output.append(ANSI_WHITE);
 
 			}
 			else
 			{
-				output += (renderBlack ? ANSI_BLACK_BACKGROUND : "");
+				output.append(renderBlack ? ANSI_BLACK_BACKGROUND : "");
 			}
 		}
 		return output;
-	}
-
-	public SimpleDateFormat getSdf()
-	{
-		return sdf;
-	}
-
-	public void setSdf(SimpleDateFormat sdf)
-	{
-		this.sdf = sdf;
 	}
 }

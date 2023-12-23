@@ -1,8 +1,12 @@
 package com.guicedee.logger.logging;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.logging.LogRecord;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 abstract class LogFormatter
 		extends java.util.logging.Formatter
@@ -14,18 +18,13 @@ abstract class LogFormatter
 		if (record.getThrown() != null)
 		{
 			Throwable t = record.getThrown();
-			StringWriter sw = new StringWriter();
-			try (PrintWriter pw = new PrintWriter(sw))
-			{
-				t.printStackTrace(pw);
-			}
-			output.append(LogColourFormatter.getAnsiReset());
-			output.append("\n" + sw.toString());
+			String stackTrace = ExceptionUtils.getStackTrace(t);
+			output.append("\n").append(stackTrace);
 		}
 		return output;
 	}
 
-	String processParameters(String output, LogRecord record)
+	StringBuilder processParameters(StringBuilder output, LogRecord record)
 	{
 		if (record.getParameters() != null && record.getParameters().length > 0)
 		{
@@ -40,7 +39,11 @@ abstract class LogFormatter
 				String replacable = o.toString();
 				try
 				{
-					output = output.replaceAll(replace, replacable);
+					Pattern p = Pattern.compile(replace);
+					Matcher m = p.matcher(output);
+					String s = m.replaceAll(replacable);
+					output.delete(0, output.length());
+					output.append(s);
 				}catch (IllegalArgumentException iae)
 				{
 					//

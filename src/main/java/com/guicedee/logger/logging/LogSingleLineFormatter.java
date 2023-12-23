@@ -17,6 +17,10 @@
 package com.guicedee.logger.logging;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -34,7 +38,7 @@ public class LogSingleLineFormatter
 	 * Ansi Colour
 	 */
 
-	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	private static final DateTimeFormatter sdf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
 	/**
 	 * The log colour formatter
@@ -68,68 +72,20 @@ public class LogSingleLineFormatter
 			return "";
 		}
 
-		String output = "";
+		StringBuilder output = new StringBuilder();
+		LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(record.getMillis()), ZoneId.systemDefault());
+		output.append("[").append(sdf.format(localDateTime)).append("]-[");
+		if(record.getThrown() != null)
+			output.append(printException(record).toString());
+		else
+			output.append(record.getMessage());
 
-		output += "[" + sdf.format(record.getMillis()) + "]-[";
-		String message = "";
-
-		if (record.getLevel()
-		          .getLocalizedName()
-		          .equals(Level.FINEST.getLocalizedName()))
-		{
-			message += record.getMessage();
-		}
-		else if (record.getLevel()
-		               .getLocalizedName()
-		               .equals(Level.FINER.getLocalizedName()))
-		{
-			message += record.getMessage();
-		}
-		else if (record.getLevel()
-		               .getLocalizedName()
-		               .equals(Level.FINE.getLocalizedName()))
-		{
-			message += record.getMessage();
-		}
-		else if (record.getLevel()
-		               .getLocalizedName()
-		               .equals(Level.CONFIG.getLocalizedName()))
-		{
-			message += record.getMessage();
-		}
-		else if (record.getLevel()
-		               .getLocalizedName()
-		               .equals(Level.INFO.getLocalizedName()))
-		{
-			message += record.getMessage();
-		}
-		else if (record.getLevel()
-		               .getLocalizedName()
-		               .equals(Level.WARNING.getLocalizedName()))
-		{
-			message += record.getMessage();
-		}
-		else if (record.getLevel()
-		               .getLocalizedName()
-		               .equals(Level.SEVERE.getLocalizedName()))
-		{
-			message += record.getMessage();
-		}
-
-		if (message.trim()
-		           .isEmpty())
-		{
-			return "";
-		}
-
-		output += message;
-		output += printException(record).toString();
 		output = processParameters(output, record);
 
-		output += "]-";
-		output += "[" + record.getLevel()
-		                      .getLocalizedName() + "]";
-		output += "-[" + record.getLoggerName() + "]";
+		output.append("]-");
+		output.append("[").append(record.getLevel()
+                .getLocalizedName()).append("]");
+		output.append("-[").append(record.getLoggerName()).append("]");
 		return output + System.getProperty("line.separator");
 	}
 }

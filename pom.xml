@@ -36,6 +36,11 @@
             <artifactId>slf4j</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.guicedee.services</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
     </dependencies>
 
     <scm>
